@@ -10,7 +10,7 @@ import app as entry
 from papertrail.core.llm import RateLimited
 from papertrail.web import api
 from tests.conftest import fake_llm, make_settings
-from tests.test_payables_pack import invoice, po
+from tests.test_payables_pack import inv_line, invoice, po
 from tests.test_pipelines import RECEIPT_JSON
 
 
@@ -70,8 +70,8 @@ def test_rate_limit_is_friendly_busy_message(client, tmp_path):
 
 
 def test_evaluate_rules(client):
-    payload = {"pack": "payables", "matching": "rules",
-               "documents": {"invoice": invoice().model_dump(mode="json"), "purchase_order": po().model_dump(mode="json")}}
+    docs = {"invoice": invoice().model_dump(mode="json"), "purchase_order": po().model_dump(mode="json")}
+    payload = {"pack": "payables", "matching": "rules", "documents": docs}
     r = client.post("/api/evaluate", json=payload)
     assert r.status_code == 200, r.text
     assert r.json()["decision"]["outcome"] == "approve"
@@ -84,8 +84,7 @@ def test_evaluate_falls_back_to_rules_when_llm_busy(client, tmp_path):
 
     api._state["llm"] = fake_llm(busy, tmp_path)
     order = po()
-    inv = invoice(lines=[__import__("tests.test_payables_pack", fromlist=["inv_line"]).inv_line(
-        "Something unusual", "9999", 1, 10.0)])
+    inv = invoice(lines=[inv_line("Something unusual", "9999", 1, 10.0)])
     payload = {"pack": "payables", "matching": "rules+llm",
                "documents": {"invoice": inv.model_dump(mode="json"), "purchase_order": order.model_dump(mode="json")}}
     r = client.post("/api/evaluate", json=payload)
@@ -93,7 +92,8 @@ def test_evaluate_falls_back_to_rules_when_llm_busy(client, tmp_path):
 
 
 def test_evaluate_missing_document(client):
-    r = client.post("/api/evaluate", json={"pack": "payables", "documents": {"invoice": invoice().model_dump(mode="json")}})
+    docs = {"invoice": invoice().model_dump(mode="json")}
+    r = client.post("/api/evaluate", json={"pack": "payables", "documents": docs})
     assert r.status_code == 400 and "purchase_order" in r.json()["detail"]
 
 
