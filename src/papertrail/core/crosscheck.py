@@ -18,6 +18,7 @@ from pydantic import Field as PField
 
 from papertrail.core.findings import Finding, Severity
 from papertrail.core.images import PreparedImage
+from papertrail.core.llm import RateLimited
 from papertrail.core.matching import Matcher
 from papertrail.core.validators.duplicates import DuplicateIndex
 
@@ -82,6 +83,8 @@ def run_crosschecks(
         try:
             findings = check.run(docs, ctx)
             status = _status(findings)
+        except RateLimited:
+            raise  # capacity, not a bug: the caller decides to wait, retry or fall back to rules
         except Exception as exc:  # a buggy rule must not take down the case
             findings = [
                 Finding(

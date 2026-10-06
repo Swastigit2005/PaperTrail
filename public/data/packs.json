@@ -1,0 +1,118 @@
+[
+ {
+  "name": "claims",
+  "title": "Health insurance claims",
+  "description": "Pharmacy bills checked against the prescription: drugs, patient, dates and quantities.",
+  "benchmarked": true,
+  "doc_types": [
+   {
+    "name": "prescription",
+    "title": "medical prescription",
+    "description": "a doctor's prescription (printed or handwritten) listing medicines under Rx"
+   },
+   {
+    "name": "bill",
+    "title": "pharmacy bill",
+    "description": "a pharmacy or hospital bill itemising medicines with quantity, rate and amount"
+   }
+  ],
+  "checks": [
+   {
+    "code": "unprescribed_medicine",
+    "description": "Every billed medicine was prescribed"
+   },
+   {
+    "code": "patient_name_mismatch",
+    "description": "Patient name matches on both documents"
+   },
+   {
+    "code": "bill_before_prescription",
+    "description": "Bill dated on/after the prescription, within 30 days"
+   },
+   {
+    "code": "implausible_quantity",
+    "description": "Billed quantity fits dose x frequency x duration"
+   }
+  ]
+ },
+ {
+  "name": "expenses",
+  "title": "Expense reimbursement",
+  "description": "Employee expense claims checked against the receipt: amount, policy window and duplicates.",
+  "benchmarked": false,
+  "doc_types": [
+   {
+    "name": "receipt",
+    "title": "merchant receipt",
+    "description": "a till, restaurant, fuel or travel receipt issued by a merchant"
+   },
+   {
+    "name": "expense_claim",
+    "title": "expense claim form",
+    "description": "an employee reimbursement form naming the claimant, expense and amount claimed"
+   }
+  ],
+  "checks": [
+   {
+    "code": "claim_amount_mismatch",
+    "description": "Claimed amount does not exceed the receipt total"
+   },
+   {
+    "code": "expense_date_mismatch",
+    "description": "Claim expense date equals the receipt date"
+   },
+   {
+    "code": "outside_policy_window",
+    "description": "Receipt is within 30 days of the claim"
+   },
+   {
+    "code": "merchant_mismatch",
+    "description": "Claim merchant matches the receipt merchant"
+   },
+   {
+    "code": "duplicate_receipt",
+    "description": "Receipt was not already claimed"
+   }
+  ]
+ },
+ {
+  "name": "payables",
+  "title": "Accounts payable (invoice to PO)",
+  "description": "GST invoices checked for validity and matched line by line against the purchase order.",
+  "benchmarked": true,
+  "doc_types": [
+   {
+    "name": "invoice",
+    "title": "GST tax invoice",
+    "description": "an Indian GST tax invoice with GSTINs, HSN codes and CGST/SGST or IGST"
+   },
+   {
+    "name": "purchase_order",
+    "title": "purchase order",
+    "description": "a purchase order issued by a buyer listing items, quantities and agreed rates"
+   }
+  ],
+  "checks": [
+   {
+    "code": "gstin_mismatch",
+    "description": "Invoice seller GSTIN equals the PO vendor GSTIN"
+   },
+   {
+    "code": "po_reference_mismatch",
+    "description": "Invoice references this PO number"
+   },
+   {
+    "code": "line_not_on_po",
+    "description": "Every invoice line is on the PO (description + HSN)"
+   },
+   {
+    "code": "qty_over_po",
+    "description": "Billed quantity does not exceed the ordered quantity"
+   },
+   {
+    "code": "rate_above_po",
+    "description": "Invoice rate within 2% of the PO rate"
+   }
+  ]
+ }
+]

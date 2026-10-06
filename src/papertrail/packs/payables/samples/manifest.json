@@ -1,0 +1,47 @@
+{
+ "pack": "payables",
+ "samples": [
+  {
+   "id": "clean",
+   "title": "Clean invoice (paraphrased lines)",
+   "tier": "clean",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve"
+  },
+  {
+   "id": "overbilled",
+   "title": "Rate above PO and quantity over PO",
+   "tier": "scanned",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "rate_above_po",
+    "qty_over_po"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  },
+  {
+   "id": "tax",
+   "title": "Wrong tax split and invalid GSTIN",
+   "tier": "clean",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "wrong_tax_split",
+    "invalid_gstin"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  }
+ ]
+}

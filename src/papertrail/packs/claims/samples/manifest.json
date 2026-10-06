@@ -1,0 +1,46 @@
+{
+ "pack": "claims",
+ "samples": [
+  {
+   "id": "clean",
+   "title": "Clean claim (brand vs generic names)",
+   "tier": "clean",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve"
+  },
+  {
+   "id": "unprescribed",
+   "title": "Bill includes a medicine that was not prescribed",
+   "tier": "scanned",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "unprescribed_medicine"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  },
+  {
+   "id": "quantity",
+   "title": "Billed quantity far exceeds the prescribed course",
+   "tier": "clean",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "implausible_quantity",
+    "bill_before_prescription"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  }
+ ]
+}

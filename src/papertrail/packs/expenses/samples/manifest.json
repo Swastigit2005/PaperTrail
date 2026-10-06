@@ -1,0 +1,45 @@
+{
+ "pack": "expenses",
+ "samples": [
+  {
+   "id": "clean",
+   "title": "Clean meal claim",
+   "tier": "clean",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve"
+  },
+  {
+   "id": "inflated",
+   "title": "Claimed amount exceeds the receipt",
+   "tier": "scanned",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [
+    "claim_amount_mismatch"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  },
+  {
+   "id": "duplicate",
+   "title": "Same receipt claimed again (duplicate)",
+   "tier": "scanned",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [
+    "duplicate_receipt"
+   ],
+   "duplicate_of": "clean",
+   "expected": "flag"
+  }
+ ]
+}

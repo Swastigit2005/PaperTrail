@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check .
+      - name: Unit tests (offline, mocked LLM and HTTP)
+        run: pytest
+      - name: Static site data is in sync with bench/results and samples
+        run: |
+          python scripts/build_web.py
+          git diff --exit-code -- public/ || (echo "Run 'python scripts/build_web.py' and commit public/" && exit 1)

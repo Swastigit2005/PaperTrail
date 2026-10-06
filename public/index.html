@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PaperTrail</title>
+  <meta name="description" content="Document intake with vision LLMs: extraction, validation and cross-document checks for insurance claims and invoice-to-PO matching, benchmarked.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='3' fill='%232a78d6'/%3E%3Cpath d='M11 11h10M11 16h10M11 21h6' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="notice" role="note">
+    <span aria-hidden="true">⚠</span>
+    Demo with synthetic data, not for real claims or payments. Every document here is fake.
+  </div>
+
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect x="6" y="3" width="20" height="26" rx="3" fill="var(--accent)"/><path d="M11 11h10M11 16h10M11 21h6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div>
+        <h1>PaperTrail</h1>
+        <p class="tagline">Reads business documents, checks them against each other, and routes each case: approve, review or flag, with reasons.</p>
+      </div>
+    </div>
+    <a class="gh" id="repo-link" href="https://github.com/" target="_blank" rel="noopener">View code</a>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="try" aria-selected="true">Try a pack</button>
+    <button role="tab" data-tab="queue" aria-selected="false">Review queue <span class="count" id="queue-count">0</span></button>
+    <button role="tab" data-tab="bench" aria-selected="false">Benchmark</button>
+    <button role="tab" data-tab="how" aria-selected="false">How it works</button>
+  </nav>
+
+  <main>
+    <!-- TRY A PACK -->
+    <section id="tab-try" class="tab-panel" role="tabpanel">
+      <div class="pack-picker" id="pack-picker" role="radiogroup" aria-label="Pack"></div>
+
+      <div class="layout">
+        <aside class="inputs">
+          <h2>Sample pairs</h2>
+          <p class="hint">Precomputed with the real engine. Instant, no quota used.</p>
+          <div id="samples" class="samples"></div>
+
+          <h2 class="mt">Or upload your own</h2>
+          <p class="hint">Two documents, images or PDF (first page), max 5 MB each. Use fake data only.</p>
+          <form id="upload-form" class="upload">
+            <div class="file-row" data-slot="0">
+              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Choose document 1</span></label>
+              <select aria-label="Document 1 type"></select>
+            </div>
+            <div class="file-row" data-slot="1">
+              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Choose document 2</span></label>
+              <select aria-label="Document 2 type"></select>
+            </div>
+            <fieldset>
+              <legend>Extraction</legend>
+              <label><input type="radio" name="pipeline" value="vlm" checked> Vision LLM</label>
+              <label><input type="radio" name="pipeline" value="ocr+llm"> OCR + LLM <small>(OCR runs in your browser)</small></label>
+            </fieldset>
+            <fieldset>
+              <legend>Matching</legend>
+              <label><input type="radio" name="matching" value="rules+llm" checked> Rules + LLM</label>
+              <label><input type="radio" name="matching" value="rules"> Rules only</label>
+            </fieldset>
+            <button type="submit" class="primary" id="run-btn">Process documents</button>
+            <p class="status" id="status" aria-live="polite"></p>
+          </form>
+        </aside>
+
+        <section class="results" id="results" aria-live="polite">
+          <div class="empty">
+            <p>Pick a sample pair on the left to see a full case: extracted fields with confidence, validation, cross-document checks and the routing decision.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- REVIEW QUEUE -->
+    <section id="tab-queue" class="tab-panel" role="tabpanel" hidden>
+      <h2>Review queue</h2>
+      <p class="hint">Every case in this browser session that needs a human: flagged or needing review. The engine never makes the final call.</p>
+      <div id="queue"></div>
+    </section>
+
+    <!-- BENCHMARK -->
+    <section id="tab-bench" class="tab-panel" role="tabpanel" hidden>
+      <article class="md" id="bench-md"><p class="hint">Loading benchmark…</p></article>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="tab-how" class="tab-panel" role="tabpanel" hidden>
+      <h2>Architecture</h2>
+      <div class="mermaid-wrap"><pre class="mermaid" id="arch">
+flowchart LR
+  IN["Document images<br/>photo · scan · PDF"] --> DET{"Doc-type detection<br/>keywords, then vision LLM<br/>(manual override)"}
+  DET --> VLM["VLM direct<br/>Groq vision model"]
+  DET --> OCR["OCR + LLM<br/>Tesseract, then text model"]
+  VLM --> F["Field&lt;T&gt; per value<br/>value · confidence · evidence · null_reason"]
+  OCR --> F
+  F --> V["Per-document validators<br/>RxNorm · GSTIN · arithmetic · dates"]
+  F --> X["Cross-document checks<br/>rules first, LLM only for fuzzy matches"]
+  V --> D{"Decision policy"}
+  X --> D
+  D --> A1["approve"]
+  D --> A2["needs review"]
+  D --> A3["flag"]
+  A2 --> H["Human reviewer<br/>makes the final call"]
+  A3 --> H
+  P[("Packs<br/>claims · payables · expenses")] -. "schemas · validators · checks · policy" .-> V
+  P -.-> X
+  P -.-> D
+      </pre></div>
+      <h2 class="mt">Packs</h2>
+      <div id="packs-info" class="packs-info"></div>
+      <h2 class="mt">Add a pack in a day</h2>
+      <article class="md" id="pack-guide"><p class="hint">Loading guide…</p></article>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built on Groq (free tier), Pydantic, Tesseract and RxNorm. Base idea and RxNorm validator adapted from
+      <a href="https://github.com/Sumanth077/Hands-On-AI-Engineering/tree/main/OCR/medical_prescription_digitizer" target="_blank" rel="noopener">Hands-On-AI-Engineering</a> (MIT).</p>
+  </footer>
+
+  <dialog id="zoom"><img alt=""><button class="close" aria-label="Close">×</button></dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@18.1.0/lib/marked.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

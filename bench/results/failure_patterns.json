@@ -1,0 +1,343 @@
+[
+ {
+  "key": "claims|ocr_llm|field|prescription.medicines[*].strength|misread",
+  "description": "OCR+LLM + rules+LLM: `prescription.medicines[*].strength` misread (wrong value)",
+  "count": 9,
+  "examples": [
+   {
+    "pair": "cla-000",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[0].strength",
+    "truth": "500 mg",
+    "pred": "599 mg"
+   },
+   {
+    "pair": "cla-000",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[2].strength",
+    "truth": null,
+    "pred": "120"
+   },
+   {
+    "pair": "cla-001",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[1].strength",
+    "truth": null,
+    "pred": "400 mg"
+   }
+  ],
+  "tiers_in_examples": {
+   "clean": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|prescription.medicines[*].name|misread",
+  "description": "OCR+LLM + rules+LLM: `prescription.medicines[*].name` misread (wrong value)",
+  "count": 8,
+  "examples": [
+   {
+    "pair": "cla-000",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[2].name",
+    "truth": "Allegra 120",
+    "pred": "Allegra"
+   },
+   {
+    "pair": "cla-001",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[1].name",
+    "truth": "Brufen 400",
+    "pred": "Brufen"
+   },
+   {
+    "pair": "cla-001",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[2].name",
+    "truth": "Augmentin 625 Duo",
+    "pred": "Augmentin"
+   }
+  ],
+  "tiers_in_examples": {
+   "clean": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|prescription.medicines[*].duration|dropped",
+  "description": "OCR+LLM + rules+LLM: `prescription.medicines[*].duration` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-000",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[0].duration",
+    "truth": "7 days",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "prescription",
+    "path": "medicines[0].duration",
+    "truth": "7 days",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "prescription",
+    "path": "medicines[1].duration",
+    "truth": "1 week",
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "clean": 1,
+   "hard": 2
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|prescription.medicines[*].frequency|dropped",
+  "description": "OCR+LLM + rules+LLM: `prescription.medicines[*].frequency` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "prescription",
+    "path": "medicines[0].frequency",
+    "truth": "0-0-1",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "prescription",
+    "path": "medicines[1].frequency",
+    "truth": "HS",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "prescription",
+    "path": "medicines[2].frequency",
+    "truth": "1-1-1",
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "hard": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|bill.line_items[*].amount|dropped",
+  "description": "OCR+LLM + rules+LLM: `bill.line_items[*].amount` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[0].amount",
+    "truth": 147.75,
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[1].amount",
+    "truth": 49.07,
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[2].amount",
+    "truth": 29.2,
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "hard": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|bill.line_items[*].batch|dropped",
+  "description": "OCR+LLM + rules+LLM: `bill.line_items[*].batch` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[0].batch",
+    "truth": "B83140",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[1].batch",
+    "truth": "B25930",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[2].batch",
+    "truth": "B47540",
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "hard": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|bill.line_items[*].medicine|dropped",
+  "description": "OCR+LLM + rules+LLM: `bill.line_items[*].medicine` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[0].medicine",
+    "truth": "PANTOPRAZOLE 40MG TAB",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[1].medicine",
+    "truth": "Ondem 4 Tab",
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[2].medicine",
+    "truth": "Glycomet 500 Tab",
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "hard": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|bill.line_items[*].qty|dropped",
+  "description": "OCR+LLM + rules+LLM: `bill.line_items[*].qty` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[0].qty",
+    "truth": 15.0,
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[1].qty",
+    "truth": 7.0,
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[2].qty",
+    "truth": 10.0,
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "hard": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|bill.line_items[*].rate|dropped",
+  "description": "OCR+LLM + rules+LLM: `bill.line_items[*].rate` dropped (left null)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[0].rate",
+    "truth": 9.85,
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[1].rate",
+    "truth": 7.01,
+    "pred": null
+   },
+   {
+    "pair": "cla-002",
+    "tier": "hard",
+    "doc": "bill",
+    "path": "line_items[2].rate",
+    "truth": 2.92,
+    "pred": null
+   }
+  ],
+  "tiers_in_examples": {
+   "hard": 3
+  }
+ },
+ {
+  "key": "claims|ocr_llm|field|prescription.medicines[*].dosage|misread",
+  "description": "OCR+LLM + rules+LLM: `prescription.medicines[*].dosage` misread (wrong value)",
+  "count": 4,
+  "examples": [
+   {
+    "pair": "cla-003",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[1].dosage",
+    "truth": "1 tab",
+    "pred": "4 tab"
+   },
+   {
+    "pair": "cla-004",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[0].dosage",
+    "truth": "1 tab",
+    "pred": "1tab"
+   },
+   {
+    "pair": "cla-004",
+    "tier": "clean",
+    "doc": "prescription",
+    "path": "medicines[3].dosage",
+    "truth": "1 tab",
+    "pred": "1tab"
+   }
+  ],
+  "tiers_in_examples": {
+   "clean": 3
+  }
+ }
+]

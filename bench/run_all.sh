@@ -21,7 +21,7 @@ esac
 for config in $configs; do
   for limit in 15 30 45 60; do
     for pack in claims payables; do
-      $PY -m bench.run_benchmark --pack "$pack" --config "$config" --limit "$limit"
+      $PY -u -m bench.run_benchmark --pack "$pack" --config "$config" --limit "$limit"
       code=$?
       if [ $code -eq 3 ]; then echo "quota exhausted during $pack/$config; resume later"; exit 3; fi
       if [ $code -ne 0 ]; then echo "failed: $pack/$config (exit $code)"; exit $code; fi

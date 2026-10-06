@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+.venv
+.cache
+.git
+**/__pycache__
+bench/data
+bench/dev_results
+bench/logs
+bench/results/runs
+tests

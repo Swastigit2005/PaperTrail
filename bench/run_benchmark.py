@@ -41,6 +41,7 @@ ROOT = Path(__file__).resolve().parent
 DATASETS = {
     "test": (ROOT / "data" / "synthetic", ROOT / "results"),  # frozen seed 7: the reported numbers
     "dev": (ROOT / "data" / "dev", ROOT / "dev_results"),  # seed 1: used for tuning
+    "real": (ROOT / "data" / "real_fake", ROOT / "results" / "real_fake"),  # phone photos, reported separately
 }
 DATA, RESULTS = DATASETS["test"]
 RUNS = RESULTS / "runs"
@@ -153,7 +154,7 @@ def run(pack_name: str, config: str, limit: int | None, tiers: set[str] | None) 
     extractor = None if spec["pipeline"] == "oracle" else build_extractor(spec["pipeline"], llm, settings)
     matcher = Matcher(mode=spec["matching"], llm=llm, model=settings.match_model)
     rxnorm = RxNormClient(cache_dir=settings.cache_dir) if pack_name == "claims" else None
-    today = date.fromisoformat(manifest["reference_date"])
+    today = date.fromisoformat(manifest["reference_date"]) if manifest.get("reference_date") else date.today()
     with out.open("a") as fh:
         for i, pair in enumerate(todo, 1):
             ctx = CheckContext(matcher=matcher, case_id=pair["pair_id"], today=today,
@@ -251,10 +252,15 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--tier", action="append", choices=["clean", "scanned", "hard"])
     ap.add_argument("--score-only", action="store_true")
+    ap.add_argument("--results-dir", type=Path, default=None, help="write runs/scores here (e.g. the CI gate)")
     ap.add_argument("--dataset", choices=sorted(DATASETS), default="test",
-                    help="test = frozen seed-7 set reported in the README; dev = seed-1 set for tuning")
+                    help="test = frozen seed-7 set (README); dev = seed-1 tuning set; real = labelled phone photos")
     args = ap.parse_args()
     use_dataset(args.dataset)
+    if args.results_dir:
+        global RESULTS, RUNS
+        RESULTS = args.results_dir
+        RUNS = RESULTS / "runs"
     if not args.score_only:
         run(args.pack, args.config, args.limit, set(args.tier) if args.tier else None)
     rep = score(args.pack, args.config)

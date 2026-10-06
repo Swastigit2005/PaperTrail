@@ -1,0 +1,40 @@
+name: benchmark-gate
+
+# Manual: runs the real pipeline on a 20-pair subset (10 per pack) with the GROQ_API_KEY secret and
+# fails if discrepancy recall or extraction F1 drops below bench/thresholds.json.
+on:
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GROQ_VISION_MODEL: ${{ vars.GROQ_VISION_MODEL || 'qwen/qwen3.8-27b' }}
+      GROQ_TEXT_MODEL: ${{ vars.GROQ_TEXT_MODEL || 'openai/gpt-oss-120b' }}
+      GROQ_MATCH_MODEL: ${{ vars.GROQ_MATCH_MODEL || 'openai/gpt-oss-20b' }}
+      GROQ_TEXT_REASONING_EFFORT: low
+      MATCHING: rules+llm
+      PAPERTRAIL_MAX_WAIT: "300"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Regenerate the test-set images from the seed
+        run: python -m bench.generate_synthetic --seed 7
+      - name: Run the 20-pair subset
+        run: |
+          for pack in claims payables; do
+            python -u -m bench.run_benchmark --pack "$pack" --config vlm_llm --limit 10 --results-dir bench/gate_results
+          done
+      - name: Compare with thresholds
+        run: python -m bench.check_thresholds --results-dir bench/gate_results --config vlm_llm
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: gate-results
+          path: bench/gate_results/*.json

@@ -25,3 +25,5 @@ bench/data/real_fake/**/*.png
 bench/data/real_fake/**/*.heic
 bench/data/dev/
 bench/dev_results/
+bench/logs/
+bench/gate_results/
