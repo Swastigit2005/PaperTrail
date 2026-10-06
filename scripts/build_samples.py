@@ -29,7 +29,7 @@ from papertrail.core.crosscheck import CheckContext  # noqa: E402
 from papertrail.core.engine import evaluate  # noqa: E402
 from papertrail.core.extraction import VLMDirectExtractor  # noqa: E402
 from papertrail.core.images import load_document  # noqa: E402
-from papertrail.core.llm import LLMClient  # noqa: E402
+from papertrail.core.llm import LLMClient, QuotaExhausted  # noqa: E402
 from papertrail.core.matching import Matcher  # noqa: E402
 from papertrail.core.pack import get_pack  # noqa: E402
 from papertrail.core.validators.duplicates import DuplicateIndex  # noqa: E402
@@ -152,7 +152,11 @@ def main() -> None:
         entries = render_pack(pack, out, rng, fake)
         (out / "manifest.json").write_text(json.dumps({"pack": pack, "samples": entries}, indent=1))
         if not args.render_only:
-            run_engine(pack, out, entries)
+            try:
+                run_engine(pack, out, entries)
+            except QuotaExhausted as exc:
+                print(f"daily quota exhausted ({exc}); finished extractions are cached, re-run later")
+                sys.exit(3)
 
 
 if __name__ == "__main__":
