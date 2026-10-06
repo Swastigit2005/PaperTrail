@@ -72,12 +72,23 @@ class OcrThenLLMExtractor:
     ocr: Callable[[PreparedImage], OcrResult] = tesseract_ocr
     max_tokens: int = 3000
     name: str = "ocr+llm"
+    _memo: dict[str, OcrResult] = field(default_factory=dict, repr=False)
+
+    def run_ocr(self, image: PreparedImage) -> OcrResult:
+        """OCR an image once; repeated calls for the same image reuse the result."""
+        if image.sha256 not in self._memo:
+            self._memo[image.sha256] = self.ocr(image)
+        return self._memo[image.sha256]
+
+    def detection_text(self, image: PreparedImage) -> str | None:
+        """OCR text, reused later by ``extract``."""
+        return self.run_ocr(image).text
 
     def extract(
         self, image: PreparedImage, doc_type: DocType, *, ocr_text: str | None = None
     ) -> ExtractionResult:
         """Extract one document; uses ``ocr_text`` if given (e.g. from browser OCR) else Tesseract."""
-        ocr = OcrResult(text=ocr_text) if ocr_text is not None else self.ocr(image)
+        ocr = OcrResult(text=ocr_text) if ocr_text is not None else self.run_ocr(image)
         user = (
             f"OCR text of a {doc_type.title} (reading order, may contain OCR errors; fix obvious "
             "character confusions only when certain, otherwise lower confidence):\n"

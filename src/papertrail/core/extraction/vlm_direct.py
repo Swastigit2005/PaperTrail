@@ -20,6 +20,10 @@ class VLMDirectExtractor:
     max_tokens: int = 3000
     name: str = "vlm"
 
+    def detection_text(self, image: PreparedImage) -> str | None:
+        """The VLM pipeline has no OCR text; detection falls back to the vision model."""
+        return None
+
     def extract(
         self, image: PreparedImage, doc_type: DocType, *, ocr_text: str | None = None
     ) -> ExtractionResult:

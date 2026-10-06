@@ -37,3 +37,7 @@ class Extractor(Protocol):
         """Extract ``doc_type``'s schema from the image. ``ocr_text`` may be supplied by the
         caller (e.g. browser-side OCR); pipelines that do not need it ignore it."""
         ...
+
+    def detection_text(self, image: PreparedImage) -> str | None:
+        """Text the pipeline produces anyway (OCR) for free keyword-based type detection, else None."""
+        ...

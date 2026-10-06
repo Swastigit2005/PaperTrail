@@ -108,3 +108,33 @@ def test_override_beats_detection():
 
 def test_schemas_parse_types():
     assert isinstance(receipt_doc(), Receipt) and isinstance(claim_doc(), ExpenseClaim)
+
+
+def test_ocr_pipeline_detects_by_keywords_and_ocrs_once():
+    from papertrail.core.extraction import OcrThenLLMExtractor
+    from papertrail.core.extraction.ocr_then_llm import OcrResult
+    from tests.test_pipelines import RECEIPT_JSON
+
+    texts = {
+        "r": "CAFE AROMA Bill No 7 Thank you visit again Payment UPI",
+        "c": "EXPENSE CLAIM Employee Purpose Approved by",
+    }
+    ocr_calls: list[str] = []
+
+    def ocr(image):
+        key = "r" if image.name.startswith("r") else "c"
+        ocr_calls.append(key)
+        return OcrResult(texts[key], {"cafe": 30.0})
+
+    claim_json = {k: {"value": None} for k in ("employee_name", "amount_claimed")}
+    llm = fake_llm(lambda p: __import__("json").dumps(RECEIPT_JSON if "receipt" in p["messages"][0]["content"][:80]
+                                                      else claim_json))
+    ex = OcrThenLLMExtractor(llm, "text-model", ocr=ocr)
+    inputs = [DocumentInput(make_image("r")), DocumentInput(make_image("c", seed=5))]
+    result = process_case(get_pack("expenses"), inputs, ex, CheckContext(matcher=Matcher()), llm=llm,
+                          vision_model="vision-a")
+    assert {d.detection["method"] for d in result.documents.values()} == {"keywords"}
+    assert sorted(ocr_calls) == ["c", "r"]  # one OCR per image, shared by detection and extraction
+    assert all(c["model"] == "text-model" for c in llm.api.chat.completions.calls)  # no vision calls
+    assert result.usage["requests"] == 2
+    assert result.documents["receipt"].data["merchant"]["confidence"] == 0.30  # word-conf cap kept

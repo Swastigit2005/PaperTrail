@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 import uuid
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from typing import Any
 
@@ -115,6 +115,15 @@ def assign_doc_types(
     return resolved
 
 
+def _clients(*candidates: object) -> list[LLMClient]:
+    """Distinct LLM clients among the candidates (identity, not equality)."""
+    out: list[LLMClient] = []
+    for c in candidates:
+        if isinstance(c, LLMClient) and all(c is not o for o in out):
+            out.append(c)
+    return out
+
+
 def process_case(
     pack: Pack,
     inputs: Sequence[DocumentInput],
@@ -124,9 +133,21 @@ def process_case(
     llm: LLMClient | None = None,
     vision_model: str | None = None,
 ) -> CaseResult:
-    """Run one case end to end. Requires exactly one document per pack document type."""
+    """Run one case end to end. Requires exactly one document per pack document type.
+
+    ``usage`` on the result covers every LLM call made for the case: detection, extraction and
+    (in rules+llm mode) matching.
+    """
     start = time.perf_counter()
-    detections = assign_doc_types(pack, inputs, llm=llm, vision_model=vision_model)
+    clients = _clients(llm, getattr(extractor, "llm", None), ctx.matcher.llm)
+    before = [c.usage.as_dict() for c in clients]
+    # OCR pipelines hand their (memoised) OCR text to detection so keywords can decide for free;
+    # extraction still receives the original input and reuses the OCR with its word confidences.
+    detect_inputs = [
+        doc if doc.doc_type or doc.ocr_text else replace(doc, ocr_text=extractor.detection_text(doc.image))
+        for doc in inputs
+    ]
+    detections = assign_doc_types(pack, detect_inputs, llm=llm, vision_model=vision_model)
     found = sorted(d.doc_type for d in detections)
     expected = sorted(dt.name for dt in pack.doc_types)
     if found != expected:
@@ -135,14 +156,14 @@ def process_case(
     docs: dict[str, BaseModel] = {}
     results: dict[str, DocumentResult] = {}
     images: dict[str, PreparedImage] = {}
-    usage: dict[str, int] = {}
+    extract_usage: dict[str, int] = {}
     for doc, det in zip(inputs, detections, strict=True):
         dt = pack.doc_type(det.doc_type)
         res = extractor.extract(doc.image, dt, ocr_text=doc.ocr_text)
         docs[dt.name] = res.data
         images[dt.name] = doc.image
         for k, v in res.usage.items():
-            usage[k] = usage.get(k, 0) + v
+            extract_usage[k] = extract_usage.get(k, 0) + v
         results[dt.name] = DocumentResult(
             doc_type=dt.name, title=dt.title, data=res.data.model_dump(mode="json"),
             detection={"method": det.method, "confidence": det.confidence},
@@ -152,6 +173,10 @@ def process_case(
 
     ctx.images = images
     validations, outcomes, decision = evaluate(pack, docs, ctx)
+    usage: dict[str, int] = {} if clients else extract_usage
+    for client, snap in zip(clients, before, strict=True):
+        for k, v in client.usage.as_dict().items():
+            usage[k] = usage.get(k, 0) + v - snap[k]
     return CaseResult(
         case_id=ctx.case_id or uuid.uuid4().hex[:8],
         pack=pack.name,
