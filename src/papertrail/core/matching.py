@@ -18,7 +18,7 @@ from papertrail.core.validators.fuzzy import normalize_text, text_similarity
 if TYPE_CHECKING:
     from papertrail.core.llm import LLMClient, Usage
 
-MatchMethod = Literal["exact", "normalized", "fuzzy", "llm", "none"]
+MatchMethod = Literal["exact", "normalized", "fuzzy", "key", "llm", "none"]
 
 
 class MatchVerdict(BaseModel):
@@ -57,6 +57,7 @@ class Matcher:
     llm: LLMClient | None = None
     model: str | None = None
     threshold: float = 88.0
+    key_corroboration: float = 75.0
 
     def __post_init__(self) -> None:
         self.llm_calls = 0
@@ -73,9 +74,15 @@ class Matcher:
         *,
         domain: str,
         normalize: Callable[[str], str] | None = None,
+        left_keys: Sequence[str | None] | None = None,
+        right_keys: Sequence[str | None] | None = None,
     ) -> list[MatchVerdict]:
-        """Return one verdict per left item. ``normalize`` maps items to a canonical key
-        (e.g. brand -> generic ingredient) and is tried before fuzzy matching."""
+        """Return one verdict per left item.
+
+        Rules, in order: exact text, ``normalize`` (a canonical key such as brand -> generic
+        ingredient), fuzzy text similarity, then a secondary key (e.g. HSN code) that matches when
+        it is unique on both sides. Only then, in ``rules+llm`` mode, the LLM sees what is left.
+        """
         verdicts: list[MatchVerdict] = []
         left_n = [normalize_text(s) for s in left]
         right_n = [normalize_text(s) for s in right]
@@ -99,6 +106,18 @@ class Matcher:
                     verdict = MatchVerdict(
                         left=i, right=j, method="fuzzy", score=scores[j],
                         reason=f"text similarity {scores[j]:.0f}",
+                    )
+            if verdict.right is None and left_keys and right_keys and left_keys[i]:
+                key = left_keys[i]
+                hits = [j for j, k in enumerate(right_keys) if k == key]
+                shared_left = sum(1 for k in left_keys if k == key) > 1
+                corroboration = text_similarity(item, right_n[hits[0]]) if len(hits) == 1 else 0.0
+                # unique on the right; if several left items share the key (e.g. a split delivery),
+                # each must also look textually related to the right item
+                if len(hits) == 1 and (not shared_left or corroboration >= self.key_corroboration):
+                    verdict = MatchVerdict(
+                        left=i, right=hits[0], method="key", score=corroboration,
+                        reason=f"shared key {key}" + (f", text similarity {corroboration:.0f}" if shared_left else ""),
                     )
             verdicts.append(verdict)
 

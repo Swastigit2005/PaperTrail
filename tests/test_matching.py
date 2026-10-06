@@ -44,3 +44,14 @@ def test_llm_bad_indices_are_ignored():
     m = Matcher(mode="rules+llm", llm=llm, model="match-model")
     v = m.match(["widget"], ["gadget"], domain="d")
     assert v[0].right is None
+
+
+def test_unique_secondary_key_matches_only_when_unambiguous():
+    m = Matcher(mode="rules")
+    left = ["A4 paper ream", "Blue gel pens", "Black gel pens"]
+    right = ["Copier paper A4 500 sheets", "Ball pen blue"]
+    v = m.match(left, right, domain="d", left_keys=["4802", "9608", "9608"], right_keys=["4802", "9608"])
+    assert (v[0].method, v[0].right) == ("key", 0)
+    # key 9608 is shared by two invoice lines: each needs text corroboration (>= 75)
+    assert v[1].method == "key" and v[1].right == 1  # "Blue gel pens" ~ "Ball pen blue": 77
+    assert v[2].right is None  # "Black gel pens" ~ "Ball pen blue": 59
