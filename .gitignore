@@ -1,8 +1,11 @@
+!.env.example
+*.egg-info/
+*.pyc
+.DS_Store
+.cache/
 .env
 .env.*
-!.env.example
-__pycache__/
-*.pyc
+.pytest_cache/
+.ruff_cache/
 .venv/
-.cache/
-.DS_Store
+__pycache__/
