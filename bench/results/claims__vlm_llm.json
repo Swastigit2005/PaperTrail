@@ -1,0 +1,510 @@
+{
+ "pack": "claims",
+ "config": "vlm_llm",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "n_pairs": 10,
+ "n_errors": 0,
+ "dataset": {
+  "seed": 7,
+  "total_pairs": 60
+ },
+ "detection": {
+  "micro": {
+   "precision": 0.8571428571428571,
+   "recall": 1.0,
+   "false_alarm_rate": 0.16666666666666666
+  },
+  "per_type": {
+   "unprescribed_medicine": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "support": 1,
+    "precision": 0.5,
+    "recall": 1.0
+   },
+   "patient_name_mismatch": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "support": 2,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "bill_before_prescription": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "implausible_quantity": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "arithmetic_error": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "support": 1,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  }
+ },
+ "validation_catch_rate": {
+  "arithmetic_error": 1.0
+ },
+ "decision": {
+  "n": 10,
+  "accuracy": 0.9,
+  "discrepant_not_auto_approved": 1.0,
+  "clean_auto_approved": 0.8333333333333334,
+  "clean_flagged": 0.16666666666666666,
+  "confusion": {
+   "approve": {
+    "approve": 5,
+    "needs_review": 0,
+    "flag": 1
+   },
+   "needs_review": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 0
+   },
+   "flag": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 4
+   }
+  }
+ },
+ "ops": {
+  "model_latency_p50_s": 3.715,
+  "model_latency_p95_s": 4.143,
+  "tokens_per_pair_mean": 6174.2,
+  "tokens_per_pair_p95": 6767.0
+ },
+ "per_pair": {
+  "cla-000": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-001": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-002": {
+   "expected": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-003": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-004": {
+   "expected": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ]
+  },
+  "cla-005": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-006": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-007": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-008": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-009": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  }
+ },
+ "extraction": {
+  "all": {
+   "exact": {
+    "precision": 0.8796498905908097,
+    "recall": 0.9157175398633257,
+    "f1": 0.8973214285714285
+   },
+   "normalized": {
+    "precision": 0.8949671772428884,
+    "recall": 0.9316628701594533,
+    "f1": 0.9129464285714285
+   },
+   "counts": {
+    "tp": 402,
+    "fp": 55,
+    "fn": 37,
+    "tp_norm": 409,
+    "fp_norm": 48,
+    "fn_norm": 30,
+    "occluded_guesses": 0,
+    "occluded_total": 3
+   }
+  },
+  "bill": {
+   "exact": {
+    "precision": 0.9707112970711297,
+    "recall": 0.9707112970711297,
+    "f1": 0.9707112970711297
+   },
+   "normalized": {
+    "precision": 0.99581589958159,
+    "recall": 0.99581589958159,
+    "f1": 0.99581589958159
+   },
+   "counts": {
+    "tp": 232,
+    "fp": 7,
+    "fn": 7,
+    "tp_norm": 238,
+    "fp_norm": 1,
+    "fn_norm": 1,
+    "occluded_guesses": 0,
+    "occluded_total": 1
+   }
+  },
+  "bill|clean": {
+   "exact": {
+    "precision": 0.9640718562874252,
+    "recall": 0.9640718562874252,
+    "f1": 0.9640718562874252
+   },
+   "normalized": {
+    "precision": 0.9940119760479041,
+    "recall": 0.9940119760479041,
+    "f1": 0.9940119760479041
+   },
+   "counts": {
+    "tp": 161,
+    "fp": 6,
+    "fn": 6,
+    "tp_norm": 166,
+    "fp_norm": 1,
+    "fn_norm": 1,
+    "occluded_guesses": 0,
+    "occluded_total": 0
+   }
+  },
+  "bill|hard": {
+   "exact": {
+    "precision": 0.9803921568627451,
+    "recall": 0.9803921568627451,
+    "f1": 0.9803921568627451
+   },
+   "normalized": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "counts": {
+    "tp": 50,
+    "fp": 1,
+    "fn": 1,
+    "tp_norm": 51,
+    "fp_norm": 0,
+    "fn_norm": 0,
+    "occluded_guesses": 0,
+    "occluded_total": 1
+   }
+  },
+  "bill|scanned": {
+   "exact": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "normalized": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "counts": {
+    "tp": 21,
+    "fp": 0,
+    "fn": 0,
+    "tp_norm": 21,
+    "fp_norm": 0,
+    "fn_norm": 0,
+    "occluded_guesses": 0,
+    "occluded_total": 0
+   }
+  },
+  "prescription": {
+   "exact": {
+    "precision": 0.7798165137614679,
+    "recall": 0.85,
+    "f1": 0.8133971291866028
+   },
+   "normalized": {
+    "precision": 0.7844036697247706,
+    "recall": 0.855,
+    "f1": 0.8181818181818182
+   },
+   "counts": {
+    "tp": 170,
+    "fp": 48,
+    "fn": 30,
+    "tp_norm": 171,
+    "fp_norm": 47,
+    "fn_norm": 29,
+    "occluded_guesses": 0,
+    "occluded_total": 2
+   }
+  },
+  "prescription|clean": {
+   "exact": {
+    "precision": 0.8289473684210527,
+    "recall": 0.8811188811188811,
+    "f1": 0.8542372881355932
+   },
+   "normalized": {
+    "precision": 0.8289473684210527,
+    "recall": 0.8811188811188811,
+    "f1": 0.8542372881355932
+   },
+   "counts": {
+    "tp": 126,
+    "fp": 26,
+    "fn": 17,
+    "tp_norm": 126,
+    "fp_norm": 26,
+    "fn_norm": 17,
+    "occluded_guesses": 0,
+    "occluded_total": 0
+   }
+  },
+  "prescription|hard": {
+   "exact": {
+    "precision": 0.5957446808510638,
+    "recall": 0.7368421052631579,
+    "f1": 0.6588235294117647
+   },
+   "normalized": {
+    "precision": 0.6170212765957447,
+    "recall": 0.7631578947368421,
+    "f1": 0.6823529411764706
+   },
+   "counts": {
+    "tp": 28,
+    "fp": 19,
+    "fn": 10,
+    "tp_norm": 29,
+    "fp_norm": 18,
+    "fn_norm": 9,
+    "occluded_guesses": 0,
+    "occluded_total": 2
+   }
+  },
+  "prescription|scanned": {
+   "exact": {
+    "precision": 0.8421052631578947,
+    "recall": 0.8421052631578947,
+    "f1": 0.8421052631578947
+   },
+   "normalized": {
+    "precision": 0.8421052631578947,
+    "recall": 0.8421052631578947,
+    "f1": 0.8421052631578947
+   },
+   "counts": {
+    "tp": 16,
+    "fp": 3,
+    "fn": 3,
+    "tp_norm": 16,
+    "fp_norm": 3,
+    "fn_norm": 3,
+    "occluded_guesses": 0,
+    "occluded_total": 0
+   }
+  },
+  "tier|clean": {
+   "exact": {
+    "precision": 0.8996865203761756,
+    "recall": 0.9258064516129032,
+    "f1": 0.9125596184419714
+   },
+   "normalized": {
+    "precision": 0.9153605015673981,
+    "recall": 0.9419354838709677,
+    "f1": 0.9284578696343403
+   },
+   "counts": {
+    "tp": 287,
+    "fp": 32,
+    "fn": 23,
+    "tp_norm": 292,
+    "fp_norm": 27,
+    "fn_norm": 18,
+    "occluded_guesses": 0,
+    "occluded_total": 0
+   }
+  },
+  "tier|hard": {
+   "exact": {
+    "precision": 0.7959183673469388,
+    "recall": 0.8764044943820225,
+    "f1": 0.8342245989304812
+   },
+   "normalized": {
+    "precision": 0.8163265306122449,
+    "recall": 0.898876404494382,
+    "f1": 0.8556149732620321
+   },
+   "counts": {
+    "tp": 78,
+    "fp": 20,
+    "fn": 11,
+    "tp_norm": 80,
+    "fp_norm": 18,
+    "fn_norm": 9,
+    "occluded_guesses": 0,
+    "occluded_total": 3
+   }
+  },
+  "tier|scanned": {
+   "exact": {
+    "precision": 0.925,
+    "recall": 0.925,
+    "f1": 0.925
+   },
+   "normalized": {
+    "precision": 0.925,
+    "recall": 0.925,
+    "f1": 0.925
+   },
+   "counts": {
+    "tp": 37,
+    "fp": 3,
+    "fn": 3,
+    "tp_norm": 37,
+    "fp_norm": 3,
+    "fn_norm": 3,
+    "occluded_guesses": 0,
+    "occluded_total": 0
+   }
+  }
+ },
+ "calibration": {
+  "all_fields": {
+   "bins": [
+    {
+     "range": [
+      0.0,
+      0.5
+     ],
+     "n": 0,
+     "accuracy": null
+    },
+    {
+     "range": [
+      0.5,
+      0.75
+     ],
+     "n": 2,
+     "accuracy": 0.0
+    },
+    {
+     "range": [
+      0.75,
+      0.9
+     ],
+     "n": 8,
+     "accuracy": 0.375
+    },
+    {
+     "range": [
+      0.9,
+      1.0
+     ],
+     "n": 447,
+     "accuracy": 0.9082774049217002
+    }
+   ],
+   "threshold": 0.75,
+   "high_conf_accuracy": 0.8989010989010989,
+   "low_conf_accuracy": 0.0,
+   "errors_flagged_low_conf": 0.041666666666666664,
+   "n_fields": 457,
+   "n_errors": 48
+  },
+  "critical_fields": {
+   "bins": [
+    {
+     "range": [
+      0.0,
+      0.5
+     ],
+     "n": 0,
+     "accuracy": null
+    },
+    {
+     "range": [
+      0.5,
+      0.75
+     ],
+     "n": 1,
+     "accuracy": 0.0
+    },
+    {
+     "range": [
+      0.75,
+      0.9
+     ],
+     "n": 1,
+     "accuracy": 0.0
+    },
+    {
+     "range": [
+      0.9,
+      1.0
+     ],
+     "n": 191,
+     "accuracy": 0.9109947643979057
+    }
+   ],
+   "threshold": 0.75,
+   "high_conf_accuracy": 0.90625,
+   "low_conf_accuracy": 0.0,
+   "errors_flagged_low_conf": 0.05263157894736842,
+   "n_fields": 193,
+   "n_errors": 19
+  }
+ }
+}
