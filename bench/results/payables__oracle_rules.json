@@ -1,0 +1,490 @@
+{
+ "pack": "payables",
+ "config": "oracle_rules",
+ "pipeline": "oracle",
+ "matching": "rules",
+ "n_pairs": 60,
+ "n_errors": 0,
+ "dataset": {
+  "seed": 7,
+  "total_pairs": 60
+ },
+ "detection": {
+  "micro": {
+   "precision": 0.9230769230769231,
+   "recall": 0.972972972972973,
+   "false_alarm_rate": 0.03333333333333333
+  },
+  "per_type": {
+   "gstin_mismatch": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "support": 5,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "invalid_gstin": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "support": 5,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "rate_above_po": {
+    "tp": 4,
+    "fp": 0,
+    "fn": 1,
+    "support": 5,
+    "precision": 1.0,
+    "recall": 0.8
+   },
+   "qty_over_po": {
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "support": 6,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "line_not_on_po": {
+    "tp": 5,
+    "fp": 3,
+    "fn": 0,
+    "support": 5,
+    "precision": 0.625,
+    "recall": 1.0
+   },
+   "wrong_tax_split": {
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "support": 6,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "total_mismatch": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "support": 5,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  }
+ },
+ "validation_catch_rate": {
+  "invalid_gstin": 1.0,
+  "total_mismatch": 1.0
+ },
+ "decision": {
+  "n": 60,
+  "accuracy": 0.9833333333333333,
+  "discrepant_not_auto_approved": 1.0,
+  "clean_auto_approved": 0.9666666666666667,
+  "clean_flagged": 0.03333333333333333,
+  "confusion": {
+   "approve": {
+    "approve": 29,
+    "needs_review": 0,
+    "flag": 1
+   },
+   "needs_review": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 0
+   },
+   "flag": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 30
+   }
+  }
+ },
+ "ops": {
+  "model_latency_p50_s": null,
+  "model_latency_p95_s": null,
+  "tokens_per_pair_mean": null,
+  "tokens_per_pair_p95": null
+ },
+ "per_pair": {
+  "pay-000": {
+   "expected": [
+    "invalid_gstin",
+    "rate_above_po"
+   ],
+   "predicted": [
+    "invalid_gstin",
+    "rate_above_po"
+   ]
+  },
+  "pay-001": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-002": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-003": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-004": {
+   "expected": [
+    "line_not_on_po"
+   ],
+   "predicted": [
+    "line_not_on_po"
+   ]
+  },
+  "pay-005": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-006": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-007": {
+   "expected": [
+    "total_mismatch"
+   ],
+   "predicted": [
+    "line_not_on_po",
+    "total_mismatch"
+   ]
+  },
+  "pay-008": {
+   "expected": [
+    "wrong_tax_split"
+   ],
+   "predicted": [
+    "wrong_tax_split"
+   ]
+  },
+  "pay-009": {
+   "expected": [
+    "gstin_mismatch"
+   ],
+   "predicted": [
+    "gstin_mismatch"
+   ]
+  },
+  "pay-010": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-011": {
+   "expected": [
+    "total_mismatch"
+   ],
+   "predicted": [
+    "total_mismatch"
+   ]
+  },
+  "pay-012": {
+   "expected": [
+    "invalid_gstin"
+   ],
+   "predicted": [
+    "invalid_gstin"
+   ]
+  },
+  "pay-013": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-014": {
+   "expected": [
+    "gstin_mismatch"
+   ],
+   "predicted": [
+    "gstin_mismatch"
+   ]
+  },
+  "pay-015": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-016": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-017": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-018": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-019": {
+   "expected": [
+    "wrong_tax_split"
+   ],
+   "predicted": [
+    "wrong_tax_split"
+   ]
+  },
+  "pay-020": {
+   "expected": [
+    "wrong_tax_split"
+   ],
+   "predicted": [
+    "wrong_tax_split"
+   ]
+  },
+  "pay-021": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-022": {
+   "expected": [
+    "invalid_gstin"
+   ],
+   "predicted": [
+    "invalid_gstin"
+   ]
+  },
+  "pay-023": {
+   "expected": [
+    "invalid_gstin"
+   ],
+   "predicted": [
+    "invalid_gstin"
+   ]
+  },
+  "pay-024": {
+   "expected": [
+    "rate_above_po",
+    "total_mismatch"
+   ],
+   "predicted": [
+    "line_not_on_po",
+    "total_mismatch"
+   ]
+  },
+  "pay-025": {
+   "expected": [
+    "gstin_mismatch"
+   ],
+   "predicted": [
+    "gstin_mismatch"
+   ]
+  },
+  "pay-026": {
+   "expected": [
+    "gstin_mismatch",
+    "line_not_on_po"
+   ],
+   "predicted": [
+    "gstin_mismatch",
+    "line_not_on_po"
+   ]
+  },
+  "pay-027": {
+   "expected": [
+    "invalid_gstin",
+    "wrong_tax_split"
+   ],
+   "predicted": [
+    "invalid_gstin",
+    "wrong_tax_split"
+   ]
+  },
+  "pay-028": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-029": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-030": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-031": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-032": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-033": {
+   "expected": [
+    "qty_over_po"
+   ],
+   "predicted": [
+    "qty_over_po"
+   ]
+  },
+  "pay-034": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-035": {
+   "expected": [
+    "qty_over_po",
+    "rate_above_po"
+   ],
+   "predicted": [
+    "qty_over_po",
+    "rate_above_po"
+   ]
+  },
+  "pay-036": {
+   "expected": [
+    "line_not_on_po"
+   ],
+   "predicted": [
+    "line_not_on_po"
+   ]
+  },
+  "pay-037": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-038": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-039": {
+   "expected": [
+    "qty_over_po"
+   ],
+   "predicted": [
+    "qty_over_po"
+   ]
+  },
+  "pay-040": {
+   "expected": [
+    "total_mismatch"
+   ],
+   "predicted": [
+    "total_mismatch"
+   ]
+  },
+  "pay-041": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-042": {
+   "expected": [
+    "line_not_on_po"
+   ],
+   "predicted": [
+    "line_not_on_po"
+   ]
+  },
+  "pay-043": {
+   "expected": [
+    "qty_over_po"
+   ],
+   "predicted": [
+    "qty_over_po"
+   ]
+  },
+  "pay-044": {
+   "expected": [
+    "rate_above_po"
+   ],
+   "predicted": [
+    "rate_above_po"
+   ]
+  },
+  "pay-045": {
+   "expected": [
+    "wrong_tax_split"
+   ],
+   "predicted": [
+    "wrong_tax_split"
+   ]
+  },
+  "pay-046": {
+   "expected": [
+    "qty_over_po",
+    "total_mismatch"
+   ],
+   "predicted": [
+    "qty_over_po",
+    "total_mismatch"
+   ]
+  },
+  "pay-047": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-048": {
+   "expected": [
+    "rate_above_po"
+   ],
+   "predicted": [
+    "rate_above_po"
+   ]
+  },
+  "pay-049": {
+   "expected": [
+    "gstin_mismatch",
+    "wrong_tax_split"
+   ],
+   "predicted": [
+    "gstin_mismatch",
+    "wrong_tax_split"
+   ]
+  },
+  "pay-050": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-051": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-052": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-053": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-054": {
+   "expected": [
+    "qty_over_po"
+   ],
+   "predicted": [
+    "qty_over_po"
+   ]
+  },
+  "pay-055": {
+   "expected": [],
+   "predicted": [
+    "line_not_on_po"
+   ]
+  },
+  "pay-056": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-057": {
+   "expected": [],
+   "predicted": []
+  },
+  "pay-058": {
+   "expected": [
+    "line_not_on_po"
+   ],
+   "predicted": [
+    "line_not_on_po"
+   ]
+  },
+  "pay-059": {
+   "expected": [],
+   "predicted": []
+  }
+ }
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from itertools import permutations
 
 from rapidfuzz import fuzz
 
@@ -22,17 +23,16 @@ def normalize_person_name(name: str) -> str:
     return " ".join(tokens)
 
 
+def _token_compatible(x: str, y: str) -> bool:
+    return x == y or (len(x) == 1 and y.startswith(x)) or (len(y) == 1 and x.startswith(y))
+
+
 def _initials_compatible(a: list[str], b: list[str]) -> bool:
-    """'r sharma' vs 'rahul sharma': same token count, every token equal or initial-compatible."""
-    if len(a) != len(b):
+    """'r sharma' vs 'sharma rahul': same token count and some pairing where every token is equal
+    or an initial of its partner. Names have few tokens, so all orderings are tried."""
+    if len(a) != len(b) or len(a) > 5:
         return False
-    for x, y in zip(sorted(a, key=len, reverse=True), sorted(b, key=len, reverse=True), strict=True):
-        if x == y:
-            continue
-        if (len(x) == 1 and y.startswith(x)) or (len(y) == 1 and x.startswith(y)):
-            continue
-        return False
-    return True
+    return any(all(_token_compatible(x, y) for x, y in zip(a, perm, strict=True)) for perm in permutations(b))
 
 
 def name_similarity(a: str, b: str) -> float:
@@ -43,7 +43,7 @@ def name_similarity(a: str, b: str) -> float:
     if na == nb:
         return 100.0
     ta, tb = na.split(), nb.split()
-    if _initials_compatible(ta, tb) or _initials_compatible(sorted(ta), sorted(tb)):
+    if _initials_compatible(ta, tb):
         return 92.0
     return float(fuzz.token_sort_ratio(na, nb))
 

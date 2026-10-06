@@ -66,3 +66,12 @@ def test_missing_attributes_default_to_null_and_iter_paths():
 
 def test_known_helper():
     assert known(5.0).confidence == 1.0
+
+
+def test_compact_short_keys():
+    f = Field[Number].model_validate({"v": 12.5, "c": 0.9})
+    assert f.value == 12.5 and f.confidence == 0.9 and f.evidence == "12.5"
+    g = Field[LenientDate].model_validate({"v": "2026-09-03", "c": 0.95, "e": "03/09/26"})
+    assert g.value == date(2026, 9, 3) and g.evidence == "03/09/26"
+    h = Field[str].model_validate({"v": None, "c": 0.8, "n": "illegible"})
+    assert h.value is None and h.null_reason == "illegible"

@@ -15,3 +15,13 @@ __pycache__/
 .cache/
 
 .DS_Store
+
+# generated benchmark images (reproducible from the seed; manifests are committed)
+bench/data/synthetic/**/*.png
+bench/data/synthetic/**/*.jpg
+bench/data/real_fake/**/*.jpg
+bench/data/real_fake/**/*.jpeg
+bench/data/real_fake/**/*.png
+bench/data/real_fake/**/*.heic
+bench/data/dev/
+bench/dev_results/

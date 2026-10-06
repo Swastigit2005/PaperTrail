@@ -1,0 +1,6880 @@
+{
+ "pack": "payables",
+ "seed": 7,
+ "reference_date": "2026-10-06",
+ "count": 60,
+ "pairs": [
+  {
+   "pair_id": "pay-000",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "rate_above_po",
+     "detail": "rate above PO",
+     "fields": [
+      "invoice.line_items[0].rate"
+     ]
+    },
+    {
+     "type": "invalid_gstin",
+     "fields": [
+      "invoice.buyer_gstin"
+     ],
+     "detail": "buyer GSTIN checksum broken"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-000/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 2.44,
+      "blur": 0.68,
+      "noise": 11.0,
+      "light": 0.78,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Dora-Rana",
+      "seller_gstin": "37WIDCI7878D1Z5",
+      "buyer_name": "Bava, Bora and Wason",
+      "buyer_gstin": "04PZGCO9989C1ZI",
+      "invoice_number": "GST/26-27/2127",
+      "invoice_date": "2026-08-15",
+      "po_reference": "4500049169",
+      "place_of_supply": "Chandigarh (04)",
+      "line_items": [
+       {
+        "description": "Sugar (5 KG)",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 323.36,
+        "gst_rate": 5.0,
+        "amount": 1616.8
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 1.0,
+        "rate": 712.0,
+        "gst_rate": 18.0,
+        "amount": 712.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 20.0,
+        "rate": 208.0,
+        "gst_rate": 18.0,
+        "amount": 4160.0
+       },
+       {
+        "description": "CTC tea pack 1 kg",
+        "hsn": "0902",
+        "qty": 1.0,
+        "rate": 527.0,
+        "gst_rate": 5.0,
+        "amount": 527.0
+       }
+      ],
+      "taxable_value": 7015.8,
+      "cgst": null,
+      "sgst": null,
+      "igst": 984.15,
+      "grand_total": 7999.95
+     }
+    },
+    "purchase_order": {
+     "image": "pay-000/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.16,
+      "blur": 0.56,
+      "noise": 7.6,
+      "light": 0.79,
+      "jpeg": 65,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500049169",
+      "po_date": "2026-07-29",
+      "buyer_name": "Bava, Bora and Wason",
+      "vendor_name": "Dora-Rana",
+      "vendor_gstin": "37WIDCI7878D1Z5",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 258.0,
+        "amount": 1290.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 1.0,
+        "rate": 712.0,
+        "amount": 712.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 20.0,
+        "rate": 208.0,
+        "amount": 4160.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 1.0,
+        "rate": 527.0,
+        "amount": 527.0
+       }
+      ],
+      "total": 6689.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-001",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-001/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 2.25,
+      "blur": 0.61,
+      "noise": 8.6,
+      "light": 0.88,
+      "jpeg": 49,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Pau PLC",
+      "seller_gstin": "12THQCK3146M2ZB",
+      "buyer_name": "Tripathi and Sons",
+      "buyer_gstin": "12SSTCK5115I2ZX",
+      "invoice_number": "TI/26-27/4382",
+      "invoice_date": "2026-05-29",
+      "po_reference": "PO/MUM/26-27/890",
+      "place_of_supply": "Arunachal Pradesh (12)",
+      "line_items": [
+       {
+        "description": "Alcohol hand rub 5 ltr",
+        "hsn": "3808",
+        "qty": 2.0,
+        "rate": 1277.0,
+        "gst_rate": 18.0,
+        "amount": 2554.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 1.0,
+        "rate": 410.0,
+        "gst_rate": 18.0,
+        "amount": 410.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1631.99,
+        "gst_rate": 18.0,
+        "amount": 32639.8
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 2.0,
+        "rate": 2211.0,
+        "gst_rate": 18.0,
+        "amount": 4422.0
+       },
+       {
+        "description": "Refined sugar 5kg bag",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 246.99,
+        "gst_rate": 5.0,
+        "amount": 1234.95
+       }
+      ],
+      "taxable_value": 41260.75,
+      "cgst": 3633.2,
+      "sgst": 3633.2,
+      "igst": null,
+      "grand_total": 48527.14
+     }
+    },
+    "purchase_order": {
+     "image": "pay-001/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.59,
+      "blur": 0.56,
+      "noise": 11.0,
+      "light": 0.84,
+      "jpeg": 48,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/MUM/26-27/890",
+      "po_date": "2026-05-14",
+      "buyer_name": "Tripathi and Sons",
+      "vendor_name": "Pau PLC",
+      "vendor_gstin": "12THQCK3146M2ZB",
+      "line_items": [
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 2.0,
+        "rate": 1277.0,
+        "amount": 2554.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 1.0,
+        "rate": 410.0,
+        "amount": 410.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1668.0,
+        "amount": 33360.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 2.0,
+        "rate": 2211.0,
+        "amount": 4422.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 251.0,
+        "amount": 1255.0
+       }
+      ],
+      "total": 42001.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-002",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-002/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Chadha Group",
+      "seller_gstin": "29LYSCN3154C1ZM",
+      "buyer_name": "Boase-Khosla",
+      "buyer_gstin": "29OJRCU1340A1ZJ",
+      "invoice_number": "TI/26-27/4634",
+      "invoice_date": "2026-05-14",
+      "po_reference": "4500029937",
+      "place_of_supply": "Karnataka (29)",
+      "line_items": [
+       {
+        "description": "CAT-6 LAN cable roll 305m",
+        "hsn": "8544",
+        "qty": 4.0,
+        "rate": 5959.35,
+        "gst_rate": 18.0,
+        "amount": 23837.4
+       },
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 18251.0,
+        "gst_rate": 18.0,
+        "amount": 18251.0
+       },
+       {
+        "description": "CTC tea pack 1 kg",
+        "hsn": "0902",
+        "qty": 1.0,
+        "rate": 498.13,
+        "gst_rate": 5.0,
+        "amount": 498.13
+       },
+       {
+        "description": "Toner cartridge HP 88A",
+        "hsn": "8443",
+        "qty": 50.0,
+        "rate": 2311.0,
+        "gst_rate": 18.0,
+        "amount": 115550.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 20.0,
+        "rate": 700.0,
+        "gst_rate": 18.0,
+        "amount": 14000.0
+       }
+      ],
+      "taxable_value": 172136.53,
+      "cgst": 15459.91,
+      "sgst": 15459.91,
+      "igst": null,
+      "grand_total": 203056.35
+     }
+    },
+    "purchase_order": {
+     "image": "pay-002/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500029937",
+      "po_date": "2026-05-11",
+      "buyer_name": "Boase-Khosla",
+      "vendor_name": "Chadha Group",
+      "vendor_gstin": "29LYSCN3154C1ZM",
+      "line_items": [
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 4.0,
+        "rate": 6211.0,
+        "amount": 24844.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 18251.0,
+        "amount": 18251.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 1.0,
+        "rate": 517.0,
+        "amount": 517.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 50.0,
+        "rate": 2311.0,
+        "amount": 115550.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 20.0,
+        "rate": 700.0,
+        "amount": 14000.0
+       }
+      ],
+      "total": 173162.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-003",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-003/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 2.11,
+      "blur": 0.79,
+      "noise": 10.5,
+      "light": 0.91,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Samra Inc",
+      "seller_gstin": "09XLKCS3678R1ZX",
+      "buyer_name": "Dasgupta, Kapoor and Bhatia",
+      "buyer_gstin": "09SEWCQ5501E1ZG",
+      "invoice_number": "INV/26-27/1358",
+      "invoice_date": "2026-06-09",
+      "po_reference": "4500070341",
+      "place_of_supply": "Uttar Pradesh (09)",
+      "line_items": [
+       {
+        "description": "Heavy-duty stapling machine",
+        "hsn": "8472",
+        "qty": 5.0,
+        "rate": 367.0,
+        "gst_rate": 18.0,
+        "amount": 1835.0
+       },
+       {
+        "description": "Logitech M235 cordless mouse",
+        "hsn": "8471",
+        "qty": 6.0,
+        "rate": 798.0,
+        "gst_rate": 18.0,
+        "amount": 4788.0
+       }
+      ],
+      "taxable_value": 6623.0,
+      "cgst": 596.07,
+      "sgst": 596.07,
+      "igst": null,
+      "grand_total": 7815.14
+     }
+    },
+    "purchase_order": {
+     "image": "pay-003/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.65,
+      "blur": 0.56,
+      "noise": 7.0,
+      "light": 0.9,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500070341",
+      "po_date": "2026-05-22",
+      "buyer_name": "Dasgupta, Kapoor and Bhatia",
+      "vendor_name": "Samra Inc",
+      "vendor_gstin": "09XLKCS3678R1ZX",
+      "line_items": [
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 10.0,
+        "rate": 218.0,
+        "amount": 2180.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 5.0,
+        "rate": 367.0,
+        "amount": 1835.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 798.0,
+        "amount": 9576.0
+       }
+      ],
+      "total": 13591.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-004",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "line_not_on_po",
+     "detail": "Philips LED tubelight 20W not ordered",
+     "fields": [
+      "invoice.line_items[2].description"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-004/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.51,
+      "blur": 0.93,
+      "noise": 26.4,
+      "light": 0.72,
+      "jpeg": 37,
+      "scale": 0.44
+     },
+     "occluded": [
+      "line_items[1].hsn"
+     ],
+     "truth": {
+      "seller_name": "Ranganathan, Bawa and Kant",
+      "seller_gstin": "26RLZCX1991D1ZK",
+      "buyer_name": "Deol LLC",
+      "buyer_gstin": "26KGOCS1744N1Z6",
+      "invoice_number": "GST/26-27/4980",
+      "invoice_date": "2026-05-31",
+      "po_reference": "PO/MUM/26-27/031",
+      "place_of_supply": "Dadra and Nagar Haveli and Daman and Diu (26)",
+      "line_items": [
+       {
+        "description": "Sanitiser 5L jerry can",
+        "hsn": "3808",
+        "qty": 2.0,
+        "rate": 1087.0,
+        "gst_rate": 18.0,
+        "amount": 2174.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 628.0,
+        "gst_rate": 18.0,
+        "amount": 7536.0
+       },
+       {
+        "description": "Philips LED tubelight 20W",
+        "hsn": "9405",
+        "qty": 1.0,
+        "rate": 319.0,
+        "gst_rate": 18.0,
+        "amount": 319.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 2.0,
+        "rate": 138.0,
+        "gst_rate": 18.0,
+        "amount": 276.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 224.0,
+        "gst_rate": 5.0,
+        "amount": 1120.0
+       }
+      ],
+      "taxable_value": 11425.0,
+      "cgst": 955.45,
+      "sgst": 955.45,
+      "igst": null,
+      "grand_total": 13335.9
+     }
+    },
+    "purchase_order": {
+     "image": "pay-004/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": -0.21,
+      "blur": 1.33,
+      "noise": 27.3,
+      "light": 0.66,
+      "jpeg": 36,
+      "scale": 0.52
+     },
+     "occluded": [
+      "line_items[3].amount"
+     ],
+     "truth": {
+      "po_number": "PO/MUM/26-27/031",
+      "po_date": "2026-05-14",
+      "buyer_name": "Deol LLC",
+      "vendor_name": "Ranganathan, Bawa and Kant",
+      "vendor_gstin": "26RLZCX1991D1ZK",
+      "line_items": [
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 2.0,
+        "rate": 1087.0,
+        "amount": 2174.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 628.0,
+        "amount": 7536.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 2.0,
+        "rate": 138.0,
+        "amount": 276.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 884.0,
+        "amount": 44200.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 224.0,
+        "amount": 1120.0
+       }
+      ],
+      "total": 55306.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-005",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-005/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.85,
+      "blur": 0.75,
+      "noise": 8.1,
+      "light": 0.78,
+      "jpeg": 47,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Dhawan-Zachariah",
+      "seller_gstin": "20XGJCR1817A1Z4",
+      "buyer_name": "Morar PLC",
+      "buyer_gstin": "20WUGCA7867H1ZW",
+      "invoice_number": "GST/26-27/1252",
+      "invoice_date": "2026-08-03",
+      "po_reference": "4500021893",
+      "place_of_supply": "Jharkhand (20)",
+      "line_items": [
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 10.0,
+        "rate": 344.0,
+        "gst_rate": 18.0,
+        "amount": 3440.0
+       },
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 646.0,
+        "gst_rate": 18.0,
+        "amount": 6460.0
+       },
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23742.02,
+        "gst_rate": 18.0,
+        "amount": 23742.02
+       },
+       {
+        "description": "D-Link Cat6 UTP cable box",
+        "hsn": "8544",
+        "qty": 1.0,
+        "rate": 7105.21,
+        "gst_rate": 18.0,
+        "amount": 7105.21
+       }
+      ],
+      "taxable_value": 40747.23,
+      "cgst": 3667.25,
+      "sgst": 3667.25,
+      "igst": null,
+      "grand_total": 48081.73
+     }
+    },
+    "purchase_order": {
+     "image": "pay-005/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.72,
+      "blur": 0.63,
+      "noise": 10.3,
+      "light": 0.9,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500021893",
+      "po_date": "2026-07-13",
+      "buyer_name": "Morar PLC",
+      "vendor_name": "Dhawan-Zachariah",
+      "vendor_gstin": "20XGJCR1817A1Z4",
+      "line_items": [
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 10.0,
+        "rate": 344.0,
+        "amount": 3440.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 646.0,
+        "amount": 6460.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 24058.0,
+        "amount": 24058.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 12.0,
+        "rate": 247.0,
+        "amount": 2964.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 1.0,
+        "rate": 7418.0,
+        "amount": 7418.0
+       }
+      ],
+      "total": 44340.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-006",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-006/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Golla, Chauhan and Guha",
+      "seller_gstin": "03DWTCS8521V2ZX",
+      "buyer_name": "Chatterjee-Bhatnagar",
+      "buyer_gstin": "03CYCCJ3081T1ZS",
+      "invoice_number": "INV/26-27/4718",
+      "invoice_date": "2026-07-12",
+      "po_reference": "PO/MUM/26-27/590",
+      "place_of_supply": "Punjab (03)",
+      "line_items": [
+       {
+        "description": "D-Link Cat6 UTP cable box",
+        "hsn": "8544",
+        "qty": 2.0,
+        "rate": 7709.0,
+        "gst_rate": 18.0,
+        "amount": 15418.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 12.0,
+        "rate": 2385.0,
+        "gst_rate": 18.0,
+        "amount": 28620.0
+       },
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 20.0,
+        "rate": 147.0,
+        "gst_rate": 18.0,
+        "amount": 2940.0
+       }
+      ],
+      "taxable_value": 46978.0,
+      "cgst": 4228.02,
+      "sgst": 4228.02,
+      "igst": null,
+      "grand_total": 55434.04
+     }
+    },
+    "purchase_order": {
+     "image": "pay-006/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/MUM/26-27/590",
+      "po_date": "2026-06-24",
+      "buyer_name": "Chatterjee-Bhatnagar",
+      "vendor_name": "Golla, Chauhan and Guha",
+      "vendor_gstin": "03DWTCS8521V2ZX",
+      "line_items": [
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 5.0,
+        "rate": 7709.0,
+        "amount": 38545.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 12.0,
+        "rate": 2385.0,
+        "amount": 28620.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 20.0,
+        "rate": 147.0,
+        "amount": 2940.0
+       }
+      ],
+      "total": 70105.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-007",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "total_mismatch",
+     "fields": [
+      "invoice.grand_total"
+     ],
+     "detail": "total off by -1838"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-007/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.33,
+      "blur": 0.63,
+      "noise": 7.2,
+      "light": 0.79,
+      "jpeg": 48,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Bhasin, Jha and Taneja",
+      "seller_gstin": "29IMQCS7334Y2ZU",
+      "buyer_name": "Wali, Sane and Murthy",
+      "buyer_gstin": "29EMCCV2996E1Z5",
+      "invoice_number": "INV/26-27/0206",
+      "invoice_date": "2026-07-02",
+      "po_reference": "PO/HYD/26-27/578",
+      "place_of_supply": "Karnataka (29)",
+      "line_items": [
+       {
+        "description": "Wired USB keyboard (full size)",
+        "hsn": "8471",
+        "qty": 1.0,
+        "rate": 843.36,
+        "gst_rate": 18.0,
+        "amount": 843.36
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 50.86,
+        "gst_rate": 18.0,
+        "amount": 203.44
+       },
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 1.0,
+        "rate": 125.89,
+        "gst_rate": 18.0,
+        "amount": 125.89
+       },
+       {
+        "description": "Sugar (5 KG)",
+        "hsn": "1701",
+        "qty": 20.0,
+        "rate": 261.0,
+        "gst_rate": 5.0,
+        "amount": 5220.0
+       },
+       {
+        "description": "A4 Copier Paper 500 Sht",
+        "hsn": "4802",
+        "qty": 25.0,
+        "rate": 305.0,
+        "gst_rate": 18.0,
+        "amount": 7625.0
+       }
+      ],
+      "taxable_value": 14017.69,
+      "cgst": 922.29,
+      "sgst": 922.29,
+      "igst": null,
+      "grand_total": 14024.27
+     }
+    },
+    "purchase_order": {
+     "image": "pay-007/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.73,
+      "blur": 0.54,
+      "noise": 9.9,
+      "light": 0.81,
+      "jpeg": 56,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/HYD/26-27/578",
+      "po_date": "2026-06-21",
+      "buyer_name": "Wali, Sane and Murthy",
+      "vendor_name": "Bhasin, Jha and Taneja",
+      "vendor_gstin": "29IMQCS7334Y2ZU",
+      "line_items": [
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 1.0,
+        "rate": 873.0,
+        "amount": 873.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 52.0,
+        "amount": 208.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 1.0,
+        "rate": 129.0,
+        "amount": 129.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 20.0,
+        "rate": 261.0,
+        "amount": 5220.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 25.0,
+        "rate": 305.0,
+        "amount": 7625.0
+       }
+      ],
+      "total": 14055.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-008",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "wrong_tax_split",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst"
+     ],
+     "detail": "CGST/SGST on inter-state"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-008/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Setty-Pathak",
+      "seller_gstin": "22BSRCG4478Z1Z6",
+      "buyer_name": "Kothari-Gole",
+      "buyer_gstin": "24QDCCP7210V1ZC",
+      "invoice_number": "TI/26-27/2089",
+      "invoice_date": "2026-06-20",
+      "po_reference": "4500097017",
+      "place_of_supply": "Gujarat (24)",
+      "line_items": [
+       {
+        "description": "Mesh office chair with lumbar support",
+        "hsn": "9401",
+        "qty": 25.0,
+        "rate": 6925.0,
+        "gst_rate": 18.0,
+        "amount": 173125.0
+       },
+       {
+        "description": "Lever arch box file x10",
+        "hsn": "4820",
+        "qty": 4.0,
+        "rate": 229.0,
+        "gst_rate": 18.0,
+        "amount": 916.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 242.0,
+        "gst_rate": 5.0,
+        "amount": 1210.0
+       }
+      ],
+      "taxable_value": 175251.0,
+      "cgst": 15693.94,
+      "sgst": 15693.94,
+      "igst": null,
+      "grand_total": 206638.88
+     }
+    },
+    "purchase_order": {
+     "image": "pay-008/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500097017",
+      "po_date": "2026-05-28",
+      "buyer_name": "Kothari-Gole",
+      "vendor_name": "Setty-Pathak",
+      "vendor_gstin": "22BSRCG4478Z1Z6",
+      "line_items": [
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 25.0,
+        "rate": 6925.0,
+        "amount": 173125.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 4.0,
+        "rate": 229.0,
+        "amount": 916.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 242.0,
+        "amount": 1210.0
+       }
+      ],
+      "total": 175251.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-009",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "gstin_mismatch",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ],
+     "detail": "invoice issued under a different GSTIN than the PO vendor"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-009/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Kohli, Bumb and Mital",
+      "seller_gstin": "08ENWCX6370F1ZR",
+      "buyer_name": "Talwar, Oza and Sen",
+      "buyer_gstin": "02LIJCQ0750A1ZC",
+      "invoice_number": "TI/26-27/0666",
+      "invoice_date": "2026-06-15",
+      "po_reference": "4500071225",
+      "place_of_supply": "Himachal Pradesh (02)",
+      "line_items": [
+       {
+        "description": "Adjustable aluminium laptop riser",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1474.0,
+        "gst_rate": 18.0,
+        "amount": 29480.0
+       },
+       {
+        "description": "Laser toner 88A",
+        "hsn": "8443",
+        "qty": 25.0,
+        "rate": 2163.38,
+        "gst_rate": 18.0,
+        "amount": 54084.5
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 50.0,
+        "rate": 281.0,
+        "gst_rate": 18.0,
+        "amount": 14050.0
+       },
+       {
+        "description": "Kangaro HD-45 stapler",
+        "hsn": "8472",
+        "qty": 9.0,
+        "rate": 340.02,
+        "gst_rate": 18.0,
+        "amount": 3060.18
+       }
+      ],
+      "taxable_value": 100674.68,
+      "cgst": null,
+      "sgst": null,
+      "igst": 18121.44,
+      "grand_total": 118796.12
+     }
+    },
+    "purchase_order": {
+     "image": "pay-009/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500071225",
+      "po_date": "2026-06-05",
+      "buyer_name": "Talwar, Oza and Sen",
+      "vendor_name": "Kohli, Bumb and Mital",
+      "vendor_gstin": "08BNRCN2976G2Z2",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1474.0,
+        "amount": 29480.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 25.0,
+        "rate": 2212.0,
+        "amount": 55300.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 50.0,
+        "rate": 281.0,
+        "amount": 14050.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 20.0,
+        "rate": 351.0,
+        "amount": 7020.0
+       }
+      ],
+      "total": 105850.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-010",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-010/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.55,
+      "blur": 0.77,
+      "noise": 11.3,
+      "light": 0.78,
+      "jpeg": 55,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Bora-Dalal",
+      "seller_gstin": "07TVFCR6085Z1ZC",
+      "buyer_name": "Sahota, Gala and Oommen",
+      "buyer_gstin": "13DWMCR2319B1ZI",
+      "invoice_number": "GST/26-27/3034",
+      "invoice_date": "2026-05-27",
+      "po_reference": "4500095158",
+      "place_of_supply": "Nagaland (13)",
+      "line_items": [
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 127.0,
+        "gst_rate": 18.0,
+        "amount": 3175.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 51.0,
+        "gst_rate": 18.0,
+        "amount": 1275.0
+       },
+       {
+        "description": "Dell KB216 keyboard",
+        "hsn": "8471",
+        "qty": 25.0,
+        "rate": 821.0,
+        "gst_rate": 18.0,
+        "amount": 20525.0
+       },
+       {
+        "description": "A4 paper ream",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 297.0,
+        "gst_rate": 18.0,
+        "amount": 297.0
+       }
+      ],
+      "taxable_value": 25272.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 4548.96,
+      "grand_total": 29820.96
+     }
+    },
+    "purchase_order": {
+     "image": "pay-010/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.91,
+      "blur": 0.66,
+      "noise": 7.9,
+      "light": 0.82,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500095158",
+      "po_date": "2026-04-27",
+      "buyer_name": "Sahota, Gala and Oommen",
+      "vendor_name": "Bora-Dalal",
+      "vendor_gstin": "07TVFCR6085Z1ZC",
+      "line_items": [
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 127.0,
+        "amount": 3175.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 51.0,
+        "amount": 1275.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 25.0,
+        "rate": 821.0,
+        "amount": 20525.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 297.0,
+        "amount": 297.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 12.0,
+        "rate": 7964.0,
+        "amount": 95568.0
+       }
+      ],
+      "total": 120840.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-011",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "total_mismatch",
+     "fields": [
+      "invoice.grand_total"
+     ],
+     "detail": "total off by -1921"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-011/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.49,
+      "blur": 0.74,
+      "noise": 11.3,
+      "light": 0.81,
+      "jpeg": 54,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Suresh Group",
+      "seller_gstin": "15SNZCG8369R1ZW",
+      "buyer_name": "Brahmbhatt PLC",
+      "buyer_gstin": "15SSGCF7640P1ZM",
+      "invoice_number": "INV/26-27/2194",
+      "invoice_date": "2026-06-15",
+      "po_reference": "4500035730",
+      "place_of_supply": "Mizoram (15)",
+      "line_items": [
+       {
+        "description": "Refined sugar 5kg bag",
+        "hsn": "1701",
+        "qty": 4.0,
+        "rate": 223.0,
+        "gst_rate": 5.0,
+        "amount": 892.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 1.0,
+        "rate": 390.0,
+        "gst_rate": 18.0,
+        "amount": 390.0
+       },
+       {
+        "description": "Logitech M235 cordless mouse",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 560.32,
+        "gst_rate": 18.0,
+        "amount": 28016.0
+       },
+       {
+        "description": "CAT-6 LAN cable roll 305m",
+        "hsn": "8544",
+        "qty": 20.0,
+        "rate": 6049.0,
+        "gst_rate": 18.0,
+        "amount": 120980.0
+       }
+      ],
+      "taxable_value": 150278.0,
+      "cgst": 13467.04,
+      "sgst": 13467.04,
+      "igst": null,
+      "grand_total": 175291.08
+     }
+    },
+    "purchase_order": {
+     "image": "pay-011/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.33,
+      "blur": 0.53,
+      "noise": 11.0,
+      "light": 0.81,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500035730",
+      "po_date": "2026-06-05",
+      "buyer_name": "Brahmbhatt PLC",
+      "vendor_name": "Suresh Group",
+      "vendor_gstin": "15SNZCG8369R1ZW",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 223.0,
+        "amount": 1115.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 1.0,
+        "rate": 390.0,
+        "amount": 390.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 2.0,
+        "rate": 2269.0,
+        "amount": 4538.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 576.0,
+        "amount": 28800.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 20.0,
+        "rate": 6049.0,
+        "amount": 120980.0
+       }
+      ],
+      "total": 155823.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-012",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "invalid_gstin",
+     "fields": [
+      "invoice.buyer_gstin"
+     ],
+     "detail": "buyer GSTIN checksum broken"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-012/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.35,
+      "blur": 0.74,
+      "noise": 11.3,
+      "light": 0.91,
+      "jpeg": 49,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Murthy, Oak and Palla",
+      "seller_gstin": "16RNHCZ1621K1ZZ",
+      "buyer_name": "Taneja, Shan and Biswas",
+      "buyer_gstin": "08TLICQ2175U1ZX",
+      "invoice_number": "TI/26-27/2429",
+      "invoice_date": "2026-06-06",
+      "po_reference": "4500061252",
+      "place_of_supply": "Rajasthan (08)",
+      "line_items": [
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 637.0,
+        "gst_rate": 18.0,
+        "amount": 2548.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 10.0,
+        "rate": 277.0,
+        "gst_rate": 18.0,
+        "amount": 2770.0
+       },
+       {
+        "description": "Cleaning services per month",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23774.0,
+        "gst_rate": 18.0,
+        "amount": 23774.0
+       }
+      ],
+      "taxable_value": 29092.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 5236.56,
+      "grand_total": 34328.56
+     }
+    },
+    "purchase_order": {
+     "image": "pay-012/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.29,
+      "blur": 0.49,
+      "noise": 8.5,
+      "light": 0.83,
+      "jpeg": 53,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500061252",
+      "po_date": "2026-05-17",
+      "buyer_name": "Taneja, Shan and Biswas",
+      "vendor_name": "Murthy, Oak and Palla",
+      "vendor_gstin": "16RNHCZ1621K1ZZ",
+      "line_items": [
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 637.0,
+        "amount": 2548.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 10.0,
+        "rate": 277.0,
+        "amount": 2770.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23774.0,
+        "amount": 23774.0
+       }
+      ],
+      "total": 29092.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-013",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-013/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": -4.58,
+      "blur": 1.24,
+      "noise": 24.7,
+      "light": 0.72,
+      "jpeg": 28,
+      "scale": 0.48
+     },
+     "occluded": [
+      "invoice_date"
+     ],
+     "truth": {
+      "seller_name": "Madan Group",
+      "seller_gstin": "26IGHCI1057L2ZU",
+      "buyer_name": "Bhattacharyya, Bhat and Mukherjee",
+      "buyer_gstin": "10FWPCV6305T1ZC",
+      "invoice_number": "TI/26-27/3684",
+      "invoice_date": "2026-05-21",
+      "po_reference": "4500013999",
+      "place_of_supply": "Bihar (10)",
+      "line_items": [
+       {
+        "description": "Heavy-duty stapling machine",
+        "hsn": "8472",
+        "qty": 10.0,
+        "rate": 368.9,
+        "gst_rate": 18.0,
+        "amount": 3689.0
+       },
+       {
+        "description": "Refined sugar 5kg bag",
+        "hsn": "1701",
+        "qty": 12.0,
+        "rate": 226.0,
+        "gst_rate": 5.0,
+        "amount": 2712.0
+       },
+       {
+        "description": "20 W LED batten",
+        "hsn": "9405",
+        "qty": 4.0,
+        "rate": 282.0,
+        "gst_rate": 18.0,
+        "amount": 1128.0
+       }
+      ],
+      "taxable_value": 7529.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 1002.66,
+      "grand_total": 8531.66
+     }
+    },
+    "purchase_order": {
+     "image": "pay-013/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.41,
+      "blur": 1.0,
+      "noise": 19.4,
+      "light": 0.7,
+      "jpeg": 31,
+      "scale": 0.5
+     },
+     "occluded": [
+      "total"
+     ],
+     "truth": {
+      "po_number": "4500013999",
+      "po_date": "2026-04-27",
+      "buyer_name": "Bhattacharyya, Bhat and Mukherjee",
+      "vendor_name": "Madan Group",
+      "vendor_gstin": "26IGHCI1057L2ZU",
+      "line_items": [
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 10.0,
+        "rate": 380.0,
+        "amount": 3800.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 12.0,
+        "rate": 226.0,
+        "amount": 2712.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 4.0,
+        "rate": 282.0,
+        "amount": 1128.0
+       }
+      ],
+      "total": 7640.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-014",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "gstin_mismatch",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ],
+     "detail": "invoice issued under a different GSTIN than the PO vendor"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-014/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.17,
+      "blur": 1.19,
+      "noise": 24.9,
+      "light": 0.69,
+      "jpeg": 29,
+      "scale": 0.49
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Sehgal, Mane and Raju",
+      "seller_gstin": "03HNTCV0731A1ZS",
+      "buyer_name": "Palan, Bajaj and Shenoy",
+      "buyer_gstin": "33VPUCW0273V1ZT",
+      "invoice_number": "TI/26-27/2399",
+      "invoice_date": "2026-06-24",
+      "po_reference": "PO/HYD/26-27/808",
+      "place_of_supply": "Tamil Nadu (33)",
+      "line_items": [
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 4.0,
+        "rate": 454.04,
+        "gst_rate": 5.0,
+        "amount": 1816.16
+       },
+       {
+        "description": "Heavy-duty stapling machine",
+        "hsn": "8472",
+        "qty": 12.0,
+        "rate": 413.0,
+        "gst_rate": 18.0,
+        "amount": 4956.0
+       },
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 174.0,
+        "gst_rate": 18.0,
+        "amount": 4350.0
+       },
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 19623.0,
+        "gst_rate": 18.0,
+        "amount": 19623.0
+       },
+       {
+        "description": "Laser toner 88A",
+        "hsn": "8443",
+        "qty": 1.0,
+        "rate": 2350.0,
+        "gst_rate": 18.0,
+        "amount": 2350.0
+       }
+      ],
+      "taxable_value": 33095.16,
+      "cgst": null,
+      "sgst": null,
+      "igst": 5721.03,
+      "grand_total": 38816.19
+     }
+    },
+    "purchase_order": {
+     "image": "pay-014/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.7,
+      "blur": 1.03,
+      "noise": 23.9,
+      "light": 0.7,
+      "jpeg": 40,
+      "scale": 0.45
+     },
+     "occluded": [
+      "line_items[4].amount"
+     ],
+     "truth": {
+      "po_number": "PO/HYD/26-27/808",
+      "po_date": "2026-06-13",
+      "buyer_name": "Palan, Bajaj and Shenoy",
+      "vendor_name": "Sehgal, Mane and Raju",
+      "vendor_gstin": "03KDLCY3890U1ZS",
+      "line_items": [
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 4.0,
+        "rate": 460.0,
+        "amount": 1840.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 12.0,
+        "rate": 413.0,
+        "amount": 4956.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 174.0,
+        "amount": 4350.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 19623.0,
+        "amount": 19623.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 1.0,
+        "rate": 2350.0,
+        "amount": 2350.0
+       }
+      ],
+      "total": 33119.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-015",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-015/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.83,
+      "blur": 0.79,
+      "noise": 8.4,
+      "light": 0.86,
+      "jpeg": 55,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Ganguly-Dada",
+      "seller_gstin": "36HHUCR2202Q1Z8",
+      "buyer_name": "Bhargava-Kamdar",
+      "buyer_gstin": "36AYGCP6925X2ZV",
+      "invoice_number": "TI/26-27/1034",
+      "invoice_date": "2026-08-25",
+      "po_reference": "PO/HYD/26-27/507",
+      "place_of_supply": "Telangana (36)",
+      "line_items": [
+       {
+        "description": "Lever arch box file x10",
+        "hsn": "4820",
+        "qty": 2.0,
+        "rate": 166.0,
+        "gst_rate": 18.0,
+        "amount": 332.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 50.0,
+        "rate": 7905.0,
+        "gst_rate": 18.0,
+        "amount": 395250.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 2.0,
+        "rate": 266.0,
+        "gst_rate": 18.0,
+        "amount": 532.0
+       },
+       {
+        "description": "CTC tea pack 1 kg",
+        "hsn": "0902",
+        "qty": 20.0,
+        "rate": 541.0,
+        "gst_rate": 5.0,
+        "amount": 10820.0
+       }
+      ],
+      "taxable_value": 406934.0,
+      "cgst": 35920.76,
+      "sgst": 35920.76,
+      "igst": null,
+      "grand_total": 478775.52
+     }
+    },
+    "purchase_order": {
+     "image": "pay-015/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.98,
+      "blur": 0.7,
+      "noise": 8.4,
+      "light": 0.92,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/HYD/26-27/507",
+      "po_date": "2026-08-02",
+      "buyer_name": "Bhargava-Kamdar",
+      "vendor_name": "Ganguly-Dada",
+      "vendor_gstin": "36HHUCR2202Q1Z8",
+      "line_items": [
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 2.0,
+        "rate": 166.0,
+        "amount": 332.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 50.0,
+        "rate": 7905.0,
+        "amount": 395250.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 2.0,
+        "rate": 266.0,
+        "amount": 532.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 20.0,
+        "rate": 541.0,
+        "amount": 10820.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 4.0,
+        "rate": 2536.0,
+        "amount": 10144.0
+       }
+      ],
+      "total": 417078.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-016",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-016/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 2.03,
+      "blur": 0.71,
+      "noise": 9.5,
+      "light": 0.82,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Dayal-Kota",
+      "seller_gstin": "18XBVCV2568L2ZL",
+      "buyer_name": "Raman-Taneja",
+      "buyer_gstin": "18OBRCM6934B1ZR",
+      "invoice_number": "INV/26-27/4081",
+      "invoice_date": "2026-08-07",
+      "po_reference": "PO-2026-4735",
+      "place_of_supply": "Assam (18)",
+      "line_items": [
+       {
+        "description": "Kangaro HD-45 stapler",
+        "hsn": "8472",
+        "qty": 20.0,
+        "rate": 354.0,
+        "gst_rate": 18.0,
+        "amount": 7080.0
+       },
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 2.0,
+        "rate": 169.0,
+        "gst_rate": 18.0,
+        "amount": 338.0
+       },
+       {
+        "description": "Refined sugar 5kg bag",
+        "hsn": "1701",
+        "qty": 4.0,
+        "rate": 240.0,
+        "gst_rate": 5.0,
+        "amount": 960.0
+       },
+       {
+        "description": "Laptop stand (alu)",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1371.84,
+        "gst_rate": 18.0,
+        "amount": 27436.8
+       },
+       {
+        "description": "Lever arch box file x10",
+        "hsn": "4820",
+        "qty": 25.0,
+        "rate": 169.0,
+        "gst_rate": 18.0,
+        "amount": 4225.0
+       }
+      ],
+      "taxable_value": 40039.8,
+      "cgst": 3541.18,
+      "sgst": 3541.18,
+      "igst": null,
+      "grand_total": 47122.16
+     }
+    },
+    "purchase_order": {
+     "image": "pay-016/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.06,
+      "blur": 0.51,
+      "noise": 10.2,
+      "light": 0.86,
+      "jpeg": 58,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-4735",
+      "po_date": "2026-07-16",
+      "buyer_name": "Raman-Taneja",
+      "vendor_name": "Dayal-Kota",
+      "vendor_gstin": "18XBVCV2568L2ZL",
+      "line_items": [
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 20.0,
+        "rate": 354.0,
+        "amount": 7080.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 2.0,
+        "rate": 169.0,
+        "amount": 338.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 4.0,
+        "rate": 240.0,
+        "amount": 960.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1416.0,
+        "amount": 28320.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 25.0,
+        "rate": 169.0,
+        "amount": 4225.0
+       }
+      ],
+      "total": 40923.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-017",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-017/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Ganesan Group",
+      "seller_gstin": "15OEQCW4123M2Z9",
+      "buyer_name": "Mall-Devan",
+      "buyer_gstin": "15PVVCS1270N1Z5",
+      "invoice_number": "TI/26-27/0182",
+      "invoice_date": "2026-06-12",
+      "po_reference": "PO/MUM/26-27/226",
+      "place_of_supply": "Mizoram (15)",
+      "line_items": [
+       {
+        "description": "JK Copier A4 75gsm ream",
+        "hsn": "4802",
+        "qty": 12.0,
+        "rate": 242.0,
+        "gst_rate": 18.0,
+        "amount": 2904.0
+       }
+      ],
+      "taxable_value": 2904.0,
+      "cgst": 261.36,
+      "sgst": 261.36,
+      "igst": null,
+      "grand_total": 3426.72
+     }
+    },
+    "purchase_order": {
+     "image": "pay-017/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/MUM/26-27/226",
+      "po_date": "2026-05-27",
+      "buyer_name": "Mall-Devan",
+      "vendor_name": "Ganesan Group",
+      "vendor_gstin": "15OEQCW4123M2Z9",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1218.0,
+        "amount": 24360.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 12.0,
+        "rate": 242.0,
+        "amount": 2904.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 5.0,
+        "rate": 751.0,
+        "amount": 3755.0
+       }
+      ],
+      "total": 31019.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-018",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-018/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Mallick-Sagar",
+      "seller_gstin": "15OKPCY0829C1ZC",
+      "buyer_name": "Rai-Kashyap",
+      "buyer_gstin": "22QXYCY5984R2Z2",
+      "invoice_number": "GST/26-27/4650",
+      "invoice_date": "2026-05-28",
+      "po_reference": "4500026732",
+      "place_of_supply": "Chhattisgarh (22)",
+      "line_items": [
+       {
+        "description": "Laser toner 88A",
+        "hsn": "8443",
+        "qty": 20.0,
+        "rate": 2324.16,
+        "gst_rate": 18.0,
+        "amount": 46483.2
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 24943.0,
+        "gst_rate": 18.0,
+        "amount": 24943.0
+       }
+      ],
+      "taxable_value": 71426.2,
+      "cgst": null,
+      "sgst": null,
+      "igst": 12856.72,
+      "grand_total": 84282.92
+     }
+    },
+    "purchase_order": {
+     "image": "pay-018/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500026732",
+      "po_date": "2026-05-05",
+      "buyer_name": "Rai-Kashyap",
+      "vendor_name": "Mallick-Sagar",
+      "vendor_gstin": "15OKPCY0829C1ZC",
+      "line_items": [
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 20.0,
+        "rate": 2419.0,
+        "amount": 48380.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 24943.0,
+        "amount": 24943.0
+       }
+      ],
+      "total": 73323.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-019",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "wrong_tax_split",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst"
+     ],
+     "detail": "IGST on intra-state"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-019/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Butala and Sons",
+      "seller_gstin": "38LZYCD9064J1ZX",
+      "buyer_name": "Kata Ltd",
+      "buyer_gstin": "38NNJCU4138E1Z3",
+      "invoice_number": "INV/26-27/1027",
+      "invoice_date": "2026-08-20",
+      "po_reference": "4500061722",
+      "place_of_supply": "Ladakh (38)",
+      "line_items": [
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23810.51,
+        "gst_rate": 18.0,
+        "amount": 23810.51
+       },
+       {
+        "description": "Sugar (5 KG)",
+        "hsn": "1701",
+        "qty": 39.0,
+        "rate": 259.0,
+        "gst_rate": 5.0,
+        "amount": 10101.0
+       },
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 685.0,
+        "gst_rate": 18.0,
+        "amount": 34250.0
+       },
+       {
+        "description": "Sanitiser 5L jerry can",
+        "hsn": "3808",
+        "qty": 6.0,
+        "rate": 929.0,
+        "gst_rate": 18.0,
+        "amount": 5574.0
+       }
+      ],
+      "taxable_value": 73735.51,
+      "cgst": null,
+      "sgst": null,
+      "igst": 11959.26,
+      "grand_total": 85694.77
+     }
+    },
+    "purchase_order": {
+     "image": "pay-019/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500061722",
+      "po_date": "2026-07-27",
+      "buyer_name": "Kata Ltd",
+      "vendor_name": "Butala and Sons",
+      "vendor_gstin": "38LZYCD9064J1ZX",
+      "line_items": [
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 24744.0,
+        "amount": 24744.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 50.0,
+        "rate": 259.0,
+        "amount": 12950.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 685.0,
+        "amount": 34250.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 10.0,
+        "rate": 929.0,
+        "amount": 9290.0
+       }
+      ],
+      "total": 81234.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-020",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "wrong_tax_split",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst"
+     ],
+     "detail": "IGST on intra-state"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-020/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Arora Group",
+      "seller_gstin": "08QUTCL8022D2ZQ",
+      "buyer_name": "Gopal, Lall and Manda",
+      "buyer_gstin": "08QFRCL3266N1ZZ",
+      "invoice_number": "GST/26-27/2014",
+      "invoice_date": "2026-09-02",
+      "po_reference": "PO/BLR/26-27/624",
+      "place_of_supply": "Rajasthan (08)",
+      "line_items": [
+       {
+        "description": "Cleaning services per month",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 20504.27,
+        "gst_rate": 18.0,
+        "amount": 20504.27
+       },
+       {
+        "description": "CAT-6 LAN cable roll 305m",
+        "hsn": "8544",
+        "qty": 12.0,
+        "rate": 7280.0,
+        "gst_rate": 18.0,
+        "amount": 87360.0
+       }
+      ],
+      "taxable_value": 107864.27,
+      "cgst": null,
+      "sgst": null,
+      "igst": 19415.57,
+      "grand_total": 127279.84
+     }
+    },
+    "purchase_order": {
+     "image": "pay-020/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/BLR/26-27/624",
+      "po_date": "2026-08-08",
+      "buyer_name": "Gopal, Lall and Manda",
+      "vendor_name": "Arora Group",
+      "vendor_gstin": "08QUTCL8022D2ZQ",
+      "line_items": [
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 20849.0,
+        "amount": 20849.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 12.0,
+        "rate": 7280.0,
+        "amount": 87360.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 5.0,
+        "rate": 2779.0,
+        "amount": 13895.0
+       }
+      ],
+      "total": 122104.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-021",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-021/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.14,
+      "blur": 0.66,
+      "noise": 11.1,
+      "light": 0.8,
+      "jpeg": 58,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Dhingra Group",
+      "seller_gstin": "35HMRCC6137C2ZR",
+      "buyer_name": "Pingle, Nagar and Dass",
+      "buyer_gstin": "12JORCW1849B1ZB",
+      "invoice_number": "GST/26-27/2341",
+      "invoice_date": "2026-08-17",
+      "po_reference": "PO/MUM/26-27/652",
+      "place_of_supply": "Arunachal Pradesh (12)",
+      "line_items": [
+       {
+        "description": "Sugar (5 KG)",
+        "hsn": "1701",
+        "qty": 20.0,
+        "rate": 241.79,
+        "gst_rate": 5.0,
+        "amount": 4835.8
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 806.0,
+        "gst_rate": 18.0,
+        "amount": 40300.0
+       }
+      ],
+      "taxable_value": 45135.8,
+      "cgst": null,
+      "sgst": null,
+      "igst": 7495.79,
+      "grand_total": 52631.59
+     }
+    },
+    "purchase_order": {
+     "image": "pay-021/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.59,
+      "blur": 0.78,
+      "noise": 7.8,
+      "light": 0.82,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/MUM/26-27/652",
+      "po_date": "2026-07-18",
+      "buyer_name": "Pingle, Nagar and Dass",
+      "vendor_name": "Dhingra Group",
+      "vendor_gstin": "35HMRCC6137C2ZR",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 20.0,
+        "rate": 252.0,
+        "amount": 5040.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 806.0,
+        "amount": 40300.0
+       }
+      ],
+      "total": 45340.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-022",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "invalid_gstin",
+     "fields": [
+      "invoice.buyer_gstin"
+     ],
+     "detail": "buyer GSTIN checksum broken"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-022/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Varma, Bhagat and Shan",
+      "seller_gstin": "06USQCE2415U2ZC",
+      "buyer_name": "Ramanathan, Rao and Rastogi",
+      "buyer_gstin": "21SRPCH3281Y1ZK",
+      "invoice_number": "INV/26-27/0679",
+      "invoice_date": "2026-06-03",
+      "po_reference": "PO-2026-1231",
+      "place_of_supply": "Odisha (21)",
+      "line_items": [
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 2.0,
+        "rate": 344.0,
+        "gst_rate": 18.0,
+        "amount": 688.0
+       },
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 21605.0,
+        "gst_rate": 18.0,
+        "amount": 21605.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 4.0,
+        "rate": 293.22,
+        "gst_rate": 18.0,
+        "amount": 1172.88
+       }
+      ],
+      "taxable_value": 23465.88,
+      "cgst": null,
+      "sgst": null,
+      "igst": 4223.86,
+      "grand_total": 27689.74
+     }
+    },
+    "purchase_order": {
+     "image": "pay-022/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-1231",
+      "po_date": "2026-05-20",
+      "buyer_name": "Ramanathan, Rao and Rastogi",
+      "vendor_name": "Varma, Bhagat and Shan",
+      "vendor_gstin": "06USQCE2415U2ZC",
+      "line_items": [
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 2.0,
+        "rate": 344.0,
+        "amount": 688.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 21605.0,
+        "amount": 21605.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 5.0,
+        "rate": 298.0,
+        "amount": 1490.0
+       }
+      ],
+      "total": 23783.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-023",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "invalid_gstin",
+     "fields": [
+      "invoice.buyer_gstin"
+     ],
+     "detail": "buyer GSTIN checksum broken"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-023/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Chawla-Subramaniam",
+      "seller_gstin": "31PQSCE5246W1ZC",
+      "buyer_name": "Rattan, Bhatia and Halder",
+      "buyer_gstin": "31QQVCE2791I1Z2",
+      "invoice_number": "TI/26-27/1917",
+      "invoice_date": "2026-06-03",
+      "po_reference": "4500075895",
+      "place_of_supply": "Lakshadweep (31)",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 314.0,
+        "gst_rate": 18.0,
+        "amount": 314.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 2.0,
+        "rate": 170.93,
+        "gst_rate": 18.0,
+        "amount": 341.86
+       },
+       {
+        "description": "Kangaro HD-45 stapler",
+        "hsn": "8472",
+        "qty": 50.0,
+        "rate": 365.0,
+        "gst_rate": 18.0,
+        "amount": 18250.0
+       }
+      ],
+      "taxable_value": 18905.86,
+      "cgst": 1701.53,
+      "sgst": 1701.53,
+      "igst": null,
+      "grand_total": 22308.91
+     }
+    },
+    "purchase_order": {
+     "image": "pay-023/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500075895",
+      "po_date": "2026-05-16",
+      "buyer_name": "Rattan, Bhatia and Halder",
+      "vendor_name": "Chawla-Subramaniam",
+      "vendor_gstin": "31PQSCE5246W1ZC",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 2.0,
+        "rate": 314.0,
+        "amount": 628.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 2.0,
+        "rate": 178.0,
+        "amount": 356.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 50.0,
+        "rate": 365.0,
+        "amount": 18250.0
+       }
+      ],
+      "total": 19234.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-024",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "rate_above_po",
+     "detail": "rate above PO",
+     "fields": [
+      "invoice.line_items[0].rate"
+     ]
+    },
+    {
+     "type": "total_mismatch",
+     "fields": [
+      "invoice.grand_total"
+     ],
+     "detail": "total off by +1307"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-024/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.64,
+      "blur": 0.47,
+      "noise": 6.6,
+      "light": 0.89,
+      "jpeg": 58,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Joshi Group",
+      "seller_gstin": "36UCXCW8848Q2Z0",
+      "buyer_name": "Choudhary LLC",
+      "buyer_gstin": "36BLACL9457K2ZB",
+      "invoice_number": "GST/26-27/1444",
+      "invoice_date": "2026-06-20",
+      "po_reference": "PO/MUM/26-27/029",
+      "place_of_supply": "Telangana (36)",
+      "line_items": [
+       {
+        "description": "Logitech M235 cordless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 610.68,
+        "gst_rate": 18.0,
+        "amount": 7328.16
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 780.0,
+        "gst_rate": 18.0,
+        "amount": 9360.0
+       }
+      ],
+      "taxable_value": 16688.16,
+      "cgst": 1501.93,
+      "sgst": 1501.93,
+      "igst": null,
+      "grand_total": 20999.03
+     }
+    },
+    "purchase_order": {
+     "image": "pay-024/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.39,
+      "blur": 0.76,
+      "noise": 6.5,
+      "light": 0.79,
+      "jpeg": 63,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/MUM/26-27/029",
+      "po_date": "2026-05-22",
+      "buyer_name": "Choudhary LLC",
+      "vendor_name": "Joshi Group",
+      "vendor_gstin": "36UCXCW8848Q2Z0",
+      "line_items": [
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 526.0,
+        "amount": 6312.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 25.0,
+        "rate": 780.0,
+        "amount": 19500.0
+       }
+      ],
+      "total": 25812.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-025",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "gstin_mismatch",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ],
+     "detail": "invoice issued under a different GSTIN than the PO vendor"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-025/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.61,
+      "blur": 0.56,
+      "noise": 10.8,
+      "light": 0.86,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Ben, Chaudry and Acharya",
+      "seller_gstin": "27EGJCG6954R1Z5",
+      "buyer_name": "Dora, Yadav and Chaudhuri",
+      "buyer_gstin": "27VATCP5264M2ZX",
+      "invoice_number": "INV/26-27/3287",
+      "invoice_date": "2026-08-08",
+      "po_reference": "PO-2026-0084",
+      "place_of_supply": "Maharashtra (27)",
+      "line_items": [
+       {
+        "description": "Sugar (5 KG)",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 217.78,
+        "gst_rate": 5.0,
+        "amount": 1088.9
+       },
+       {
+        "description": "Lever arch box file x10",
+        "hsn": "4820",
+        "qty": 10.0,
+        "rate": 166.0,
+        "gst_rate": 18.0,
+        "amount": 1660.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 6.0,
+        "rate": 903.0,
+        "gst_rate": 18.0,
+        "amount": 5418.0
+       },
+       {
+        "description": "Tata Tea Premium 1kg",
+        "hsn": "0902",
+        "qty": 10.0,
+        "rate": 517.17,
+        "gst_rate": 5.0,
+        "amount": 5171.7
+       },
+       {
+        "description": "Laser toner 88A",
+        "hsn": "8443",
+        "qty": 5.0,
+        "rate": 2616.0,
+        "gst_rate": 18.0,
+        "amount": 13080.0
+       }
+      ],
+      "taxable_value": 26418.6,
+      "cgst": 1970.73,
+      "sgst": 1970.73,
+      "igst": null,
+      "grand_total": 30360.07
+     }
+    },
+    "purchase_order": {
+     "image": "pay-025/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.13,
+      "blur": 0.74,
+      "noise": 9.3,
+      "light": 0.79,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-0084",
+      "po_date": "2026-07-13",
+      "buyer_name": "Dora, Yadav and Chaudhuri",
+      "vendor_name": "Ben, Chaudry and Acharya",
+      "vendor_gstin": "27VLWCS6850O1ZZ",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 10.0,
+        "rate": 228.0,
+        "amount": 2280.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 10.0,
+        "rate": 166.0,
+        "amount": 1660.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 12.0,
+        "rate": 903.0,
+        "amount": 10836.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 10.0,
+        "rate": 528.0,
+        "amount": 5280.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 5.0,
+        "rate": 2616.0,
+        "amount": 13080.0
+       }
+      ],
+      "total": 33136.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-026",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "gstin_mismatch",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ],
+     "detail": "invoice issued under a different GSTIN than the PO vendor"
+    },
+    {
+     "type": "line_not_on_po",
+     "detail": "A4 paper ream not ordered",
+     "fields": [
+      "invoice.line_items[4].description"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-026/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.64,
+      "blur": 1.07,
+      "noise": 22.0,
+      "light": 0.69,
+      "jpeg": 37,
+      "scale": 0.48
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Bal-Bobal",
+      "seller_gstin": "17DBYCI7801M2ZL",
+      "buyer_name": "Puri and Sons",
+      "buyer_gstin": "17UJMCX7838U1ZS",
+      "invoice_number": "TI/26-27/0832",
+      "invoice_date": "2026-07-08",
+      "po_reference": "4500042683",
+      "place_of_supply": "Meghalaya (17)",
+      "line_items": [
+       {
+        "description": "CAT-6 LAN cable roll 305m",
+        "hsn": "8544",
+        "qty": 2.0,
+        "rate": 7296.0,
+        "gst_rate": 18.0,
+        "amount": 14592.0
+       },
+       {
+        "description": "Dell KB216 keyboard",
+        "hsn": "8471",
+        "qty": 1.0,
+        "rate": 880.0,
+        "gst_rate": 18.0,
+        "amount": 880.0
+       },
+       {
+        "description": "CTC tea pack 1 kg",
+        "hsn": "0902",
+        "qty": 1.0,
+        "rate": 462.78,
+        "gst_rate": 5.0,
+        "amount": 462.78
+       },
+       {
+        "description": "Laser toner 88A",
+        "hsn": "8443",
+        "qty": 50.0,
+        "rate": 2154.19,
+        "gst_rate": 18.0,
+        "amount": 107709.5
+       },
+       {
+        "description": "A4 paper ream",
+        "hsn": "4802",
+        "qty": 10.0,
+        "rate": 296.0,
+        "gst_rate": 18.0,
+        "amount": 2960.0
+       }
+      ],
+      "taxable_value": 126604.28,
+      "cgst": 11364.31,
+      "sgst": 11364.31,
+      "igst": null,
+      "grand_total": 149332.89
+     }
+    },
+    "purchase_order": {
+     "image": "pay-026/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.05,
+      "blur": 1.21,
+      "noise": 26.4,
+      "light": 0.63,
+      "jpeg": 31,
+      "scale": 0.43
+     },
+     "occluded": [
+      "line_items[1].qty"
+     ],
+     "truth": {
+      "po_number": "4500042683",
+      "po_date": "2026-06-30",
+      "buyer_name": "Puri and Sons",
+      "vendor_name": "Bal-Bobal",
+      "vendor_gstin": "17VQGCQ8459Y1ZF",
+      "line_items": [
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 2.0,
+        "rate": 7296.0,
+        "amount": 14592.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 10.0,
+        "rate": 367.0,
+        "amount": 3670.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 1.0,
+        "rate": 880.0,
+        "amount": 880.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 1.0,
+        "rate": 480.0,
+        "amount": 480.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 50.0,
+        "rate": 2250.0,
+        "amount": 112500.0
+       }
+      ],
+      "total": 132122.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-027",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "invalid_gstin",
+     "fields": [
+      "invoice.buyer_gstin"
+     ],
+     "detail": "buyer GSTIN checksum broken"
+    },
+    {
+     "type": "wrong_tax_split",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst"
+     ],
+     "detail": "CGST/SGST on inter-state"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-027/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Krishnan, Palan and Patla",
+      "seller_gstin": "16QWGCQ8211F2ZU",
+      "buyer_name": "Das-D\u2019Alia",
+      "buyer_gstin": "31SMHCQ7928T1ZP",
+      "invoice_number": "INV/26-27/4327",
+      "invoice_date": "2026-08-06",
+      "po_reference": "PO-2026-7427",
+      "place_of_supply": "Lakshadweep (31)",
+      "line_items": [
+       {
+        "description": "JK Copier A4 75gsm ream",
+        "hsn": "4802",
+        "qty": 19.0,
+        "rate": 280.0,
+        "gst_rate": 18.0,
+        "amount": 5320.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 703.0,
+        "gst_rate": 18.0,
+        "amount": 2812.0
+       }
+      ],
+      "taxable_value": 8132.0,
+      "cgst": 731.88,
+      "sgst": 731.88,
+      "igst": null,
+      "grand_total": 9595.76
+     }
+    },
+    "purchase_order": {
+     "image": "pay-027/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-7427",
+      "po_date": "2026-07-09",
+      "buyer_name": "Das-D\u2019Alia",
+      "vendor_name": "Krishnan, Palan and Patla",
+      "vendor_gstin": "16QWGCQ8211F2ZU",
+      "line_items": [
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 1.0,
+        "rate": 7783.0,
+        "amount": 7783.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 25.0,
+        "rate": 280.0,
+        "amount": 7000.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 703.0,
+        "amount": 2812.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 10.0,
+        "rate": 267.0,
+        "amount": 2670.0
+       }
+      ],
+      "total": 20265.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-028",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-028/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.27,
+      "blur": 0.55,
+      "noise": 11.9,
+      "light": 0.83,
+      "jpeg": 63,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Shukla-Srinivasan",
+      "seller_gstin": "38YIICR8672K1ZE",
+      "buyer_name": "Muni-Chada",
+      "buyer_gstin": "03SGMCM8442U2ZQ",
+      "invoice_number": "TI/26-27/2709",
+      "invoice_date": "2026-07-13",
+      "po_reference": "PO-2026-6920",
+      "place_of_supply": "Punjab (03)",
+      "line_items": [
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 5.0,
+        "rate": 176.0,
+        "gst_rate": 18.0,
+        "amount": 880.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 9.0,
+        "rate": 8018.77,
+        "gst_rate": 18.0,
+        "amount": 72168.93
+       },
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 20.0,
+        "rate": 725.0,
+        "gst_rate": 18.0,
+        "amount": 14500.0
+       }
+      ],
+      "taxable_value": 87548.93,
+      "cgst": null,
+      "sgst": null,
+      "igst": 15758.81,
+      "grand_total": 103307.74
+     }
+    },
+    "purchase_order": {
+     "image": "pay-028/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.14,
+      "blur": 0.56,
+      "noise": 11.7,
+      "light": 0.91,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-6920",
+      "po_date": "2026-07-05",
+      "buyer_name": "Muni-Chada",
+      "vendor_name": "Shukla-Srinivasan",
+      "vendor_gstin": "38YIICR8672K1ZE",
+      "line_items": [
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 5.0,
+        "rate": 176.0,
+        "amount": 880.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 20.0,
+        "rate": 75.0,
+        "amount": 1500.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 12.0,
+        "rate": 8344.0,
+        "amount": 100128.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 20.0,
+        "rate": 725.0,
+        "amount": 14500.0
+       }
+      ],
+      "total": 117008.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-029",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-029/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Chaudry Ltd",
+      "seller_gstin": "22MTLCN6571E1Z1",
+      "buyer_name": "Lanka-Srinivas",
+      "buyer_gstin": "31VJMCW5260J2ZZ",
+      "invoice_number": "INV/26-27/0657",
+      "invoice_date": "2026-04-25",
+      "po_reference": "PO-2026-3488",
+      "place_of_supply": "Lakshadweep (31)",
+      "line_items": [
+       {
+        "description": "Lever arch box file x10",
+        "hsn": "4820",
+        "qty": 10.0,
+        "rate": 240.0,
+        "gst_rate": 18.0,
+        "amount": 2400.0
+       },
+       {
+        "description": "Laptop stand (alu)",
+        "hsn": "8473",
+        "qty": 2.0,
+        "rate": 1321.0,
+        "gst_rate": 18.0,
+        "amount": 2642.0
+       },
+       {
+        "description": "Dry erase markers x4",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 126.0,
+        "gst_rate": 18.0,
+        "amount": 1260.0
+       }
+      ],
+      "taxable_value": 6302.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 1134.36,
+      "grand_total": 7436.36
+     }
+    },
+    "purchase_order": {
+     "image": "pay-029/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-3488",
+      "po_date": "2026-04-14",
+      "buyer_name": "Lanka-Srinivas",
+      "vendor_name": "Chaudry Ltd",
+      "vendor_gstin": "22MTLCN6571E1Z1",
+      "line_items": [
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 10.0,
+        "rate": 240.0,
+        "amount": 2400.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 21241.0,
+        "amount": 21241.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 25.0,
+        "rate": 586.0,
+        "amount": 14650.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 4.0,
+        "rate": 1321.0,
+        "amount": 5284.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 126.0,
+        "amount": 1260.0
+       }
+      ],
+      "total": 44835.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-030",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-030/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": 2.84,
+      "blur": 1.12,
+      "noise": 25.1,
+      "light": 0.62,
+      "jpeg": 30,
+      "scale": 0.49
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Edwin, Varty and Bajaj",
+      "seller_gstin": "05MBMCI8058L1ZL",
+      "buyer_name": "Wable LLC",
+      "buyer_gstin": "05QGZCS0138J1Z7",
+      "invoice_number": "INV/26-27/2738",
+      "invoice_date": "2026-05-09",
+      "po_reference": "4500029390",
+      "place_of_supply": "Uttarakhand (05)",
+      "line_items": [
+       {
+        "description": "D-Link Cat6 UTP cable box",
+        "hsn": "8544",
+        "qty": 2.0,
+        "rate": 7064.57,
+        "gst_rate": 18.0,
+        "amount": 14129.14
+       }
+      ],
+      "taxable_value": 14129.14,
+      "cgst": 1271.62,
+      "sgst": 1271.62,
+      "igst": null,
+      "grand_total": 16672.39
+     }
+    },
+    "purchase_order": {
+     "image": "pay-030/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.54,
+      "blur": 1.11,
+      "noise": 26.1,
+      "light": 0.74,
+      "jpeg": 39,
+      "scale": 0.43
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500029390",
+      "po_date": "2026-04-18",
+      "buyer_name": "Wable LLC",
+      "vendor_name": "Edwin, Varty and Bajaj",
+      "vendor_gstin": "05MBMCI8058L1ZL",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 20.0,
+        "rate": 1507.0,
+        "amount": 30140.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 19929.0,
+        "amount": 19929.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 2.0,
+        "rate": 7191.0,
+        "amount": 14382.0
+       }
+      ],
+      "total": 64451.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-031",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-031/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.8,
+      "blur": 0.5,
+      "noise": 11.5,
+      "light": 0.87,
+      "jpeg": 50,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Bala PLC",
+      "seller_gstin": "35SPHCE8135O1ZS",
+      "buyer_name": "Chand-Lal",
+      "buyer_gstin": "12ZMBCH7801Z1ZL",
+      "invoice_number": "TI/26-27/0925",
+      "invoice_date": "2026-05-23",
+      "po_reference": "4500080079",
+      "place_of_supply": "Arunachal Pradesh (12)",
+      "line_items": [
+       {
+        "description": "Blue ball pen box/10",
+        "hsn": "9608",
+        "qty": 8.0,
+        "rate": 52.0,
+        "gst_rate": 18.0,
+        "amount": 416.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 2.0,
+        "rate": 742.0,
+        "gst_rate": 18.0,
+        "amount": 1484.0
+       }
+      ],
+      "taxable_value": 1900.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 342.0,
+      "grand_total": 2242.0
+     }
+    },
+    "purchase_order": {
+     "image": "pay-031/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.53,
+      "blur": 0.78,
+      "noise": 6.7,
+      "light": 0.81,
+      "jpeg": 57,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500080079",
+      "po_date": "2026-04-24",
+      "buyer_name": "Chand-Lal",
+      "vendor_name": "Bala PLC",
+      "vendor_gstin": "35SPHCE8135O1ZS",
+      "line_items": [
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 20.0,
+        "rate": 52.0,
+        "amount": 1040.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 2.0,
+        "rate": 742.0,
+        "amount": 1484.0
+       }
+      ],
+      "total": 2524.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-032",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-032/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": 3.95,
+      "blur": 1.11,
+      "noise": 19.9,
+      "light": 0.65,
+      "jpeg": 39,
+      "scale": 0.45
+     },
+     "occluded": [
+      "seller_name"
+     ],
+     "truth": {
+      "seller_name": "Peri, Ganesh and Parekh",
+      "seller_gstin": "31AARCB2757A1ZZ",
+      "buyer_name": "Walia PLC",
+      "buyer_gstin": "38RDZCW0335H1Z5",
+      "invoice_number": "GST/26-27/4472",
+      "invoice_date": "2026-07-09",
+      "po_reference": "PO/MUM/26-27/722",
+      "place_of_supply": "Ladakh (38)",
+      "line_items": [
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 78.0,
+        "gst_rate": 18.0,
+        "amount": 312.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 6.0,
+        "rate": 715.0,
+        "gst_rate": 18.0,
+        "amount": 4290.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 20.0,
+        "rate": 227.0,
+        "gst_rate": 18.0,
+        "amount": 4540.0
+       }
+      ],
+      "taxable_value": 9142.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 1645.56,
+      "grand_total": 10787.56
+     }
+    },
+    "purchase_order": {
+     "image": "pay-032/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": -2.09,
+      "blur": 0.98,
+      "noise": 20.8,
+      "light": 0.63,
+      "jpeg": 38,
+      "scale": 0.49
+     },
+     "occluded": [
+      "line_items[3].description"
+     ],
+     "truth": {
+      "po_number": "PO/MUM/26-27/722",
+      "po_date": "2026-06-15",
+      "buyer_name": "Walia PLC",
+      "vendor_name": "Peri, Ganesh and Parekh",
+      "vendor_gstin": "31AARCB2757A1ZZ",
+      "line_items": [
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 78.0,
+        "amount": 312.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 715.0,
+        "amount": 8580.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 20.0,
+        "rate": 227.0,
+        "amount": 4540.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 25.0,
+        "rate": 2457.0,
+        "amount": 61425.0
+       }
+      ],
+      "total": 74857.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-033",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "qty_over_po",
+     "detail": "27 billed vs 25 ordered",
+     "fields": [
+      "invoice.line_items[0].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-033/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.7,
+      "blur": 1.01,
+      "noise": 20.3,
+      "light": 0.72,
+      "jpeg": 32,
+      "scale": 0.48
+     },
+     "occluded": [
+      "cgst"
+     ],
+     "truth": {
+      "seller_name": "Narayan, Kapoor and Hayer",
+      "seller_gstin": "17POBCH2593E1ZH",
+      "buyer_name": "Rattan Ltd",
+      "buyer_gstin": "17YZACO5502K1ZG",
+      "invoice_number": "TI/26-27/4072",
+      "invoice_date": "2026-08-20",
+      "po_reference": "4500062181",
+      "place_of_supply": "Meghalaya (17)",
+      "line_items": [
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 27.0,
+        "rate": 361.0,
+        "gst_rate": 18.0,
+        "amount": 9747.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 25.0,
+        "rate": 236.0,
+        "gst_rate": 5.0,
+        "amount": 5900.0
+       }
+      ],
+      "taxable_value": 15647.0,
+      "cgst": 1024.73,
+      "sgst": 1024.73,
+      "igst": null,
+      "grand_total": 17696.46
+     }
+    },
+    "purchase_order": {
+     "image": "pay-033/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.13,
+      "blur": 1.34,
+      "noise": 24.6,
+      "light": 0.72,
+      "jpeg": 37,
+      "scale": 0.52
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500062181",
+      "po_date": "2026-07-27",
+      "buyer_name": "Rattan Ltd",
+      "vendor_name": "Narayan, Kapoor and Hayer",
+      "vendor_gstin": "17POBCH2593E1ZH",
+      "line_items": [
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 25.0,
+        "rate": 361.0,
+        "amount": 9025.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 25.0,
+        "rate": 236.0,
+        "amount": 5900.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23586.0,
+        "amount": 23586.0
+       }
+      ],
+      "total": 38511.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-034",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-034/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Iyengar PLC",
+      "seller_gstin": "33ZUSCP0096E1ZI",
+      "buyer_name": "Parekh-Balakrishnan",
+      "buyer_gstin": "03RMJCQ1049X2ZI",
+      "invoice_number": "TI/26-27/3381",
+      "invoice_date": "2026-07-20",
+      "po_reference": "PO-2026-3633",
+      "place_of_supply": "Punjab (03)",
+      "line_items": [
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 5.0,
+        "rate": 2792.0,
+        "gst_rate": 18.0,
+        "amount": 13960.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 652.8,
+        "gst_rate": 18.0,
+        "amount": 6528.0
+       }
+      ],
+      "taxable_value": 20488.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 3687.84,
+      "grand_total": 24175.84
+     }
+    },
+    "purchase_order": {
+     "image": "pay-034/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-3633",
+      "po_date": "2026-06-24",
+      "buyer_name": "Parekh-Balakrishnan",
+      "vendor_name": "Iyengar PLC",
+      "vendor_gstin": "33ZUSCP0096E1ZI",
+      "line_items": [
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 12.0,
+        "rate": 2792.0,
+        "amount": 33504.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 680.0,
+        "amount": 6800.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23697.0,
+        "amount": 23697.0
+       }
+      ],
+      "total": 64001.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-035",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "rate_above_po",
+     "detail": "rate above PO",
+     "fields": [
+      "invoice.line_items[0].rate"
+     ]
+    },
+    {
+     "type": "qty_over_po",
+     "detail": "32 billed vs 25 ordered",
+     "fields": [
+      "invoice.line_items[1].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-035/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": -4.86,
+      "blur": 0.9,
+      "noise": 26.1,
+      "light": 0.7,
+      "jpeg": 36,
+      "scale": 0.48
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Mammen Group",
+      "seller_gstin": "12TLSCB4474O1ZX",
+      "buyer_name": "Hari-Padmanabhan",
+      "buyer_gstin": "02SAYCZ8991A1Z7",
+      "invoice_number": "TI/26-27/1205",
+      "invoice_date": "2026-05-20",
+      "po_reference": "PO/MUM/26-27/014",
+      "place_of_supply": "Himachal Pradesh (02)",
+      "line_items": [
+       {
+        "description": "Adjustable aluminium laptop riser",
+        "hsn": "8473",
+        "qty": 5.0,
+        "rate": 1585.55,
+        "gst_rate": 18.0,
+        "amount": 7927.75
+       },
+       {
+        "description": "Kangaro HD-45 stapler",
+        "hsn": "8472",
+        "qty": 32.0,
+        "rate": 411.52,
+        "gst_rate": 18.0,
+        "amount": 13168.64
+       }
+      ],
+      "taxable_value": 21096.39,
+      "cgst": null,
+      "sgst": null,
+      "igst": 3797.35,
+      "grand_total": 24893.74
+     }
+    },
+    "purchase_order": {
+     "image": "pay-035/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.84,
+      "blur": 0.94,
+      "noise": 21.4,
+      "light": 0.63,
+      "jpeg": 36,
+      "scale": 0.48
+     },
+     "occluded": [
+      "line_items[0].description"
+     ],
+     "truth": {
+      "po_number": "PO/MUM/26-27/014",
+      "po_date": "2026-04-25",
+      "buyer_name": "Hari-Padmanabhan",
+      "vendor_name": "Mammen Group",
+      "vendor_gstin": "12TLSCB4474O1ZX",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 12.0,
+        "rate": 1312.0,
+        "amount": 15744.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 25.0,
+        "rate": 422.0,
+        "amount": 10550.0
+       }
+      ],
+      "total": 26294.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-036",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "line_not_on_po",
+     "detail": "2.4GHz wireless optical mouse not ordered",
+     "fields": [
+      "invoice.line_items[0].description"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-036/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Palla-Patla",
+      "seller_gstin": "01IRECO9158W2ZC",
+      "buyer_name": "Kannan Inc",
+      "buyer_gstin": "01QSDCT9214V2ZB",
+      "invoice_number": "INV/26-27/3839",
+      "invoice_date": "2026-07-30",
+      "po_reference": "4500019697",
+      "place_of_supply": "Jammu and Kashmir (01)",
+      "line_items": [
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 672.0,
+        "gst_rate": 18.0,
+        "amount": 6720.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 4.0,
+        "rate": 314.0,
+        "gst_rate": 18.0,
+        "amount": 1256.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 58.0,
+        "gst_rate": 18.0,
+        "amount": 232.0
+       }
+      ],
+      "taxable_value": 8208.0,
+      "cgst": 738.72,
+      "sgst": 738.72,
+      "igst": null,
+      "grand_total": 9685.44
+     }
+    },
+    "purchase_order": {
+     "image": "pay-036/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500019697",
+      "po_date": "2026-07-11",
+      "buyer_name": "Kannan Inc",
+      "vendor_name": "Palla-Patla",
+      "vendor_gstin": "01IRECO9158W2ZC",
+      "line_items": [
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 5.0,
+        "rate": 314.0,
+        "amount": 1570.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 58.0,
+        "amount": 232.0
+       }
+      ],
+      "total": 1802.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-037",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-037/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Singhal and Sons",
+      "seller_gstin": "03CLTCR6055G1ZG",
+      "buyer_name": "Jayaraman-Subramanian",
+      "buyer_gstin": "03QWMCT0514A2ZC",
+      "invoice_number": "INV/26-27/3254",
+      "invoice_date": "2026-06-15",
+      "po_reference": "PO/HYD/26-27/131",
+      "place_of_supply": "Punjab (03)",
+      "line_items": [
+       {
+        "description": "Logitech M235 cordless mouse",
+        "hsn": "8471",
+        "qty": 5.0,
+        "rate": 616.0,
+        "gst_rate": 18.0,
+        "amount": 3080.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 1.0,
+        "rate": 241.0,
+        "gst_rate": 18.0,
+        "amount": 241.0
+       }
+      ],
+      "taxable_value": 3321.0,
+      "cgst": 298.89,
+      "sgst": 298.89,
+      "igst": null,
+      "grand_total": 3918.78
+     }
+    },
+    "purchase_order": {
+     "image": "pay-037/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/HYD/26-27/131",
+      "po_date": "2026-05-27",
+      "buyer_name": "Jayaraman-Subramanian",
+      "vendor_name": "Singhal and Sons",
+      "vendor_gstin": "03CLTCR6055G1ZG",
+      "line_items": [
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 616.0,
+        "amount": 6160.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 1.0,
+        "rate": 241.0,
+        "amount": 241.0
+       }
+      ],
+      "total": 6401.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-038",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-038/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": -0.16,
+      "blur": 1.39,
+      "noise": 20.3,
+      "light": 0.67,
+      "jpeg": 35,
+      "scale": 0.53
+     },
+     "occluded": [
+      "line_items[0].amount"
+     ],
+     "truth": {
+      "seller_name": "Agarwal, Srinivas and Padmanabhan",
+      "seller_gstin": "26MPZCP0539X1ZU",
+      "buyer_name": "Chad, Dar and Rama",
+      "buyer_gstin": "26GSNCD8326R2ZK",
+      "invoice_number": "INV/26-27/2023",
+      "invoice_date": "2026-07-28",
+      "po_reference": "4500021905",
+      "place_of_supply": "Dadra and Nagar Haveli and Daman and Diu (26)",
+      "line_items": [
+       {
+        "description": "CTC tea pack 1 kg",
+        "hsn": "0902",
+        "qty": 2.0,
+        "rate": 524.0,
+        "gst_rate": 5.0,
+        "amount": 1048.0
+       },
+       {
+        "description": "Mesh office chair with lumbar support",
+        "hsn": "9401",
+        "qty": 10.0,
+        "rate": 6864.0,
+        "gst_rate": 18.0,
+        "amount": 68640.0
+       }
+      ],
+      "taxable_value": 69688.0,
+      "cgst": 6203.8,
+      "sgst": 6203.8,
+      "igst": null,
+      "grand_total": 82095.6
+     }
+    },
+    "purchase_order": {
+     "image": "pay-038/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.1,
+      "blur": 0.92,
+      "noise": 18.7,
+      "light": 0.69,
+      "jpeg": 37,
+      "scale": 0.53
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500021905",
+      "po_date": "2026-07-07",
+      "buyer_name": "Chad, Dar and Rama",
+      "vendor_name": "Agarwal, Srinivas and Padmanabhan",
+      "vendor_gstin": "26MPZCP0539X1ZU",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 2.0,
+        "rate": 234.0,
+        "amount": 468.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 2.0,
+        "rate": 524.0,
+        "amount": 1048.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 4.0,
+        "rate": 260.0,
+        "amount": 1040.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 10.0,
+        "rate": 6864.0,
+        "amount": 68640.0
+       }
+      ],
+      "total": 71196.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-039",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "qty_over_po",
+     "detail": "7 billed vs 5 ordered",
+     "fields": [
+      "invoice.line_items[1].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-039/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.12,
+      "blur": 0.67,
+      "noise": 7.7,
+      "light": 0.82,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Iyengar, Sridhar and Gokhale",
+      "seller_gstin": "32OPUCY9694P1ZL",
+      "buyer_name": "Natarajan-Chadha",
+      "buyer_gstin": "21VRUCC5254S2ZC",
+      "invoice_number": "INV/26-27/4883",
+      "invoice_date": "2026-09-08",
+      "po_reference": "PO-2026-6681",
+      "place_of_supply": "Odisha (21)",
+      "line_items": [
+       {
+        "description": "Heavy-duty stapling machine",
+        "hsn": "8472",
+        "qty": 12.0,
+        "rate": 402.0,
+        "gst_rate": 18.0,
+        "amount": 4824.0
+       },
+       {
+        "description": "Refined sugar 5kg bag",
+        "hsn": "1701",
+        "qty": 7.0,
+        "rate": 249.0,
+        "gst_rate": 5.0,
+        "amount": 1743.0
+       }
+      ],
+      "taxable_value": 6567.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 955.47,
+      "grand_total": 7522.47
+     }
+    },
+    "purchase_order": {
+     "image": "pay-039/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.6,
+      "blur": 0.62,
+      "noise": 9.0,
+      "light": 0.8,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-6681",
+      "po_date": "2026-08-09",
+      "buyer_name": "Natarajan-Chadha",
+      "vendor_name": "Iyengar, Sridhar and Gokhale",
+      "vendor_gstin": "32OPUCY9694P1ZL",
+      "line_items": [
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 12.0,
+        "rate": 402.0,
+        "amount": 4824.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 249.0,
+        "amount": 1245.0
+       }
+      ],
+      "total": 6069.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-040",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "total_mismatch",
+     "fields": [
+      "invoice.grand_total"
+     ],
+     "detail": "total off by -3788"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-040/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.56,
+      "blur": 0.69,
+      "noise": 6.9,
+      "light": 0.86,
+      "jpeg": 56,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Randhawa, Sheth and Ratti",
+      "seller_gstin": "10GTCCE0615A2ZK",
+      "buyer_name": "Chad, Dutt and Garde",
+      "buyer_gstin": "10SELCD3938P2ZK",
+      "invoice_number": "GST/26-27/4667",
+      "invoice_date": "2026-07-22",
+      "po_reference": "PO-2026-2001",
+      "place_of_supply": "Bihar (10)",
+      "line_items": [
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 7.0,
+        "rate": 623.12,
+        "gst_rate": 18.0,
+        "amount": 4361.84
+       },
+       {
+        "description": "Wired USB keyboard (full size)",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 628.0,
+        "gst_rate": 18.0,
+        "amount": 2512.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 20.0,
+        "rate": 329.0,
+        "gst_rate": 18.0,
+        "amount": 6580.0
+       }
+      ],
+      "taxable_value": 13453.84,
+      "cgst": 1210.85,
+      "sgst": 1210.85,
+      "igst": null,
+      "grand_total": 12087.53
+     }
+    },
+    "purchase_order": {
+     "image": "pay-040/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.97,
+      "blur": 0.78,
+      "noise": 8.8,
+      "light": 0.87,
+      "jpeg": 59,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-2001",
+      "po_date": "2026-07-11",
+      "buyer_name": "Chad, Dutt and Garde",
+      "vendor_name": "Randhawa, Sheth and Ratti",
+      "vendor_gstin": "10GTCCE0615A2ZK",
+      "line_items": [
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 630.0,
+        "amount": 7560.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 628.0,
+        "amount": 2512.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 20.0,
+        "rate": 329.0,
+        "amount": 6580.0
+       }
+      ],
+      "total": 16652.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-041",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-041/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Bala and Sons",
+      "seller_gstin": "01HXOCM3216U1ZJ",
+      "buyer_name": "Shroff, Dhingra and Som",
+      "buyer_gstin": "01TUDCF5422V2ZO",
+      "invoice_number": "GST/26-27/3889",
+      "invoice_date": "2026-07-12",
+      "po_reference": "PO-2026-2002",
+      "place_of_supply": "Jammu and Kashmir (01)",
+      "line_items": [
+       {
+        "description": "Mesh office chair with lumbar support",
+        "hsn": "9401",
+        "qty": 17.0,
+        "rate": 6525.0,
+        "gst_rate": 18.0,
+        "amount": 110925.0
+       },
+       {
+        "description": "Alcohol hand rub 5 ltr",
+        "hsn": "3808",
+        "qty": 50.0,
+        "rate": 1059.0,
+        "gst_rate": 18.0,
+        "amount": 52950.0
+       }
+      ],
+      "taxable_value": 163875.0,
+      "cgst": 14748.75,
+      "sgst": 14748.75,
+      "igst": null,
+      "grand_total": 193372.5
+     }
+    },
+    "purchase_order": {
+     "image": "pay-041/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-2002",
+      "po_date": "2026-06-16",
+      "buyer_name": "Shroff, Dhingra and Som",
+      "vendor_name": "Bala and Sons",
+      "vendor_gstin": "01HXOCM3216U1ZJ",
+      "line_items": [
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 20.0,
+        "rate": 6525.0,
+        "amount": 130500.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 50.0,
+        "rate": 1059.0,
+        "amount": 52950.0
+       }
+      ],
+      "total": 183450.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-042",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "line_not_on_po",
+     "detail": "Blue ball pen box/10 not ordered",
+     "fields": [
+      "invoice.line_items[1].description"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-042/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.13,
+      "blur": 0.78,
+      "noise": 11.4,
+      "light": 0.85,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Palla, Dugal and Deep",
+      "seller_gstin": "26IDGCI4883L1ZM",
+      "buyer_name": "Atwal Ltd",
+      "buyer_gstin": "26PCGCK4672R1Z8",
+      "invoice_number": "INV/26-27/4874",
+      "invoice_date": "2026-06-20",
+      "po_reference": "4500052820",
+      "place_of_supply": "Dadra and Nagar Haveli and Daman and Diu (26)",
+      "line_items": [
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 20.0,
+        "rate": 1081.0,
+        "gst_rate": 18.0,
+        "amount": 21620.0
+       },
+       {
+        "description": "Blue ball pen box/10",
+        "hsn": "9608",
+        "qty": 1.0,
+        "rate": 64.0,
+        "gst_rate": 18.0,
+        "amount": 64.0
+       },
+       {
+        "description": "Cleaning services per month",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 19959.0,
+        "gst_rate": 18.0,
+        "amount": 19959.0
+       },
+       {
+        "description": "D-Link Cat6 UTP cable box",
+        "hsn": "8544",
+        "qty": 5.0,
+        "rate": 7132.0,
+        "gst_rate": 18.0,
+        "amount": 35660.0
+       }
+      ],
+      "taxable_value": 77303.0,
+      "cgst": 6957.27,
+      "sgst": 6957.27,
+      "igst": null,
+      "grand_total": 91217.54
+     }
+    },
+    "purchase_order": {
+     "image": "pay-042/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.46,
+      "blur": 0.74,
+      "noise": 10.1,
+      "light": 0.92,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500052820",
+      "po_date": "2026-06-07",
+      "buyer_name": "Atwal Ltd",
+      "vendor_name": "Palla, Dugal and Deep",
+      "vendor_gstin": "26IDGCI4883L1ZM",
+      "line_items": [
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 20.0,
+        "rate": 1081.0,
+        "amount": 21620.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 19959.0,
+        "amount": 19959.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 5.0,
+        "rate": 7132.0,
+        "amount": 35660.0
+       }
+      ],
+      "total": 77239.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-043",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "qty_over_po",
+     "detail": "14 billed vs 10 ordered",
+     "fields": [
+      "invoice.line_items[0].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-043/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.88,
+      "blur": 0.56,
+      "noise": 7.0,
+      "light": 0.83,
+      "jpeg": 63,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Chauhan, Vyas and Dewan",
+      "seller_gstin": "17FNUCM0142M1Z7",
+      "buyer_name": "Hayer-Kakar",
+      "buyer_gstin": "17ZWSCL7861M1ZK",
+      "invoice_number": "TI/26-27/2827",
+      "invoice_date": "2026-06-30",
+      "po_reference": "PO/MUM/26-27/554",
+      "place_of_supply": "Meghalaya (17)",
+      "line_items": [
+       {
+        "description": "20 W LED batten",
+        "hsn": "9405",
+        "qty": 14.0,
+        "rate": 268.0,
+        "gst_rate": 18.0,
+        "amount": 3752.0
+       },
+       {
+        "description": "Revolving chair ergonomic",
+        "hsn": "9401",
+        "qty": 20.0,
+        "rate": 6634.0,
+        "gst_rate": 18.0,
+        "amount": 132680.0
+       }
+      ],
+      "taxable_value": 136432.0,
+      "cgst": 12278.88,
+      "sgst": 12278.88,
+      "igst": null,
+      "grand_total": 160989.76
+     }
+    },
+    "purchase_order": {
+     "image": "pay-043/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.36,
+      "blur": 0.69,
+      "noise": 7.4,
+      "light": 0.85,
+      "jpeg": 51,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/MUM/26-27/554",
+      "po_date": "2026-06-22",
+      "buyer_name": "Hayer-Kakar",
+      "vendor_name": "Chauhan, Vyas and Dewan",
+      "vendor_gstin": "17FNUCM0142M1Z7",
+      "line_items": [
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 10.0,
+        "rate": 268.0,
+        "amount": 2680.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 20.0,
+        "rate": 6634.0,
+        "amount": 132680.0
+       }
+      ],
+      "total": 135360.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-044",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "rate_above_po",
+     "detail": "rate above PO",
+     "fields": [
+      "invoice.line_items[0].rate"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-044/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.97,
+      "blur": 1.22,
+      "noise": 22.6,
+      "light": 0.65,
+      "jpeg": 38,
+      "scale": 0.42
+     },
+     "occluded": [
+      "line_items[1].rate"
+     ],
+     "truth": {
+      "seller_name": "Krishnamurthy and Sons",
+      "seller_gstin": "08RUOCP3757V1ZI",
+      "buyer_name": "Thaker-Khosla",
+      "buyer_gstin": "15OTUCK7357S1ZT",
+      "invoice_number": "INV/26-27/4854",
+      "invoice_date": "2026-04-17",
+      "po_reference": "PO-2026-1668",
+      "place_of_supply": "Mizoram (15)",
+      "line_items": [
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 196.35,
+        "gst_rate": 18.0,
+        "amount": 1963.5
+       },
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 3.0,
+        "rate": 721.0,
+        "gst_rate": 18.0,
+        "amount": 2163.0
+       }
+      ],
+      "taxable_value": 4126.5,
+      "cgst": null,
+      "sgst": null,
+      "igst": 742.77,
+      "grand_total": 4869.27
+     }
+    },
+    "purchase_order": {
+     "image": "pay-044/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.94,
+      "blur": 1.3,
+      "noise": 26.4,
+      "light": 0.72,
+      "jpeg": 26,
+      "scale": 0.43
+     },
+     "occluded": [
+      "line_items[0].qty"
+     ],
+     "truth": {
+      "po_number": "PO-2026-1668",
+      "po_date": "2026-04-05",
+      "buyer_name": "Thaker-Khosla",
+      "vendor_name": "Krishnamurthy and Sons",
+      "vendor_gstin": "08RUOCP3757V1ZI",
+      "line_items": [
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 163.0,
+        "amount": 4075.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 4.0,
+        "rate": 721.0,
+        "amount": 2884.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 20.0,
+        "rate": 7711.0,
+        "amount": 154220.0
+       }
+      ],
+      "total": 161179.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-045",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "wrong_tax_split",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst"
+     ],
+     "detail": "CGST/SGST on inter-state"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-045/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Nanda, Lad and Saini",
+      "seller_gstin": "13EPQCP5510X1ZL",
+      "buyer_name": "Bhat Ltd",
+      "buyer_gstin": "11SOFCX8663F1ZX",
+      "invoice_number": "INV/26-27/0150",
+      "invoice_date": "2026-06-14",
+      "po_reference": "4500035972",
+      "place_of_supply": "Sikkim (11)",
+      "line_items": [
+       {
+        "description": "Kangaro HD-45 stapler",
+        "hsn": "8472",
+        "qty": 25.0,
+        "rate": 422.74,
+        "gst_rate": 18.0,
+        "amount": 10568.5
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 10.0,
+        "rate": 8528.0,
+        "gst_rate": 18.0,
+        "amount": 85280.0
+       },
+       {
+        "description": "Refined sugar 5kg bag",
+        "hsn": "1701",
+        "qty": 1.0,
+        "rate": 221.0,
+        "gst_rate": 5.0,
+        "amount": 221.0
+       },
+       {
+        "description": "Laser toner 88A",
+        "hsn": "8443",
+        "qty": 4.0,
+        "rate": 2223.0,
+        "gst_rate": 18.0,
+        "amount": 8892.0
+       }
+      ],
+      "taxable_value": 104961.5,
+      "cgst": 9432.17,
+      "sgst": 9432.17,
+      "igst": null,
+      "grand_total": 123825.84
+     }
+    },
+    "purchase_order": {
+     "image": "pay-045/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500035972",
+      "po_date": "2026-06-03",
+      "buyer_name": "Bhat Ltd",
+      "vendor_name": "Nanda, Lad and Saini",
+      "vendor_gstin": "13EPQCP5510X1ZL",
+      "line_items": [
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 25.0,
+        "rate": 433.0,
+        "amount": 10825.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 10.0,
+        "rate": 8528.0,
+        "amount": 85280.0
+       },
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 1.0,
+        "rate": 221.0,
+        "amount": 221.0
+       },
+       {
+        "description": "HP 88A black toner cartridge",
+        "hsn": "8443",
+        "qty": 4.0,
+        "rate": 2223.0,
+        "amount": 8892.0
+       }
+      ],
+      "total": 105218.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-046",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "total_mismatch",
+     "fields": [
+      "invoice.grand_total"
+     ],
+     "detail": "total off by +161"
+    },
+    {
+     "type": "qty_over_po",
+     "detail": "16 billed vs 12 ordered",
+     "fields": [
+      "invoice.line_items[1].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-046/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Shanker-Varughese",
+      "seller_gstin": "36SBUCE5011M2ZO",
+      "buyer_name": "Thaker-De",
+      "buyer_gstin": "36XFLCP1723D1ZQ",
+      "invoice_number": "TI/26-27/3351",
+      "invoice_date": "2026-08-30",
+      "po_reference": "PO-2026-7573",
+      "place_of_supply": "Telangana (36)",
+      "line_items": [
+       {
+        "description": "Tata Tea Premium 1kg",
+        "hsn": "0902",
+        "qty": 20.0,
+        "rate": 554.62,
+        "gst_rate": 5.0,
+        "amount": 11092.4
+       },
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 16.0,
+        "rate": 130.0,
+        "gst_rate": 18.0,
+        "amount": 2080.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 1.0,
+        "rate": 6720.0,
+        "gst_rate": 18.0,
+        "amount": 6720.0
+       }
+      ],
+      "taxable_value": 19892.4,
+      "cgst": 1069.31,
+      "sgst": 1069.31,
+      "igst": null,
+      "grand_total": 22192.02
+     }
+    },
+    "purchase_order": {
+     "image": "pay-046/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-7573",
+      "po_date": "2026-08-02",
+      "buyer_name": "Thaker-De",
+      "vendor_name": "Shanker-Varughese",
+      "vendor_gstin": "36SBUCE5011M2ZO",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 4.0,
+        "rate": 266.0,
+        "amount": 1064.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 20.0,
+        "rate": 571.0,
+        "amount": 11420.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 12.0,
+        "rate": 130.0,
+        "amount": 1560.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 1.0,
+        "rate": 6720.0,
+        "amount": 6720.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 4.0,
+        "rate": 206.0,
+        "amount": 824.0
+       }
+      ],
+      "total": 21588.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-047",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-047/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.66,
+      "blur": 0.48,
+      "noise": 10.3,
+      "light": 0.83,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Doshi, Viswanathan and Uppal",
+      "seller_gstin": "37KVMCL4536P1Z9",
+      "buyer_name": "Sarraf and Sons",
+      "buyer_gstin": "37OOLCD0382M2Z1",
+      "invoice_number": "TI/26-27/2918",
+      "invoice_date": "2026-07-24",
+      "po_reference": "4500099446",
+      "place_of_supply": "Andhra Pradesh (37)",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 309.0,
+        "gst_rate": 18.0,
+        "amount": 309.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 27.0,
+        "rate": 1574.0,
+        "gst_rate": 18.0,
+        "amount": 42498.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 69.48,
+        "gst_rate": 18.0,
+        "amount": 277.92
+       }
+      ],
+      "taxable_value": 43084.92,
+      "cgst": 3877.64,
+      "sgst": 3877.64,
+      "igst": null,
+      "grand_total": 50840.21
+     }
+    },
+    "purchase_order": {
+     "image": "pay-047/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.67,
+      "blur": 0.6,
+      "noise": 9.7,
+      "light": 0.91,
+      "jpeg": 50,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500099446",
+      "po_date": "2026-07-20",
+      "buyer_name": "Sarraf and Sons",
+      "vendor_name": "Doshi, Viswanathan and Uppal",
+      "vendor_gstin": "37KVMCL4536P1Z9",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 309.0,
+        "amount": 309.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 900.0,
+        "amount": 9000.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 50.0,
+        "rate": 1574.0,
+        "amount": 78700.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 4.0,
+        "rate": 72.0,
+        "amount": 288.0
+       }
+      ],
+      "total": 88297.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-048",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "rate_above_po",
+     "detail": "rate above PO",
+     "fields": [
+      "invoice.line_items[1].rate"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-048/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": 3.71,
+      "blur": 0.98,
+      "noise": 25.9,
+      "light": 0.75,
+      "jpeg": 35,
+      "scale": 0.49
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Agrawal, Doctor and Gera",
+      "seller_gstin": "10IXNCG9189W1ZU",
+      "buyer_name": "Solanki PLC",
+      "buyer_gstin": "10LABCB3006G2ZB",
+      "invoice_number": "GST/26-27/1840",
+      "invoice_date": "2026-08-21",
+      "po_reference": "4500061779",
+      "place_of_supply": "Bihar (10)",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 20.0,
+        "rate": 277.0,
+        "gst_rate": 18.0,
+        "amount": 5540.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 1.0,
+        "rate": 326.01,
+        "gst_rate": 18.0,
+        "amount": 326.01
+       }
+      ],
+      "taxable_value": 5866.01,
+      "cgst": 527.94,
+      "sgst": 527.94,
+      "igst": null,
+      "grand_total": 6921.89
+     }
+    },
+    "purchase_order": {
+     "image": "pay-048/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": -0.69,
+      "blur": 1.31,
+      "noise": 26.2,
+      "light": 0.74,
+      "jpeg": 38,
+      "scale": 0.5
+     },
+     "occluded": [
+      "total"
+     ],
+     "truth": {
+      "po_number": "4500061779",
+      "po_date": "2026-07-30",
+      "buyer_name": "Solanki PLC",
+      "vendor_name": "Agrawal, Doctor and Gera",
+      "vendor_gstin": "10IXNCG9189W1ZU",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 20.0,
+        "rate": 277.0,
+        "amount": 5540.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 1.0,
+        "rate": 271.0,
+        "amount": 271.0
+       }
+      ],
+      "total": 5811.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-049",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "gstin_mismatch",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ],
+     "detail": "invoice issued under a different GSTIN than the PO vendor"
+    },
+    {
+     "type": "wrong_tax_split",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst"
+     ],
+     "detail": "CGST/SGST on inter-state"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-049/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Dara, Bhatia and Nanda",
+      "seller_gstin": "16PKACL4756P1Z0",
+      "buyer_name": "Vasa, Wali and Subramanian",
+      "buyer_gstin": "10ZMKCM6491V1Z7",
+      "invoice_number": "GST/26-27/2518",
+      "invoice_date": "2026-05-01",
+      "po_reference": "PO-2026-3175",
+      "place_of_supply": "Bihar (10)",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 25.0,
+        "rate": 271.0,
+        "gst_rate": 18.0,
+        "amount": 6775.0
+       },
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23529.0,
+        "gst_rate": 18.0,
+        "amount": 23529.0
+       },
+       {
+        "description": "Blue ball pen box/10",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 69.0,
+        "gst_rate": 18.0,
+        "amount": 1725.0
+       },
+       {
+        "description": "Sanitiser 5L jerry can",
+        "hsn": "3808",
+        "qty": 1.0,
+        "rate": 1085.0,
+        "gst_rate": 18.0,
+        "amount": 1085.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 4.0,
+        "rate": 368.0,
+        "gst_rate": 18.0,
+        "amount": 1472.0
+       }
+      ],
+      "taxable_value": 34586.0,
+      "cgst": 3112.74,
+      "sgst": 3112.74,
+      "igst": null,
+      "grand_total": 40811.48
+     }
+    },
+    "purchase_order": {
+     "image": "pay-049/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-3175",
+      "po_date": "2026-04-10",
+      "buyer_name": "Vasa, Wali and Subramanian",
+      "vendor_name": "Dara, Bhatia and Nanda",
+      "vendor_gstin": "16IBWCT0232W2Z2",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 25.0,
+        "rate": 271.0,
+        "amount": 6775.0
+       },
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 23529.0,
+        "amount": 23529.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 69.0,
+        "amount": 1725.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 1.0,
+        "rate": 1085.0,
+        "amount": 1085.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 5.0,
+        "rate": 368.0,
+        "amount": 1840.0
+       }
+      ],
+      "total": 34954.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-050",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-050/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Bhandari and Sons",
+      "seller_gstin": "26ZBDCC9381G1ZQ",
+      "buyer_name": "Malhotra Inc",
+      "buyer_gstin": "38XBLCK3514J1ZL",
+      "invoice_number": "GST/26-27/2002",
+      "invoice_date": "2026-06-08",
+      "po_reference": "PO/HYD/26-27/640",
+      "place_of_supply": "Ladakh (38)",
+      "line_items": [
+       {
+        "description": "Blue ball pen box/10",
+        "hsn": "9608",
+        "qty": 5.0,
+        "rate": 66.86,
+        "gst_rate": 18.0,
+        "amount": 334.3
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 10.0,
+        "rate": 446.0,
+        "gst_rate": 18.0,
+        "amount": 4460.0
+       },
+       {
+        "description": "2.4GHz wireless optical mouse",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 591.0,
+        "gst_rate": 18.0,
+        "amount": 29550.0
+       },
+       {
+        "description": "Revolving chair ergonomic",
+        "hsn": "9401",
+        "qty": 1.0,
+        "rate": 8399.0,
+        "gst_rate": 18.0,
+        "amount": 8399.0
+       }
+      ],
+      "taxable_value": 42743.3,
+      "cgst": null,
+      "sgst": null,
+      "igst": 7693.79,
+      "grand_total": 50437.09
+     }
+    },
+    "purchase_order": {
+     "image": "pay-050/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/HYD/26-27/640",
+      "po_date": "2026-05-28",
+      "buyer_name": "Malhotra Inc",
+      "vendor_name": "Bhandari and Sons",
+      "vendor_gstin": "26ZBDCC9381G1ZQ",
+      "line_items": [
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 5.0,
+        "rate": 70.0,
+        "amount": 350.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 10.0,
+        "rate": 446.0,
+        "amount": 4460.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 50.0,
+        "rate": 591.0,
+        "amount": 29550.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 1.0,
+        "rate": 8399.0,
+        "amount": 8399.0
+       },
+       {
+        "description": "Cat6 ethernet cable (305 m box)",
+        "hsn": "8544",
+        "qty": 4.0,
+        "rate": 6005.0,
+        "amount": 24020.0
+       }
+      ],
+      "total": 66779.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-051",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-051/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Tripathi Group",
+      "seller_gstin": "15BYZCJ8348X2ZG",
+      "buyer_name": "Bala, Bhatnagar and Savant",
+      "buyer_gstin": "32WJICF3484E1ZN",
+      "invoice_number": "TI/26-27/0574",
+      "invoice_date": "2026-06-09",
+      "po_reference": "PO-2026-7705",
+      "place_of_supply": "Kerala (32)",
+      "line_items": [
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 154.0,
+        "gst_rate": 18.0,
+        "amount": 3850.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 20.0,
+        "rate": 337.25,
+        "gst_rate": 18.0,
+        "amount": 6745.0
+       }
+      ],
+      "taxable_value": 10595.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 1907.1,
+      "grand_total": 12502.1
+     }
+    },
+    "purchase_order": {
+     "image": "pay-051/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO-2026-7705",
+      "po_date": "2026-05-14",
+      "buyer_name": "Bala, Bhatnagar and Savant",
+      "vendor_name": "Tripathi Group",
+      "vendor_gstin": "15BYZCJ8348X2ZG",
+      "line_items": [
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 25.0,
+        "rate": 154.0,
+        "amount": 3850.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 20.0,
+        "rate": 341.0,
+        "amount": 6820.0
+       }
+      ],
+      "total": 10670.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-052",
+   "pack": "payables",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-052/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.1,
+      "blur": 0.44,
+      "noise": 7.6,
+      "light": 0.86,
+      "jpeg": 55,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Tiwari-Vala",
+      "seller_gstin": "11MZQCY3945C2ZJ",
+      "buyer_name": "Malhotra Group",
+      "buyer_gstin": "36UYACH7758F2ZH",
+      "invoice_number": "GST/26-27/3083",
+      "invoice_date": "2026-07-08",
+      "po_reference": "4500020048",
+      "place_of_supply": "Telangana (36)",
+      "line_items": [
+       {
+        "description": "Camlin WB marker 4 colour set",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 140.0,
+        "gst_rate": 18.0,
+        "amount": 1400.0
+       },
+       {
+        "description": "Dell KB216 keyboard",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 637.0,
+        "gst_rate": 18.0,
+        "amount": 6370.0
+       },
+       {
+        "description": "Office box file set of 10",
+        "hsn": "4820",
+        "qty": 1.0,
+        "rate": 242.0,
+        "gst_rate": 18.0,
+        "amount": 242.0
+       }
+      ],
+      "taxable_value": 8012.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 1442.16,
+      "grand_total": 9454.16
+     }
+    },
+    "purchase_order": {
+     "image": "pay-052/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.72,
+      "blur": 0.78,
+      "noise": 12.0,
+      "light": 0.8,
+      "jpeg": 63,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500020048",
+      "po_date": "2026-06-09",
+      "buyer_name": "Malhotra Group",
+      "vendor_name": "Tiwari-Vala",
+      "vendor_gstin": "11MZQCY3945C2ZJ",
+      "line_items": [
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 20.0,
+        "rate": 1076.0,
+        "amount": 21520.0
+       },
+       {
+        "description": "Stapler heavy duty",
+        "hsn": "8472",
+        "qty": 5.0,
+        "rate": 432.0,
+        "amount": 2160.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 140.0,
+        "amount": 1400.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 637.0,
+        "amount": 6370.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 1.0,
+        "rate": 242.0,
+        "amount": 242.0
+       }
+      ],
+      "total": 31692.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-053",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-053/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.91,
+      "blur": 1.06,
+      "noise": 27.6,
+      "light": 0.69,
+      "jpeg": 35,
+      "scale": 0.47
+     },
+     "occluded": [
+      "line_items[0].hsn"
+     ],
+     "truth": {
+      "seller_name": "Walla, Sridhar and Tripathi",
+      "seller_gstin": "10HOXCO8554H1ZZ",
+      "buyer_name": "Virk LLC",
+      "buyer_gstin": "10YXKCG5739M2ZC",
+      "invoice_number": "GST/26-27/4875",
+      "invoice_date": "2026-06-11",
+      "po_reference": "PO/BLR/26-27/498",
+      "place_of_supply": "Bihar (10)",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 10.0,
+        "rate": 1545.18,
+        "gst_rate": 18.0,
+        "amount": 15451.8
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 5.0,
+        "rate": 53.0,
+        "gst_rate": 18.0,
+        "amount": 265.0
+       },
+       {
+        "description": "Mesh office chair with lumbar support",
+        "hsn": "9401",
+        "qty": 50.0,
+        "rate": 6710.0,
+        "gst_rate": 18.0,
+        "amount": 335500.0
+       }
+      ],
+      "taxable_value": 351216.8,
+      "cgst": 31609.51,
+      "sgst": 31609.51,
+      "igst": null,
+      "grand_total": 414435.82
+     }
+    },
+    "purchase_order": {
+     "image": "pay-053/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": 3.58,
+      "blur": 1.39,
+      "noise": 21.0,
+      "light": 0.68,
+      "jpeg": 25,
+      "scale": 0.44
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/BLR/26-27/498",
+      "po_date": "2026-05-27",
+      "buyer_name": "Virk LLC",
+      "vendor_name": "Walla, Sridhar and Tripathi",
+      "vendor_gstin": "10HOXCO8554H1ZZ",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 10.0,
+        "rate": 1571.0,
+        "amount": 15710.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 53.0,
+        "amount": 530.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 50.0,
+        "rate": 6710.0,
+        "amount": 335500.0
+       }
+      ],
+      "total": 351740.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-054",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "qty_over_po",
+     "detail": "72 billed vs 50 ordered",
+     "fields": [
+      "invoice.line_items[1].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-054/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": -4.65,
+      "blur": 1.16,
+      "noise": 26.6,
+      "light": 0.71,
+      "jpeg": 30,
+      "scale": 0.54
+     },
+     "occluded": [
+      "seller_gstin"
+     ],
+     "truth": {
+      "seller_name": "Jain, Sem and Devan",
+      "seller_gstin": "12ITXCU5305T2Z5",
+      "buyer_name": "Dara-Ramanathan",
+      "buyer_gstin": "20YUBCL6709T1ZC",
+      "invoice_number": "INV/26-27/0084",
+      "invoice_date": "2026-06-15",
+      "po_reference": "PO/HYD/26-27/532",
+      "place_of_supply": "Jharkhand (20)",
+      "line_items": [
+       {
+        "description": "Dell KB216 keyboard",
+        "hsn": "8471",
+        "qty": 5.0,
+        "rate": 625.0,
+        "gst_rate": 18.0,
+        "amount": 3125.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 72.0,
+        "rate": 8977.0,
+        "gst_rate": 18.0,
+        "amount": 646344.0
+       }
+      ],
+      "taxable_value": 649469.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 116904.42,
+      "grand_total": 766373.42
+     }
+    },
+    "purchase_order": {
+     "image": "pay-054/po.jpg",
+     "template": "erp",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.27,
+      "blur": 0.96,
+      "noise": 20.1,
+      "light": 0.66,
+      "jpeg": 28,
+      "scale": 0.53
+     },
+     "occluded": [
+      "line_items[1].amount"
+     ],
+     "truth": {
+      "po_number": "PO/HYD/26-27/532",
+      "po_date": "2026-05-19",
+      "buyer_name": "Dara-Ramanathan",
+      "vendor_name": "Jain, Sem and Devan",
+      "vendor_gstin": "12ITXCU5305T2Z5",
+      "line_items": [
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 5.0,
+        "rate": 625.0,
+        "amount": 3125.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 50.0,
+        "rate": 8977.0,
+        "amount": 448850.0
+       }
+      ],
+      "total": 451975.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-055",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-055/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Mutti-Bora",
+      "seller_gstin": "29ZRYCO8395G2ZL",
+      "buyer_name": "Khosla, Sangha and Bora",
+      "buyer_gstin": "02ZMHCH3666E1ZG",
+      "invoice_number": "TI/26-27/0980",
+      "invoice_date": "2026-04-19",
+      "po_reference": "4500046719",
+      "place_of_supply": "Himachal Pradesh (02)",
+      "line_items": [
+       {
+        "description": "Laptop stand (alu)",
+        "hsn": "8473",
+        "qty": 1.0,
+        "rate": 1532.0,
+        "gst_rate": 18.0,
+        "amount": 1532.0
+       },
+       {
+        "description": "Blue ball pen box/10",
+        "hsn": "9608",
+        "qty": 50.0,
+        "rate": 55.68,
+        "gst_rate": 18.0,
+        "amount": 2784.0
+       },
+       {
+        "description": "Wired USB keyboard (full size)",
+        "hsn": "8471",
+        "qty": 5.0,
+        "rate": 709.0,
+        "gst_rate": 18.0,
+        "amount": 3545.0
+       },
+       {
+        "description": "Logitech M235 cordless mouse",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 620.0,
+        "gst_rate": 18.0,
+        "amount": 6200.0
+       }
+      ],
+      "taxable_value": 14061.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 2530.98,
+      "grand_total": 16591.98
+     }
+    },
+    "purchase_order": {
+     "image": "pay-055/po.png",
+     "template": "classic",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500046719",
+      "po_date": "2026-04-13",
+      "buyer_name": "Khosla, Sangha and Bora",
+      "vendor_name": "Mutti-Bora",
+      "vendor_gstin": "29ZRYCO8395G2ZL",
+      "line_items": [
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 1.0,
+        "rate": 1532.0,
+        "amount": 1532.0
+       },
+       {
+        "description": "Ball pens blue (box of 10)",
+        "hsn": "9608",
+        "qty": 50.0,
+        "rate": 58.0,
+        "amount": 2900.0
+       },
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 5.0,
+        "rate": 709.0,
+        "amount": 3545.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 10.0,
+        "rate": 620.0,
+        "amount": 6200.0
+       }
+      ],
+      "total": 14177.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-056",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-056/invoice.jpg",
+     "template": "boxed",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.49,
+      "blur": 1.17,
+      "noise": 21.6,
+      "light": 0.68,
+      "jpeg": 35,
+      "scale": 0.45
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Mitter Inc",
+      "seller_gstin": "38COZCQ6712H2ZT",
+      "buyer_name": "Pau and Sons",
+      "buyer_gstin": "10CTWCA5422Z2ZM",
+      "invoice_number": "INV/26-27/1387",
+      "invoice_date": "2026-08-16",
+      "po_reference": "4500027294",
+      "place_of_supply": "Bihar (10)",
+      "line_items": [
+       {
+        "description": "Sugar (5 KG)",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 242.0,
+        "gst_rate": 5.0,
+        "amount": 1210.0
+       },
+       {
+        "description": "20 W LED batten",
+        "hsn": "9405",
+        "qty": 4.0,
+        "rate": 252.0,
+        "gst_rate": 18.0,
+        "amount": 1008.0
+       },
+       {
+        "description": "JK Copier A4 75gsm ream",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 260.0,
+        "gst_rate": 18.0,
+        "amount": 260.0
+       }
+      ],
+      "taxable_value": 2478.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 288.74,
+      "grand_total": 2766.74
+     }
+    },
+    "purchase_order": {
+     "image": "pay-056/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "hard",
+      "angle": -0.21,
+      "blur": 1.38,
+      "noise": 23.3,
+      "light": 0.66,
+      "jpeg": 36,
+      "scale": 0.45
+     },
+     "occluded": [
+      "line_items[1].qty"
+     ],
+     "truth": {
+      "po_number": "4500027294",
+      "po_date": "2026-07-29",
+      "buyer_name": "Pau and Sons",
+      "vendor_name": "Mitter Inc",
+      "vendor_gstin": "38COZCQ6712H2ZT",
+      "line_items": [
+       {
+        "description": "Sugar 5 kg",
+        "hsn": "1701",
+        "qty": 5.0,
+        "rate": 242.0,
+        "amount": 1210.0
+       },
+       {
+        "description": "LED tube light 20W",
+        "hsn": "9405",
+        "qty": 4.0,
+        "rate": 252.0,
+        "amount": 1008.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 260.0,
+        "amount": 260.0
+       }
+      ],
+      "total": 2478.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-057",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-057/invoice.png",
+     "template": "boxed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Devan-Sibal",
+      "seller_gstin": "24LHECR0632C1ZC",
+      "buyer_name": "Chandra Group",
+      "buyer_gstin": "03AZZCK7406Y1ZT",
+      "invoice_number": "TI/26-27/2868",
+      "invoice_date": "2026-08-07",
+      "po_reference": "PO/HYD/26-27/332",
+      "place_of_supply": "Punjab (03)",
+      "line_items": [
+       {
+        "description": "Facility housekeeping - monthly charges",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 20845.0,
+        "gst_rate": 18.0,
+        "amount": 20845.0
+       },
+       {
+        "description": "Mesh office chair with lumbar support",
+        "hsn": "9401",
+        "qty": 50.0,
+        "rate": 7092.0,
+        "gst_rate": 18.0,
+        "amount": 354600.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 11.0,
+        "rate": 1253.0,
+        "gst_rate": 18.0,
+        "amount": 13783.0
+       },
+       {
+        "description": "Logitech M235 cordless mouse",
+        "hsn": "8471",
+        "qty": 25.0,
+        "rate": 626.0,
+        "gst_rate": 18.0,
+        "amount": 15650.0
+       }
+      ],
+      "taxable_value": 404878.0,
+      "cgst": null,
+      "sgst": null,
+      "igst": 72878.04,
+      "grand_total": 477756.04
+     }
+    },
+    "purchase_order": {
+     "image": "pay-057/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "PO/HYD/26-27/332",
+      "po_date": "2026-07-20",
+      "buyer_name": "Chandra Group",
+      "vendor_name": "Devan-Sibal",
+      "vendor_gstin": "24LHECR0632C1ZC",
+      "line_items": [
+       {
+        "description": "Housekeeping services (monthly)",
+        "hsn": "998533",
+        "qty": 1.0,
+        "rate": 20845.0,
+        "amount": 20845.0
+       },
+       {
+        "description": "Box files (pack of 10)",
+        "hsn": "4820",
+        "qty": 12.0,
+        "rate": 159.0,
+        "amount": 1908.0
+       },
+       {
+        "description": "Ergonomic office chair",
+        "hsn": "9401",
+        "qty": 50.0,
+        "rate": 7092.0,
+        "amount": 354600.0
+       },
+       {
+        "description": "Hand sanitizer 5 litre can",
+        "hsn": "3808",
+        "qty": 20.0,
+        "rate": 1253.0,
+        "amount": 25060.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 25.0,
+        "rate": 626.0,
+        "amount": 15650.0
+       }
+      ],
+      "total": 418063.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-058",
+   "pack": "payables",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "line_not_on_po",
+     "detail": "Tata Tea Premium 1kg not ordered",
+     "fields": [
+      "invoice.line_items[2].description"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "invoice": {
+     "image": "pay-058/invoice.png",
+     "template": "modern",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Gaba-Kapur",
+      "seller_gstin": "38KLKCD0255E2ZV",
+      "buyer_name": "Sankar PLC",
+      "buyer_gstin": "38DAGCO9190N1ZG",
+      "invoice_number": "INV/26-27/3693",
+      "invoice_date": "2026-07-26",
+      "po_reference": "4500028591",
+      "place_of_supply": "Ladakh (38)",
+      "line_items": [
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 1.0,
+        "rate": 264.0,
+        "gst_rate": 18.0,
+        "amount": 264.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 12.0,
+        "rate": 123.87,
+        "gst_rate": 18.0,
+        "amount": 1486.44
+       },
+       {
+        "description": "Tata Tea Premium 1kg",
+        "hsn": "0902",
+        "qty": 10.0,
+        "rate": 504.0,
+        "gst_rate": 5.0,
+        "amount": 5040.0
+       }
+      ],
+      "taxable_value": 6790.44,
+      "cgst": 283.54,
+      "sgst": 283.54,
+      "igst": null,
+      "grand_total": 7357.52
+     }
+    },
+    "purchase_order": {
+     "image": "pay-058/po.png",
+     "template": "erp",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500028591",
+      "po_date": "2026-07-23",
+      "buyer_name": "Sankar PLC",
+      "vendor_name": "Gaba-Kapur",
+      "vendor_gstin": "38KLKCD0255E2ZV",
+      "line_items": [
+       {
+        "description": "USB keyboard",
+        "hsn": "8471",
+        "qty": 20.0,
+        "rate": 640.0,
+        "amount": 12800.0
+       },
+       {
+        "description": "Copier paper A4 75 GSM (500 sheets)",
+        "hsn": "4802",
+        "qty": 2.0,
+        "rate": 264.0,
+        "amount": 528.0
+       },
+       {
+        "description": "Laptop stand aluminium",
+        "hsn": "8473",
+        "qty": 4.0,
+        "rate": 1731.0,
+        "amount": 6924.0
+       },
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 12.0,
+        "rate": 129.0,
+        "amount": 1548.0
+       }
+      ],
+      "total": 21800.0
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "pay-059",
+   "pack": "payables",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "invoice": {
+     "image": "pay-059/invoice.jpg",
+     "template": "modern",
+     "degradation": {
+      "tier": "hard",
+      "angle": -1.35,
+      "blur": 0.96,
+      "noise": 26.8,
+      "light": 0.74,
+      "jpeg": 36,
+      "scale": 0.45
+     },
+     "occluded": [],
+     "truth": {
+      "seller_name": "Nori-Sama",
+      "seller_gstin": "12QGNCW1530V1ZY",
+      "buyer_name": "Parikh LLC",
+      "buyer_gstin": "12GGDCJ5035D1ZO",
+      "invoice_number": "TI/26-27/3786",
+      "invoice_date": "2026-08-16",
+      "po_reference": "4500030454",
+      "place_of_supply": "Arunachal Pradesh (12)",
+      "line_items": [
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 5.0,
+        "rate": 451.2,
+        "gst_rate": 5.0,
+        "amount": 2256.0
+       }
+      ],
+      "taxable_value": 2256.0,
+      "cgst": 56.4,
+      "sgst": 56.4,
+      "igst": null,
+      "grand_total": 2368.8
+     }
+    },
+    "purchase_order": {
+     "image": "pay-059/po.jpg",
+     "template": "classic",
+     "degradation": {
+      "tier": "hard",
+      "angle": -2.85,
+      "blur": 1.03,
+      "noise": 27.5,
+      "light": 0.73,
+      "jpeg": 33,
+      "scale": 0.51
+     },
+     "occluded": [],
+     "truth": {
+      "po_number": "4500030454",
+      "po_date": "2026-07-31",
+      "buyer_name": "Parikh LLC",
+      "vendor_name": "Nori-Sama",
+      "vendor_gstin": "12QGNCW1530V1ZY",
+      "line_items": [
+       {
+        "description": "Whiteboard markers assorted (set of 4)",
+        "hsn": "9608",
+        "qty": 10.0,
+        "rate": 172.0,
+        "amount": 1720.0
+       },
+       {
+        "description": "Wireless mouse",
+        "hsn": "8471",
+        "qty": 12.0,
+        "rate": 736.0,
+        "amount": 8832.0
+       },
+       {
+        "description": "Packaged tea 1 kg",
+        "hsn": "0902",
+        "qty": 5.0,
+        "rate": 470.0,
+        "amount": 2350.0
+       }
+      ],
+      "total": 12902.0
+     }
+    }
+   }
+  }
+ ]
+}

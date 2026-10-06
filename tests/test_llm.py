@@ -107,6 +107,7 @@ def test_cache_hit_skips_api(tmp_path):
     assert not first.cached and second.cached
     assert len(llm.api.chat.completions.calls) == 1
     assert llm.usage.requests == 1 and llm.usage.cached_requests == 1
+    assert second.usage.total_tokens == first.usage.total_tokens  # original cost reported on a hit
     other = llm.chat(model="m", system="s", user="u", images=[make_image("OTHER")])
     assert not other.cached  # different image bytes -> different key
 

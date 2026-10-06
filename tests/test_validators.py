@@ -119,3 +119,10 @@ def test_duplicate_index():
     assert idx.check("c3", 0xFFFF_0000, fp)[0].kind == "fields"
     assert idx.check("c4", 0xFFFF_0000, "other") == []
     assert hamming(0b1111, 0b0000) == 4
+
+
+def test_initials_any_order():
+    assert name_similarity("A. Doctor", "Aahana Doctor") >= 90
+    assert name_similarity("Y. Sethi", "Yashica Sethi") >= 90
+    assert name_similarity("SETHI Y", "Yashica Sethi") >= 90
+    assert name_similarity("A. Doctor", "Aahana Sethi") < 85

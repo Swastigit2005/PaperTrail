@@ -22,7 +22,8 @@ dependencies = [
 
 [project.optional-dependencies]
 ocr = ["pytesseract==0.3.13"]
-dev = ["pytest==9.1.1", "ruff==0.16.10", "pytesseract==0.3.13"]
+bench = ["faker==40.41.0", "matplotlib==3.11.2", "pytesseract==0.3.13"]
+dev = ["pytest==9.1.1", "ruff==0.16.10", "pytesseract==0.3.13", "faker==40.41.0", "matplotlib==3.11.2"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/papertrail"]

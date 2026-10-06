@@ -1,0 +1,485 @@
+{
+ "pack": "claims",
+ "config": "oracle_llm",
+ "pipeline": "oracle",
+ "matching": "rules+llm",
+ "n_pairs": 60,
+ "n_errors": 0,
+ "dataset": {
+  "seed": 1,
+  "total_pairs": 60
+ },
+ "detection": {
+  "micro": {
+   "precision": 0.8695652173913043,
+   "recall": 1.0,
+   "false_alarm_rate": 0.1
+  },
+  "per_type": {
+   "unprescribed_medicine": {
+    "tp": 8,
+    "fp": 6,
+    "fn": 0,
+    "support": 8,
+    "precision": 0.5714285714285714,
+    "recall": 1.0
+   },
+   "patient_name_mismatch": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "bill_before_prescription": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "implausible_quantity": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "arithmetic_error": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  }
+ },
+ "validation_catch_rate": {
+  "arithmetic_error": 1.0
+ },
+ "decision": {
+  "n": 60,
+  "accuracy": 0.95,
+  "discrepant_not_auto_approved": 1.0,
+  "clean_auto_approved": 0.9,
+  "clean_flagged": 0.1,
+  "confusion": {
+   "approve": {
+    "approve": 27,
+    "needs_review": 0,
+    "flag": 3
+   },
+   "needs_review": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 0
+   },
+   "flag": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 30
+   }
+  }
+ },
+ "ops": {
+  "model_latency_p50_s": null,
+  "model_latency_p95_s": null,
+  "tokens_per_pair_mean": null,
+  "tokens_per_pair_p95": null
+ },
+ "per_pair": {
+  "cla-000": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-001": {
+   "expected": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-002": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-003": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-004": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-005": {
+   "expected": [
+    "arithmetic_error",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "implausible_quantity"
+   ]
+  },
+  "cla-006": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-007": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-008": {
+   "expected": [
+    "bill_before_prescription",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-009": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-010": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-011": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-012": {
+   "expected": [
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "implausible_quantity"
+   ]
+  },
+  "cla-013": {
+   "expected": [
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "implausible_quantity",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-014": {
+   "expected": [
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "implausible_quantity"
+   ]
+  },
+  "cla-015": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-016": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  },
+  "cla-017": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-018": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-019": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-020": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-021": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-022": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-023": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-024": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-025": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-026": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-027": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-028": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-029": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-030": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-031": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-032": {
+   "expected": [
+    "arithmetic_error",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-033": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-034": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-035": {
+   "expected": [
+    "implausible_quantity",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "implausible_quantity",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-036": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-037": {
+   "expected": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ]
+  },
+  "cla-038": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-039": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-040": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-041": {
+   "expected": [
+    "arithmetic_error",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "implausible_quantity"
+   ]
+  },
+  "cla-042": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-043": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-044": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-045": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-046": {
+   "expected": [
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "implausible_quantity"
+   ]
+  },
+  "cla-047": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-048": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-049": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-050": {
+   "expected": [
+    "arithmetic_error",
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "bill_before_prescription"
+   ]
+  },
+  "cla-051": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-052": {
+   "expected": [
+    "bill_before_prescription",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-053": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-054": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  },
+  "cla-055": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-056": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-057": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-058": {
+   "expected": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-059": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  }
+ }
+}

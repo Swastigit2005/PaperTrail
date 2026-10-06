@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import re
 import threading
 import time
@@ -28,6 +29,7 @@ from papertrail.config import Settings
 from papertrail.core.images import PreparedImage
 
 M = TypeVar("M", bound=BaseModel)
+log = logging.getLogger(__name__)
 
 IMAGE_TOKEN_ESTIMATE = 1400  # measured ~1,309 prompt tokens for a <=1024px image on qwen3.8-27b
 CHARS_PER_TOKEN = 3.5
@@ -291,9 +293,15 @@ class LLMClient:
 
         cached = self.cache.get(key)
         if cached is not None:
-            usage = Usage(cached_requests=1)
+            # report the original call's cost and latency (benchmarks measure the pipeline, not the cache)
+            orig = cached.get("usage", {})
+            usage = Usage(
+                prompt_tokens=orig.get("prompt_tokens", 0),
+                completion_tokens=orig.get("completion_tokens", 0),
+                cached_requests=1,
+            )
             self.usage.add(usage)
-            return LLMResponse(cached["content"], model, usage, 0.0, cached=True)
+            return LLMResponse(cached["content"], model, usage, float(cached.get("latency_s", 0.0)), cached=True)
 
         estimate = int((len(system) + len(user)) / CHARS_PER_TOKEN) + IMAGE_TOKEN_ESTIMATE * len(images)
         estimate += min(max_tokens, 1500)
@@ -307,6 +315,8 @@ class LLMClient:
                 resp = self.api.chat.completions.create(**params)
             except groq.RateLimitError as exc:
                 retry_after = parse_duration(exc.response.headers.get("retry-after")) or 2.0**attempt
+                log.warning("429 from %s (attempt %d, retry-after %.1fs): %s", model, attempt, retry_after,
+                            str(exc)[:300])
                 if _is_daily_limit(exc):
                     raise QuotaExhausted(f"daily quota exhausted for {model}", retry_after) from exc
                 limiter.block_for(retry_after)
@@ -328,7 +338,7 @@ class LLMClient:
             )
             limiter.record_actual(usage.total_tokens)
             self.usage.add(usage)
-            self.cache.put(key, {"content": text, "model": model, "usage": usage.as_dict()})
+            self.cache.put(key, {"content": text, "model": model, "usage": usage.as_dict(), "latency_s": latency})
             return LLMResponse(text, model, usage, latency, cached=False)
         raise LLMError("unreachable")  # pragma: no cover
 

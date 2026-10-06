@@ -11,7 +11,7 @@ from papertrail.core.pack import DocType
 class PrescribedMedicine(BaseModel):
     """One medicine line on a prescription."""
 
-    name: Field[str] = doc_field("medicine name exactly as written (brand or generic), without strength")
+    name: Field[str] = doc_field("medicine name as written (brand or generic), without the Tab./Cap. prefix")
     strength: Field[str] = doc_field("strength, e.g. '650 mg', '5 mg/5 ml'")
     dosage: Field[str] = doc_field("amount per dose, e.g. '1 tab', '1/2 tab', '5 ml'")
     frequency: Field[str] = doc_field("how often as written, e.g. 'BD', 'TDS', '1-0-1', 'SOS'")

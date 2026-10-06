@@ -33,6 +33,7 @@ class MatchVerdict(BaseModel):
 
 class _LLMMatch(BaseModel):
     left: int
+    identity: str = ""
     right: int | None = None
     reason: str = ""
 
@@ -43,10 +44,25 @@ class _LLMMatches(BaseModel):
 
 _SYSTEM = """You decide whether items on two business documents refer to the same thing.
 Domain: {domain}.
-For every LEFT item, give the index of the RIGHT item that is the same product (same drug
-ingredient / same goods or service), or null if none is. Brand vs generic names of the same
-ingredient match; different strengths or different products do not. Do not match on vague
-similarity. Reply as JSON: {{"matches": [{{"left": 0, "right": 2 or null, "reason": "<=15 words"}}]}}"""
+Items may carry [hints] that deterministic rules already established (e.g. the generic ingredient
+of a known brand, or a tariff code); trust them.
+For every LEFT item:
+1. "identity": state what it is generically (active ingredient(s) for medicines, product type
+   for goods), using your knowledge of brand names.
+2. "right": the index of the RIGHT item with the same identity, or null if there is none.
+Brand and generic names of the same ingredient(s) match. A different ingredient, a different
+product, or a merely similar-sounding name does not. Several LEFT items may map to the same RIGHT
+item. Never pick the "closest" item just to avoid null.
+Reply as JSON: {{"matches": [{{"left": 0, "identity": "...", "right": 2 or null, "reason": "<=12 words"}}]}}"""
+
+
+def _hint(name: str, canon: str | None, key: str | None) -> str:
+    hints = []
+    if canon and canon != normalize_text(name):
+        hints.append(f"generic: {canon}")
+    if key:
+        hints.append(f"code: {key}")
+    return f"{name} [{'; '.join(hints)}]" if hints else name
 
 
 @dataclass
@@ -123,7 +139,11 @@ class Matcher:
 
         unmatched = [v.left for v in verdicts if v.right is None]
         if unmatched and right and self.uses_llm:
-            for v in self._llm_match(left, right, unmatched, domain):
+            lk = list(left_keys) if left_keys else [None] * len(left)
+            rk = list(right_keys) if right_keys else [None] * len(right)
+            shown_left = [_hint(s, c, k) for s, c, k in zip(left, left_c, lk, strict=True)]
+            shown_right = [_hint(s, c, k) for s, c, k in zip(right, right_c, rk, strict=True)]
+            for v in self._llm_match(shown_left, shown_right, unmatched, domain):
                 verdicts[v.left] = v
         return verdicts
 
@@ -146,7 +166,7 @@ class Matcher:
             out.append(
                 MatchVerdict(
                     left=indices[m.left], right=right_idx, method="llm" if right_idx is not None else "none",
-                    score=0.0, reason=f"LLM: {m.reason}".strip(),
+                    score=0.0, reason=f"LLM: {m.identity + '; ' if m.identity else ''}{m.reason}".strip(),
                 )
             )
         return out

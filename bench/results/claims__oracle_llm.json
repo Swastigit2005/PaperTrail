@@ -1,0 +1,485 @@
+{
+ "pack": "claims",
+ "config": "oracle_llm",
+ "pipeline": "oracle",
+ "matching": "rules+llm",
+ "n_pairs": 60,
+ "n_errors": 0,
+ "dataset": {
+  "seed": 7,
+  "total_pairs": 60
+ },
+ "detection": {
+  "micro": {
+   "precision": 0.9302325581395349,
+   "recall": 0.9090909090909091,
+   "false_alarm_rate": 0.1
+  },
+  "per_type": {
+   "unprescribed_medicine": {
+    "tp": 6,
+    "fp": 3,
+    "fn": 3,
+    "support": 9,
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666
+   },
+   "patient_name_mismatch": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "support": 9,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "bill_before_prescription": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 0,
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0
+   },
+   "implausible_quantity": {
+    "tp": 8,
+    "fp": 0,
+    "fn": 1,
+    "support": 9,
+    "precision": 1.0,
+    "recall": 0.8888888888888888
+   },
+   "arithmetic_error": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "support": 9,
+    "precision": 1.0,
+    "recall": 1.0
+   }
+  }
+ },
+ "validation_catch_rate": {
+  "arithmetic_error": 1.0
+ },
+ "decision": {
+  "n": 60,
+  "accuracy": 0.9333333333333333,
+  "discrepant_not_auto_approved": 0.9666666666666667,
+  "clean_auto_approved": 0.9,
+  "clean_flagged": 0.1,
+  "confusion": {
+   "approve": {
+    "approve": 27,
+    "needs_review": 0,
+    "flag": 3
+   },
+   "needs_review": {
+    "approve": 0,
+    "needs_review": 0,
+    "flag": 0
+   },
+   "flag": {
+    "approve": 1,
+    "needs_review": 0,
+    "flag": 29
+   }
+  }
+ },
+ "ops": {
+  "model_latency_p50_s": null,
+  "model_latency_p95_s": null,
+  "tokens_per_pair_mean": null,
+  "tokens_per_pair_p95": null
+ },
+ "per_pair": {
+  "cla-000": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-001": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-002": {
+   "expected": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "patient_name_mismatch",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-003": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-004": {
+   "expected": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ]
+  },
+  "cla-005": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-006": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-007": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-008": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-009": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-010": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-011": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-012": {
+   "expected": [
+    "arithmetic_error",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-013": {
+   "expected": [
+    "implausible_quantity",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "implausible_quantity",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-014": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-015": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-016": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-017": {
+   "expected": [
+    "arithmetic_error",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "implausible_quantity"
+   ]
+  },
+  "cla-018": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-019": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-020": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-021": {
+   "expected": [
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "implausible_quantity"
+   ]
+  },
+  "cla-022": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  },
+  "cla-023": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-024": {
+   "expected": [
+    "arithmetic_error",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-025": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  },
+  "cla-026": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-027": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-028": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  },
+  "cla-029": {
+   "expected": [
+    "implausible_quantity",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "implausible_quantity",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-030": {
+   "expected": [
+    "unprescribed_medicine"
+   ],
+   "predicted": []
+  },
+  "cla-031": {
+   "expected": [
+    "arithmetic_error",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "arithmetic_error",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-032": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-033": {
+   "expected": [
+    "implausible_quantity",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "implausible_quantity",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-034": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-035": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-036": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-037": {
+   "expected": [
+    "bill_before_prescription",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-038": {
+   "expected": [
+    "implausible_quantity",
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "implausible_quantity",
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-039": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-040": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  },
+  "cla-041": {
+   "expected": [
+    "patient_name_mismatch"
+   ],
+   "predicted": [
+    "patient_name_mismatch"
+   ]
+  },
+  "cla-042": {
+   "expected": [
+    "arithmetic_error",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-043": {
+   "expected": [],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-044": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-045": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-046": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-047": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-048": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-049": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-050": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-051": {
+   "expected": [
+    "arithmetic_error"
+   ],
+   "predicted": [
+    "arithmetic_error"
+   ]
+  },
+  "cla-052": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-053": {
+   "expected": [
+    "implausible_quantity",
+    "unprescribed_medicine"
+   ],
+   "predicted": [
+    "unprescribed_medicine"
+   ]
+  },
+  "cla-054": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-055": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-056": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-057": {
+   "expected": [],
+   "predicted": []
+  },
+  "cla-058": {
+   "expected": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ],
+   "predicted": [
+    "bill_before_prescription",
+    "implausible_quantity"
+   ]
+  },
+  "cla-059": {
+   "expected": [
+    "bill_before_prescription"
+   ],
+   "predicted": [
+    "bill_before_prescription"
+   ]
+  }
+ }
+}

@@ -55,8 +55,19 @@ def _coerce_confidence(raw: Any) -> float:
     return min(1.0, max(0.0, conf))
 
 
+_SHORT_KEYS = {"v": "value", "c": "confidence", "e": "evidence", "n": "null_reason"}
+
+
 def _as_field_dict(data: Any) -> dict[str, Any]:
-    """Normalise anything an LLM might emit for a field into the Field dict shape."""
+    """Normalise anything an LLM might emit for a field into the Field dict shape.
+
+    Accepts the compact prompt form ``{"v", "c", "e", "n"}``; a missing ``e`` means the evidence
+    is the value itself.
+    """
+    if isinstance(data, dict) and data and set(data) <= set(_SHORT_KEYS):
+        data = {_SHORT_KEYS[k]: v for k, v in data.items()}
+        if "evidence" not in data and data.get("value") is not None:
+            data["evidence"] = str(data["value"])
     if isinstance(data, dict) and set(data) <= _FIELD_KEYS | {"note", "notes", "source"}:
         out = dict(data)
         out["confidence"] = _coerce_confidence(out.get("confidence", 0.5))

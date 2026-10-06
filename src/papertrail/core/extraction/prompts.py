@@ -16,18 +16,20 @@ from pydantic import BaseModel
 
 from papertrail.core.fields import Field
 
-RULES = """Every leaf in the template is a Field object:
-  {"value": <typed value or null>, "confidence": <0..1>,
-   "evidence": "<the exact text you read, <=60 chars>", "null_reason": <null or short reason>}
+RULES = """Every leaf in the template is a compact field object F:
+  {"v": <typed value or null>, "c": <confidence 0..1>, "e": "<exact source text, only if different from v>",
+   "n": "<null reason, only when v is null>"}
+Examples: {"v": 2.5, "c": 0.9}   {"v": "2026-09-03", "c": 0.95, "e": "03/09/26"}
+          {"v": null, "c": 0.8, "n": "illegible"}
 Rules:
-- Never guess. If a value is illegible, cut off, or absent, set value to null and null_reason to
-  "illegible", "cut off", "not present" or a short explanation. Do not infer values that are not written.
-- confidence is your probability that value is exactly right as written on the document.
-- evidence must be copied from the document, not paraphrased.
+- Never guess. If a value is illegible, cut off, covered or absent, set v to null and n to "illegible",
+  "cut off", "covered", "not present" or a short explanation. Do not infer values that are not written.
+- c is your probability that v is exactly right as written on the document; lower it for hard-to-read text.
+- e must be copied from the document, not paraphrased; omit e when it would equal v.
 - Dates as YYYY-MM-DD (documents are Indian: numeric dates are day-first). Numbers as plain JSON
   numbers without currency symbols or thousands separators.
 - Lists: include every row present, in document order. An empty list if there are none.
-- Reply with one JSON object matching the template, nothing else."""
+- Reply with one compact JSON object (no indentation) matching the template, nothing else."""
 
 
 def _type_label(tp: Any) -> str:

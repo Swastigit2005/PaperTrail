@@ -79,17 +79,29 @@ def brand_ingredients(name: str) -> tuple[str, ...] | None:
     return None
 
 
-def canonical_drug(name: str, rxnorm: RxNormClient | None = None) -> str:
-    """Canonical ingredient key: brand map, then RxNorm ingredients, then the stripped name.
+KNOWN_GENERICS = frozenset(
+    {i for ings in INDIAN_BRANDS.values() for i in ings} | set(SYNONYMS) | set(SYNONYMS.values())
+)
 
-    ``'Dolo 650 Tab'`` and ``'Paracetamol 650 mg'`` both become ``'acetaminophen'``.
+
+def canonical_drug(name: str, rxnorm: RxNormClient | None = None) -> str | None:
+    """Canonical ingredient key, or None when nothing we know identifies the drug.
+
+    Order: Indian brand map, a known generic name (incl. combinations), then RxNorm ingredients.
+    ``'Dolo 650 Tab'`` and ``'Paracetamol 650 mg'`` both become ``'acetaminophen'``; an unknown
+    brand such as ``'Zifi 200'`` returns None (rules cannot say what it is; the LLM may).
     """
     ingredients = brand_ingredients(name)
+    if ingredients is None:
+        # combinations: "Amoxicillin + Clavulanic Acid 625" -> ("amoxicillin", "clavulanic acid")
+        parts = re.split(r"\s*(?:\+|/|&|\band\b)\s*", name.lower())
+        stripped = tuple(p for p in (strip_strength(part) for part in parts) if p)
+        if stripped and all(p in KNOWN_GENERICS for p in stripped):
+            ingredients = stripped
     if ingredients is None and rxnorm is not None:
         lookup = rxnorm.lookup(name)
         if lookup.found and lookup.ingredients:
             ingredients = tuple(lookup.ingredients)
-    if ingredients is None:
-        stripped = strip_strength(name)
-        ingredients = (stripped,) if stripped else ()
+    if not ingredients:
+        return None
     return "+".join(sorted({_canon_ingredient(i) for i in ingredients}))

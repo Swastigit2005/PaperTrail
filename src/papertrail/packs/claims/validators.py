@@ -19,8 +19,17 @@ def _date_sanity(ref: str, fld: Field, ctx: CheckContext) -> list[Finding]:
     return [soft("implausible_date", f"{ref}: {problem}", ref)] if problem else []
 
 
-def drug_name_findings(ref: str, name: str | None, rxnorm: RxNormClient | None) -> list[Finding]:
-    """Validate one drug name: known Indian brand, or RxNorm match; suggest the closest name if not."""
+MISREAD_CONFIDENCE = 0.9
+
+
+def drug_name_findings(
+    ref: str, name: str | None, rxnorm: RxNormClient | None, confidence: float = 1.0
+) -> list[Finding]:
+    """Validate one drug name: known Indian brand, or RxNorm match; suggest the closest name if not.
+
+    An unknown name read with high confidence is a vocabulary gap (info); read with low confidence it
+    is a possible misread (review).
+    """
     if not name:
         return []
     ingredients = brand_ingredients(name)
@@ -36,8 +45,11 @@ def drug_name_findings(ref: str, name: str | None, rxnorm: RxNormClient | None) 
         return [info("drug_validated", f"{ref} '{name}' found in RxNorm (RXCUI {lookup.rxcui})", ref,
                      source="rxnorm", rxcui=lookup.rxcui, ingredients=lookup.ingredients)]
     hint = f"; closest RxNorm match: '{lookup.suggestion}'" if lookup.suggestion else ""
-    return [soft("unknown_drug", f"{ref} '{name}' not found in RxNorm or the brand list{hint} (possible misread)",
-                 ref, suggestion=lookup.suggestion)]
+    if confidence < MISREAD_CONFIDENCE:
+        return [soft("unknown_drug", f"{ref} '{name}' not found in RxNorm or the brand list{hint} (possible misread)",
+                     ref, suggestion=lookup.suggestion)]
+    return [info("drug_not_in_reference", f"{ref} '{name}' not in RxNorm or the brand list{hint}", ref,
+                 suggestion=lookup.suggestion)]
 
 
 def validate_prescription(doc: Prescription, ctx: CheckContext) -> list[Finding]:
@@ -45,7 +57,8 @@ def validate_prescription(doc: Prescription, ctx: CheckContext) -> list[Finding]
     findings = _date_sanity("prescription.date", doc.date, ctx)
     rxnorm = ctx.services.get("rxnorm")
     for i, med in enumerate(doc.medicines):
-        findings += drug_name_findings(f"prescription.medicines[{i}].name", med.name.value, rxnorm)
+        findings += drug_name_findings(f"prescription.medicines[{i}].name", med.name.value, rxnorm,
+                                       med.name.confidence)
     return findings
 
 
@@ -59,7 +72,7 @@ def validate_bill(doc: MedicalBill, ctx: CheckContext) -> list[Finding]:
                               code="arithmetic_error")
         if f:
             findings.append(f)
-        findings += drug_name_findings(f"{p}.medicine", line.medicine.value, rxnorm)
+        findings += drug_name_findings(f"{p}.medicine", line.medicine.value, rxnorm, line.medicine.confidence)
     if doc.line_items:
         parts = [(f"bill.line_items[{i}].amount", line.amount) for i, line in enumerate(doc.line_items)]
         if doc.discount.value:

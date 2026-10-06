@@ -1,0 +1,6152 @@
+{
+ "pack": "claims",
+ "seed": 7,
+ "reference_date": "2026-10-06",
+ "count": 60,
+ "pairs": [
+  {
+   "pair_id": "cla-000",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Bina Wason vs Neel Dora"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-000/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Megha Bava",
+      "registration_number": "DMC 32454",
+      "clinic_name": "Chandra Health Centre",
+      "patient_name": "Neel Dora",
+      "patient_age": "26 Y",
+      "date": "2026-07-29",
+      "diagnosis": "UTI",
+      "medicines": [
+       {
+        "name": "Amoxicillin",
+        "strength": "500 mg",
+        "dosage": "1 cap",
+        "frequency": "1-1-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Amlodipine",
+        "strength": "5 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Allegra 120",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-000/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Pau Chemists",
+      "bill_number": "B-24337",
+      "patient_name": "Bina Wason",
+      "doctor_name": null,
+      "date": "2026-08-01",
+      "line_items": [
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B86379",
+        "qty": 14.0,
+        "rate": 10.99,
+        "amount": 153.86
+       },
+       {
+        "medicine": "Amlokind 5 Tab",
+        "batch": "B20708",
+        "qty": 10.0,
+        "rate": 3.98,
+        "amount": 39.8
+       },
+       {
+        "medicine": "Novamox 500 Cap",
+        "batch": "B87362",
+        "qty": 21.0,
+        "rate": 9.29,
+        "amount": 195.09
+       }
+      ],
+      "discount": 38.88,
+      "total": 349.87
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-001",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-001/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Tanish Barad",
+      "registration_number": "MMC 42879",
+      "clinic_name": "Chadha Health Centre",
+      "patient_name": "Barkha Tripathi",
+      "patient_age": "12 Y",
+      "date": "2026-09-18",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Rosuvastatin",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Brufen 400",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Augmentin 625 Duo",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Levothyroxine",
+        "strength": "50 mcg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-001/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Saraf Chemists",
+      "bill_number": "CB-79067",
+      "patient_name": "Ms. Barkha Tripathi",
+      "doctor_name": null,
+      "date": "2026-09-18",
+      "line_items": [
+       {
+        "medicine": "Rozavel 10 Tab",
+        "batch": "B89250",
+        "qty": 30.0,
+        "rate": 15.14,
+        "amount": 454.2
+       },
+       {
+        "medicine": "Brufen 400 Tab",
+        "batch": "B86002",
+        "qty": 7.0,
+        "rate": 1.89,
+        "amount": 13.23
+       },
+       {
+        "medicine": "Augmentin 625 Duo Tab",
+        "batch": "B46827",
+        "qty": 14.0,
+        "rate": 24.53,
+        "amount": 343.42
+       },
+       {
+        "medicine": "LEVOTHYROXINE 50MCG TAB",
+        "batch": "B21321",
+        "qty": 14.0,
+        "rate": 1.35,
+        "amount": 18.9
+       }
+      ],
+      "discount": null,
+      "total": 829.75
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-002",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Glycomet 500 Tab not prescribed",
+     "fields": [
+      "bill.line_items[2].medicine"
+     ]
+    },
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Unnati Bhargava vs Shaurya Boase"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-002/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.9,
+      "blur": 1.25,
+      "noise": 24.4,
+      "light": 0.68,
+      "jpeg": 40,
+      "scale": 0.45
+     },
+     "occluded": [
+      "registration_number"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Wridesh Chana",
+      "registration_number": "KMC 45524",
+      "clinic_name": "Dasgupta Polyclinic",
+      "patient_name": "Shaurya Boase",
+      "patient_age": "27 Y",
+      "date": "2026-09-08",
+      "diagnosis": "Hypertension",
+      "medicines": [
+       {
+        "name": "Ondansetron",
+        "strength": "4 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Pantoprazole",
+        "strength": "40 mg",
+        "dosage": "1 tab",
+        "frequency": "HS",
+        "duration": "1 week"
+       },
+       {
+        "name": "Thyronorm 50",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-002/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.76,
+      "blur": 0.91,
+      "noise": 27.8,
+      "light": 0.64,
+      "jpeg": 29,
+      "scale": 0.48
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Kapoor Chemists",
+      "bill_number": "CB-30427",
+      "patient_name": "Unnati Bhargava",
+      "doctor_name": "Dr. Wridesh Chana",
+      "date": "2026-09-11",
+      "line_items": [
+       {
+        "medicine": "PANTOPRAZOLE 40MG TAB",
+        "batch": "B83140",
+        "qty": 15.0,
+        "rate": 9.85,
+        "amount": 147.75
+       },
+       {
+        "medicine": "Ondem 4 Tab",
+        "batch": "B25930",
+        "qty": 7.0,
+        "rate": 7.01,
+        "amount": 49.07
+       },
+       {
+        "medicine": "Glycomet 500 Tab",
+        "batch": "B47540",
+        "qty": 10.0,
+        "rate": 2.92,
+        "amount": 29.2
+       },
+       {
+        "medicine": "Thyronorm 50 Tab",
+        "batch": "B43622",
+        "qty": 15.0,
+        "rate": 1.87,
+        "amount": 28.05
+       }
+      ],
+      "discount": null,
+      "total": 254.07
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-003",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-003/rx.png",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Chandran Kant",
+      "registration_number": "KMC 17109",
+      "clinic_name": "Batra Clinic",
+      "patient_name": "Bhavani Ranganathan",
+      "patient_age": "42 Y",
+      "date": "2026-09-07",
+      "diagnosis": "UTI",
+      "medicines": [
+       {
+        "name": "Calpol 650",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "1 week"
+       },
+       {
+        "name": "Telmisartan",
+        "strength": "40 mg",
+        "dosage": "1 tab",
+        "frequency": "0-0-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Taxim-O 200",
+        "strength": null,
+        "dosage": null,
+        "frequency": "TDS",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Zerodol 100",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-003/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Deol Pharmacy",
+      "bill_number": "B-25295",
+      "patient_name": "Bhavani Ranganathan",
+      "doctor_name": "Dr. Chandran Kant",
+      "date": "2026-09-10",
+      "line_items": [
+       {
+        "medicine": "Calpol 650 Tab",
+        "batch": "B38311",
+        "qty": 15.0,
+        "rate": 1.86,
+        "amount": 27.9
+       },
+       {
+        "medicine": "Zifi 200 Tab",
+        "batch": "B96705",
+        "qty": 15.0,
+        "rate": 11.23,
+        "amount": 168.45
+       },
+       {
+        "medicine": "Telvas 40 Tab",
+        "batch": "B91219",
+        "qty": 10.0,
+        "rate": 7.38,
+        "amount": 73.8
+       },
+       {
+        "medicine": "Aceclofenac Tab",
+        "batch": "B65806",
+        "qty": 7.0,
+        "rate": 6.2,
+        "amount": 43.4
+       }
+      ],
+      "discount": null,
+      "total": 313.55
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-004",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "implausible_quantity",
+     "detail": "40 billed, course needs 7",
+     "fields": [
+      "bill.line_items[0].qty"
+     ]
+    },
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-004/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Maanas Zachariah",
+      "registration_number": "TNMC 85053",
+      "clinic_name": "Dalal Nursing Home",
+      "patient_name": "Mohini Saini",
+      "patient_age": "8 Y",
+      "date": "2026-08-12",
+      "diagnosis": "Pharyngitis",
+      "medicines": [
+       {
+        "name": "Rosuvastatin",
+        "strength": "10 mg",
+        "dosage": "1 tab",
+        "frequency": "OD",
+        "duration": "1 week"
+       },
+       {
+        "name": "Levocetirizine",
+        "strength": "5 mg",
+        "dosage": null,
+        "frequency": "TDS",
+        "duration": "10 days"
+       },
+       {
+        "name": "Fexofenadine",
+        "strength": "120 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Telvas 40",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-004/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Morar Medicals",
+      "bill_number": "CB-4344",
+      "patient_name": "Ms. Mohini Saini",
+      "doctor_name": null,
+      "date": "2026-08-04",
+      "line_items": [
+       {
+        "medicine": "Rosuvas 10 Tab",
+        "batch": "B25165",
+        "qty": 40.0,
+        "rate": 15.16,
+        "amount": 606.4
+       },
+       {
+        "medicine": "LEVOCETIRIZINE 5MG TAB",
+        "batch": "B68248",
+        "qty": 30.0,
+        "rate": 2.78,
+        "amount": 83.4
+       },
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B78033",
+        "qty": 21.0,
+        "rate": 11.08,
+        "amount": 232.68
+       },
+       {
+        "medicine": "Telma 40 Tab",
+        "batch": "B59751",
+        "qty": 10.0,
+        "rate": 7.18,
+        "amount": 71.8
+       }
+      ],
+      "discount": 53.95,
+      "total": 940.33
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-005",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-005/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Raghav Pradhan",
+      "registration_number": "DMC 89414",
+      "clinic_name": "Chatterjee Health Centre",
+      "patient_name": "Hemangini Chauhan",
+      "patient_age": "11 Y",
+      "date": "2026-07-12",
+      "diagnosis": "Bronchitis",
+      "medicines": [
+       {
+        "name": "Ondem 4",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       },
+       {
+        "name": "Okacet",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "1 week"
+       },
+       {
+        "name": "Fexofenadine",
+        "strength": "120 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-005/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Bhatnagar Medicals",
+      "bill_number": "INV-74200",
+      "patient_name": "Hemangini Chauhan",
+      "doctor_name": "Dr. Raghav Pradhan",
+      "date": "2026-07-13",
+      "line_items": [
+       {
+        "medicine": "Emeset 4 Tab",
+        "batch": "B24964",
+        "qty": 7.0,
+        "rate": 5.73,
+        "amount": 40.11
+       },
+       {
+        "medicine": "Cetzine Tab",
+        "batch": "B39799",
+        "qty": 15.0,
+        "rate": 2.07,
+        "amount": 31.05
+       },
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B80665",
+        "qty": 15.0,
+        "rate": 13.32,
+        "amount": 199.8
+       }
+      ],
+      "discount": 27.1,
+      "total": 243.86
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-006",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-006/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.38,
+      "blur": 0.76,
+      "noise": 8.7,
+      "light": 0.87,
+      "jpeg": 47,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Watika Wali",
+      "registration_number": "MMC 22113",
+      "clinic_name": "Sane Polyclinic",
+      "patient_name": "Bhanumati Jha",
+      "patient_age": "68 Y",
+      "date": "2026-06-08",
+      "diagnosis": "Pharyngitis",
+      "medicines": [
+       {
+        "name": "Metformin",
+        "strength": "500 mg",
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Cetzine",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "3 days"
+       },
+       {
+        "name": "Aceclofenac",
+        "strength": "100 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-006/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.21,
+      "blur": 0.53,
+      "noise": 8.7,
+      "light": 0.81,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Murthy Chemists",
+      "bill_number": "B-41935",
+      "patient_name": "Mrs. Bhanumati Jha",
+      "doctor_name": "Dr. Watika Wali",
+      "date": "2026-06-09",
+      "line_items": [
+       {
+        "medicine": "CETIRIZINE 10MG TAB",
+        "batch": "B74080",
+        "qty": 6.0,
+        "rate": 2.4,
+        "amount": 14.4
+       },
+       {
+        "medicine": "Glyciphage 500 Tab",
+        "batch": "B60994",
+        "qty": 15.0,
+        "rate": 3.43,
+        "amount": 51.45
+       },
+       {
+        "medicine": "Zerodol 100 Tab",
+        "batch": "B54898",
+        "qty": 10.0,
+        "rate": 5.57,
+        "amount": 55.7
+       }
+      ],
+      "discount": null,
+      "total": 121.55
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-007",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-007/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Janaki Mistry",
+      "registration_number": "MMC 81334",
+      "clinic_name": "Kothari Polyclinic",
+      "patient_name": "Vidhi Setty",
+      "patient_age": "19 Y",
+      "date": "2026-06-28",
+      "diagnosis": "Hypertension",
+      "medicines": [
+       {
+        "name": "Moxikind-CV 625",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "OD",
+        "duration": "5 days"
+       },
+       {
+        "name": "Emeset 4",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Montelukast",
+        "strength": "10 mg",
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Levocet 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-007/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Gole Chemists",
+      "bill_number": "B-52779",
+      "patient_name": "Vidhi Setty",
+      "doctor_name": null,
+      "date": "2026-06-28",
+      "line_items": [
+       {
+        "medicine": "Ondem 4 Tab",
+        "batch": "B73936",
+        "qty": 15.0,
+        "rate": 7.33,
+        "amount": 109.95
+       },
+       {
+        "medicine": "Montelukast 10 mg Tab",
+        "batch": "B86791",
+        "qty": 21.0,
+        "rate": 16.75,
+        "amount": 351.75
+       },
+       {
+        "medicine": "Moxikind-CV 625 Tab",
+        "batch": "B82879",
+        "qty": 15.0,
+        "rate": 25.99,
+        "amount": 389.85
+       },
+       {
+        "medicine": "Levocet 5 Tab",
+        "batch": "B55351",
+        "qty": 7.0,
+        "rate": 3.54,
+        "amount": 24.78
+       }
+      ],
+      "discount": null,
+      "total": 876.33
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-008",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-008/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Charita Vohra",
+      "registration_number": "DMC 10004",
+      "clinic_name": "Talwar Nursing Home",
+      "patient_name": "Keya Bumb",
+      "patient_age": "56 Y",
+      "date": "2026-06-04",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Emeset 4",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "5 days"
+       },
+       {
+        "name": "Montair 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "3 days"
+       },
+       {
+        "name": "Telmisartan",
+        "strength": "40 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-008/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Oza Pharmacy",
+      "bill_number": "CB-80017",
+      "patient_name": "K. Bumb",
+      "doctor_name": "Dr. Charita Vohra",
+      "date": "2026-06-04",
+      "line_items": [
+       {
+        "medicine": "Telma 40 Tab",
+        "batch": "B28077",
+        "qty": 10.0,
+        "rate": 6.58,
+        "amount": 65.8
+       },
+       {
+        "medicine": "Montair 10 Tab",
+        "batch": "B47712",
+        "qty": 15.0,
+        "rate": 15.35,
+        "amount": 230.25
+       },
+       {
+        "medicine": "Emeset 4 Tab",
+        "batch": "B76223",
+        "qty": 5.0,
+        "rate": 5.61,
+        "amount": 28.05
+       }
+      ],
+      "discount": 32.41,
+      "total": 291.69
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-009",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "arithmetic_error",
+     "detail": "line amount != qty x rate",
+     "fields": [
+      "bill.line_items[0].amount"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-009/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": -4.56,
+      "blur": 1.17,
+      "noise": 27.4,
+      "light": 0.69,
+      "jpeg": 34,
+      "scale": 0.47
+     },
+     "occluded": [
+      "patient_age"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Elijah Dalal",
+      "registration_number": "TNMC 19079",
+      "clinic_name": "Vala Health Centre",
+      "patient_name": "Udarsh Mani",
+      "patient_age": "39 Y",
+      "date": "2026-08-13",
+      "diagnosis": "Allergic rhinitis",
+      "medicines": [
+       {
+        "name": "Ibuprofen",
+        "strength": "400 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Pantocid 40",
+        "strength": null,
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "5 days"
+       },
+       {
+        "name": "Montair 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Levocetirizine",
+        "strength": "5 mg",
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-009/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.62,
+      "blur": 1.39,
+      "noise": 20.7,
+      "light": 0.74,
+      "jpeg": 40,
+      "scale": 0.54
+     },
+     "occluded": [
+      "line_items[0].batch"
+     ],
+     "truth": {
+      "pharmacy_name": "Sahota Chemists",
+      "bill_number": "B-55411",
+      "patient_name": "Mr. Udarsh Mani",
+      "doctor_name": "Dr. Elijah Dalal",
+      "date": "2026-08-14",
+      "line_items": [
+       {
+        "medicine": "IBUPROFEN 400MG TAB",
+        "batch": "B10764",
+        "qty": 30.0,
+        "rate": 2.06,
+        "amount": 81.8
+       },
+       {
+        "medicine": "Pantop 40 Tab",
+        "batch": "B66814",
+        "qty": 5.0,
+        "rate": 9.99,
+        "amount": 49.95
+       },
+       {
+        "medicine": "Levocet 5 Tab",
+        "batch": "B17655",
+        "qty": 15.0,
+        "rate": 3.52,
+        "amount": 52.8
+       },
+       {
+        "medicine": "Montelukast Tab",
+        "batch": "B46963",
+        "qty": 15.0,
+        "rate": 16.34,
+        "amount": 245.1
+       }
+      ],
+      "discount": null,
+      "total": 429.65
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-010",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-010/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.02,
+      "blur": 0.76,
+      "noise": 7.0,
+      "light": 0.84,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Max Suresh",
+      "registration_number": "KMC 67732",
+      "clinic_name": "Sama Health Centre",
+      "patient_name": "Fitan Oommen",
+      "patient_age": "24 Y",
+      "date": "2026-09-08",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Telvas 40",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "5 days"
+       },
+       {
+        "name": "Atorvastatin",
+        "strength": "10 mg",
+        "dosage": "1 tab",
+        "frequency": "OD",
+        "duration": "10 days"
+       },
+       {
+        "name": "Allegra 120",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Metronidazole",
+        "strength": "400 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-010/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.18,
+      "blur": 0.44,
+      "noise": 11.8,
+      "light": 0.91,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Baral Medicals",
+      "bill_number": "INV-55117",
+      "patient_name": "Mr. Fitan Oommen",
+      "doctor_name": "Dr. Max Suresh",
+      "date": "2026-09-09",
+      "line_items": [
+       {
+        "medicine": "FEXOFENADINE 120MG TAB",
+        "batch": "B20266",
+        "qty": 45.0,
+        "rate": 11.77,
+        "amount": 529.65
+       },
+       {
+        "medicine": "Metronidazole 400 mg Tab",
+        "batch": "B32491",
+        "qty": 10.0,
+        "rate": 1.83,
+        "amount": 18.3
+       },
+       {
+        "medicine": "Atorvastatin 10 mg Tab",
+        "batch": "B59615",
+        "qty": 10.0,
+        "rate": 8.17,
+        "amount": 81.7
+       },
+       {
+        "medicine": "Telma 40 Tab",
+        "batch": "B83692",
+        "qty": 5.0,
+        "rate": 7.98,
+        "amount": 39.9
+       }
+      ],
+      "discount": null,
+      "total": 669.55
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-011",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-011/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Harini Palla",
+      "registration_number": "DMC 76456",
+      "clinic_name": "Taneja Clinic",
+      "patient_name": "Brinda Murthy",
+      "patient_age": "73 Y",
+      "date": "2026-08-24",
+      "diagnosis": "Pharyngitis",
+      "medicines": [
+       {
+        "name": "Omez 20",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Cefixime",
+        "strength": "200 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Ondansetron",
+        "strength": "4 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Rozavel 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "HS",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-011/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Shan Pharmacy",
+      "bill_number": "INV-9997",
+      "patient_name": "Mrs. Brinda Murthy",
+      "doctor_name": "Dr. Harini Palla",
+      "date": "2026-08-24",
+      "line_items": [
+       {
+        "medicine": "OMEPRAZOLE 20MG CAP",
+        "batch": "B56797",
+        "qty": 10.0,
+        "rate": 5.72,
+        "amount": 57.2
+       },
+       {
+        "medicine": "Ondansetron 4 mg Tab",
+        "batch": "B99997",
+        "qty": 30.0,
+        "rate": 6.26,
+        "amount": 187.8
+       },
+       {
+        "medicine": "CEFIXIME 200MG TAB",
+        "batch": "B25836",
+        "qty": 5.0,
+        "rate": 14.23,
+        "amount": 71.15
+       },
+       {
+        "medicine": "Rosuvas 10 Tab",
+        "batch": "B32089",
+        "qty": 14.0,
+        "rate": 14.27,
+        "amount": 199.78
+       }
+      ],
+      "discount": null,
+      "total": 515.93
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-012",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "arithmetic_error",
+     "detail": "line amount != qty x rate",
+     "fields": [
+      "bill.line_items[1].amount"
+     ]
+    },
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Bachittar Bhat vs Bakhshi Chander"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-012/rx.jpg",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.44,
+      "blur": 0.78,
+      "noise": 11.5,
+      "light": 0.83,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Anamika Som",
+      "registration_number": "TNMC 20172",
+      "clinic_name": "Mukherjee Clinic",
+      "patient_name": "Bakhshi Chander",
+      "patient_age": "54 Y",
+      "date": "2026-06-23",
+      "diagnosis": "Migraine",
+      "medicines": [
+       {
+        "name": "Levothyroxine",
+        "strength": "50 mcg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "7 days"
+       },
+       {
+        "name": "Emeset 4",
+        "strength": null,
+        "dosage": null,
+        "frequency": "TDS",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-012/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.55,
+      "blur": 0.63,
+      "noise": 8.7,
+      "light": 0.79,
+      "jpeg": 55,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Sehgal Pharmacy",
+      "bill_number": "B-44940",
+      "patient_name": "Bachittar Bhat",
+      "doctor_name": "Dr. Anamika Som",
+      "date": "2026-06-24",
+      "line_items": [
+       {
+        "medicine": "LEVOTHYROXINE 50MCG TAB",
+        "batch": "B19982",
+        "qty": 14.0,
+        "rate": 1.72,
+        "amount": 24.08
+       },
+       {
+        "medicine": "ONDANSETRON 4MG TAB",
+        "batch": "B45545",
+        "qty": 15.0,
+        "rate": 5.69,
+        "amount": 105.9
+       }
+      ],
+      "discount": null,
+      "total": 129.98
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-013",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Vihaan Pant vs Lucky Raju"
+    },
+    {
+     "type": "implausible_quantity",
+     "detail": "70 billed, course needs 15",
+     "fields": [
+      "bill.line_items[1].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-013/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 2.1,
+      "blur": 1.17,
+      "noise": 20.3,
+      "light": 0.67,
+      "jpeg": 34,
+      "scale": 0.45
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Idika Bajaj",
+      "registration_number": "DMC 65283",
+      "clinic_name": "Ganguly Health Centre",
+      "patient_name": "Lucky Raju",
+      "patient_age": "45 Y",
+      "date": "2026-08-26",
+      "diagnosis": "URTI",
+      "medicines": [
+       {
+        "name": "Glycomet 500",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "TDS",
+        "duration": "5 days"
+       },
+       {
+        "name": "Brufen 400",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Ondansetron",
+        "strength": "4 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-013/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "hard",
+      "angle": -2.41,
+      "blur": 0.95,
+      "noise": 25.4,
+      "light": 0.67,
+      "jpeg": 30,
+      "scale": 0.44
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Dada Chemists",
+      "bill_number": "B-60822",
+      "patient_name": "Vihaan Pant",
+      "doctor_name": "Dr. Idika Bajaj",
+      "date": "2026-08-26",
+      "line_items": [
+       {
+        "medicine": "Ibuprofen Tab",
+        "batch": "B98898",
+        "qty": 14.0,
+        "rate": 2.05,
+        "amount": 28.7
+       },
+       {
+        "medicine": "Glycomet 500 Tab",
+        "batch": "B81281",
+        "qty": 70.0,
+        "rate": 3.07,
+        "amount": 214.9
+       },
+       {
+        "medicine": "Emeset 4 Tab",
+        "batch": "B69567",
+        "qty": 30.0,
+        "rate": 7.37,
+        "amount": 221.1
+       }
+      ],
+      "discount": 29.59,
+      "total": 435.11
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-014",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-014/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "hard",
+      "angle": -2.73,
+      "blur": 1.05,
+      "noise": 21.6,
+      "light": 0.72,
+      "jpeg": 30,
+      "scale": 0.47
+     },
+     "occluded": [
+      "medicines[1].name"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Tejas Mani",
+      "registration_number": "TNMC 55675",
+      "clinic_name": "Dayal Clinic",
+      "patient_name": "Xiti Bhargava",
+      "patient_age": "12 Y",
+      "date": "2026-07-23",
+      "diagnosis": "Hypertension",
+      "medicines": [
+       {
+        "name": "Fexofenadine",
+        "strength": "120 mg",
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Cetirizine",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "3 days"
+       },
+       {
+        "name": "Pantoprazole",
+        "strength": "40 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-014/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.41,
+      "blur": 1.3,
+      "noise": 20.0,
+      "light": 0.71,
+      "jpeg": 36,
+      "scale": 0.48
+     },
+     "occluded": [
+      "line_items[1].medicine"
+     ],
+     "truth": {
+      "pharmacy_name": "Kota Pharmacy",
+      "bill_number": "INV-70991",
+      "patient_name": "BHARGAVA XITI",
+      "doctor_name": null,
+      "date": "2026-07-26",
+      "line_items": [
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B31543",
+        "qty": 20.0,
+        "rate": 11.4,
+        "amount": 228.0
+       },
+       {
+        "medicine": "Cetzine Tab",
+        "batch": "B21088",
+        "qty": 15.0,
+        "rate": 2.21,
+        "amount": 33.15
+       },
+       {
+        "medicine": "Pantocid 40 Tab",
+        "batch": "B58203",
+        "qty": 10.0,
+        "rate": 9.41,
+        "amount": 94.1
+       }
+      ],
+      "discount": null,
+      "total": 355.25
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-015",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "arithmetic_error",
+     "detail": "line amount != qty x rate",
+     "fields": [
+      "bill.line_items[0].amount"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-015/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.09,
+      "blur": 0.49,
+      "noise": 9.6,
+      "light": 0.78,
+      "jpeg": 63,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Watika Buch",
+      "registration_number": "KMC 74426",
+      "clinic_name": "Ganesan Health Centre",
+      "patient_name": "Rushil Raman",
+      "patient_age": "28 Y",
+      "date": "2026-06-01",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Pan 40",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-015/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.79,
+      "blur": 0.61,
+      "noise": 6.8,
+      "light": 0.9,
+      "jpeg": 59,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Sen Medicals",
+      "bill_number": "INV-95308",
+      "patient_name": "Rushil Raman",
+      "doctor_name": "Dr. Watika Buch",
+      "date": "2026-06-04",
+      "line_items": [
+       {
+        "medicine": "Omeprazole 20 mg Cap",
+        "batch": "B88680",
+        "qty": 10.0,
+        "rate": 6.16,
+        "amount": 91.1
+       },
+       {
+        "medicine": "Pantocid 40 Tab",
+        "batch": "B40298",
+        "qty": 20.0,
+        "rate": 9.7,
+        "amount": 194.0
+       }
+      ],
+      "discount": null,
+      "total": 285.1
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-016",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-016/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.17,
+      "blur": 0.48,
+      "noise": 6.0,
+      "light": 0.88,
+      "jpeg": 48,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Laksh Sani",
+      "registration_number": "MMC 76000",
+      "clinic_name": "Mallick Clinic",
+      "patient_name": "Sai Mall",
+      "patient_age": "24 Y",
+      "date": "2026-07-06",
+      "diagnosis": "Migraine",
+      "medicines": [
+       {
+        "name": "Rozavel 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "TDS",
+        "duration": "10 days"
+       },
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "5 days"
+       },
+       {
+        "name": "Azithral 500",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "BD",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-016/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.19,
+      "blur": 0.64,
+      "noise": 11.3,
+      "light": 0.87,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Sagar Medicals",
+      "bill_number": "CB-89949",
+      "patient_name": "Sai Mall",
+      "doctor_name": null,
+      "date": "2026-07-07",
+      "line_items": [
+       {
+        "medicine": "Omeprazole 20 mg Cap",
+        "batch": "B52277",
+        "qty": 15.0,
+        "rate": 4.75,
+        "amount": 71.25
+       },
+       {
+        "medicine": "Azithral 500 Tab",
+        "batch": "B57745",
+        "qty": 14.0,
+        "rate": 27.51,
+        "amount": 385.14
+       },
+       {
+        "medicine": "Rosuvas 10 Tab",
+        "batch": "B76400",
+        "qty": 30.0,
+        "rate": 16.41,
+        "amount": 492.3
+       }
+      ],
+      "discount": 94.87,
+      "total": 853.82
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-017",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "implausible_quantity",
+     "detail": "40 billed, course needs 10",
+     "fields": [
+      "bill.line_items[1].qty"
+     ]
+    },
+    {
+     "type": "arithmetic_error",
+     "fields": [
+      "bill.total"
+     ],
+     "detail": "total off by +202"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-017/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Vihaan Dora",
+      "registration_number": "DMC 82228",
+      "clinic_name": "Butala Nursing Home",
+      "patient_name": "Rachita Rai",
+      "patient_age": "49 Y",
+      "date": "2026-08-19",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Montair 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "twice daily",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Metformin",
+        "strength": "500 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-017/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Goda Medicals",
+      "bill_number": "INV-59149",
+      "patient_name": "Mrs. Rachita Rai",
+      "doctor_name": null,
+      "date": "2026-08-21",
+      "line_items": [
+       {
+        "medicine": "Montelukast Tab",
+        "batch": "B57128",
+        "qty": 10.0,
+        "rate": 18.85,
+        "amount": 188.5
+       },
+       {
+        "medicine": "Metformin 500 mg Tab",
+        "batch": "B41152",
+        "qty": 40.0,
+        "rate": 3.26,
+        "amount": 130.4
+       }
+      ],
+      "discount": null,
+      "total": 520.9
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-018",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-018/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.25,
+      "blur": 0.95,
+      "noise": 22.1,
+      "light": 0.64,
+      "jpeg": 27,
+      "scale": 0.5
+     },
+     "occluded": [
+      "patient_age"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Viraj Arora",
+      "registration_number": "KMC 36500",
+      "clinic_name": "Sundaram Polyclinic",
+      "patient_name": "Forum Kata",
+      "patient_age": "16 Y",
+      "date": "2026-07-05",
+      "diagnosis": "Hypertension",
+      "medicines": [
+       {
+        "name": "Amlokind 5",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "OD",
+        "duration": "3 days"
+       },
+       {
+        "name": "Paracetamol",
+        "strength": "650 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-018/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.02,
+      "blur": 0.98,
+      "noise": 27.3,
+      "light": 0.69,
+      "jpeg": 28,
+      "scale": 0.54
+     },
+     "occluded": [
+      "line_items[0].rate"
+     ],
+     "truth": {
+      "pharmacy_name": "Gopal Chemists",
+      "bill_number": "B-21548",
+      "patient_name": "Mrs. Forum Kata",
+      "doctor_name": null,
+      "date": "2026-07-06",
+      "line_items": [
+       {
+        "medicine": "Amlong 5 Tab",
+        "batch": "B58714",
+        "qty": 3.0,
+        "rate": 4.04,
+        "amount": 12.12
+       },
+       {
+        "medicine": "PARACETAMOL 650MG TAB",
+        "batch": "B25286",
+        "qty": 15.0,
+        "rate": 2.3,
+        "amount": 34.5
+       }
+      ],
+      "discount": null,
+      "total": 46.62
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-019",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Shaurya Warrior vs Karan Manda"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-019/rx.jpg",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.29,
+      "blur": 0.52,
+      "noise": 6.6,
+      "light": 0.82,
+      "jpeg": 52,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Aayush Dhingra",
+      "registration_number": "MMC 96915",
+      "clinic_name": "Pingle Health Centre",
+      "patient_name": "Karan Manda",
+      "patient_age": "42 Y",
+      "date": "2026-07-01",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Ondem 4",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "1 week"
+       },
+       {
+        "name": "Taxim-O 200",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "10 days"
+       },
+       {
+        "name": "Telmisartan",
+        "strength": "40 mg",
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-019/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.07,
+      "blur": 0.52,
+      "noise": 7.4,
+      "light": 0.79,
+      "jpeg": 58,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Nagar Chemists",
+      "bill_number": "B-15934",
+      "patient_name": "Shaurya Warrior",
+      "doctor_name": "Dr. Aayush Dhingra",
+      "date": "2026-07-04",
+      "line_items": [
+       {
+        "medicine": "Zifi 200 Tab",
+        "batch": "B10232",
+        "qty": 30.0,
+        "rate": 11.75,
+        "amount": 352.5
+       },
+       {
+        "medicine": "Telvas 40 Tab",
+        "batch": "B28912",
+        "qty": 30.0,
+        "rate": 8.64,
+        "amount": 259.2
+       },
+       {
+        "medicine": "Emeset 4 Tab",
+        "batch": "B55706",
+        "qty": 15.0,
+        "rate": 6.34,
+        "amount": 95.1
+       }
+      ],
+      "discount": 70.68,
+      "total": 636.12
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-020",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-020/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.17,
+      "blur": 1.16,
+      "noise": 24.0,
+      "light": 0.65,
+      "jpeg": 39,
+      "scale": 0.44
+     },
+     "occluded": [
+      "medicines[1].duration"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Chatura Shan",
+      "registration_number": "DMC 90974",
+      "clinic_name": "Ramanathan Polyclinic",
+      "patient_name": "Edhitha Varma",
+      "patient_age": "12 Y",
+      "date": "2026-08-21",
+      "diagnosis": "Bronchitis",
+      "medicines": [
+       {
+        "name": "Levocetirizine",
+        "strength": "5 mg",
+        "dosage": "1 tab",
+        "frequency": "HS",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Pantocid 40",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-020/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.27,
+      "blur": 0.91,
+      "noise": 20.1,
+      "light": 0.66,
+      "jpeg": 40,
+      "scale": 0.49
+     },
+     "occluded": [
+      "line_items[0].rate"
+     ],
+     "truth": {
+      "pharmacy_name": "Rao Pharmacy",
+      "bill_number": "B-44869",
+      "patient_name": "Edhitha Varma",
+      "doctor_name": "Dr. Chatura Shan",
+      "date": "2026-08-23",
+      "line_items": [
+       {
+        "medicine": "Pan 40 Tab",
+        "batch": "B88846",
+        "qty": 30.0,
+        "rate": 8.53,
+        "amount": 255.9
+       },
+       {
+        "medicine": "Levocet 5 Tab",
+        "batch": "B35216",
+        "qty": 5.0,
+        "rate": 3.0,
+        "amount": 15.0
+       }
+      ],
+      "discount": null,
+      "total": 270.9
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-021",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "implausible_quantity",
+     "detail": "50 billed, course needs 5",
+     "fields": [
+      "bill.line_items[0].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-021/rx.png",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Hemang Subramaniam",
+      "registration_number": "KMC 68303",
+      "clinic_name": "Rattan Nursing Home",
+      "patient_name": "Ryan Ramesh",
+      "patient_age": "63 Y",
+      "date": "2026-07-12",
+      "diagnosis": "Pharyngitis",
+      "medicines": [
+       {
+        "name": "Taxim-O 200",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Rozavel 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-021/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Bhatia Chemists",
+      "bill_number": "CB-99351",
+      "patient_name": "Ryan Ramesh",
+      "doctor_name": null,
+      "date": "2026-07-13",
+      "line_items": [
+       {
+        "medicine": "Rozavel 10 Tab",
+        "batch": "B58105",
+        "qty": 50.0,
+        "rate": 13.59,
+        "amount": 679.5
+       },
+       {
+        "medicine": "Taxim-O 200 Tab",
+        "batch": "B87011",
+        "qty": 30.0,
+        "rate": 12.61,
+        "amount": 378.3
+       }
+      ],
+      "discount": 44.62,
+      "total": 1013.18
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-022",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-022/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 3.64,
+      "blur": 1.31,
+      "noise": 21.4,
+      "light": 0.69,
+      "jpeg": 39,
+      "scale": 0.53
+     },
+     "occluded": [
+      "medicines[0].frequency"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Sathvik Sastry",
+      "registration_number": "KMC 66646",
+      "clinic_name": "Gaba Nursing Home",
+      "patient_name": "Girish Bhavsar",
+      "patient_age": "52 Y",
+      "date": "2026-06-12",
+      "diagnosis": "Hypertension",
+      "medicines": [
+       {
+        "name": "Emeset 4",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Fexofenadine",
+        "strength": "120 mg",
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-022/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.89,
+      "blur": 1.01,
+      "noise": 18.6,
+      "light": 0.73,
+      "jpeg": 25,
+      "scale": 0.43
+     },
+     "occluded": [
+      "patient_name"
+     ],
+     "truth": {
+      "pharmacy_name": "Choudhary Chemists",
+      "bill_number": "CB-23934",
+      "patient_name": "Girish Bhavsar",
+      "doctor_name": "Dr. Sathvik Sastry",
+      "date": "2026-06-08",
+      "line_items": [
+       {
+        "medicine": "Emeset 4 Tab",
+        "batch": "B63320",
+        "qty": 20.0,
+        "rate": 5.94,
+        "amount": 118.8
+       },
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B65542",
+        "qty": 15.0,
+        "rate": 11.1,
+        "amount": 166.5
+       }
+      ],
+      "discount": 28.53,
+      "total": 256.77
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-023",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Rosuvas 10 Tab not prescribed",
+     "fields": [
+      "bill.line_items[2].medicine"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-023/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "hard",
+      "angle": 1.75,
+      "blur": 1.19,
+      "noise": 18.3,
+      "light": 0.61,
+      "jpeg": 26,
+      "scale": 0.42
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Harsh Acharya",
+      "registration_number": "KMC 55474",
+      "clinic_name": "Dora Nursing Home",
+      "patient_name": "Onkar Ben",
+      "patient_age": "19 Y",
+      "date": "2026-06-03",
+      "diagnosis": "Fever",
+      "medicines": [
+       {
+        "name": "Amoxicillin + Clavulanic Acid",
+        "strength": "625 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Thyronorm 50",
+        "strength": null,
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Amlokind 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Cefixime",
+        "strength": "200 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-023/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.53,
+      "blur": 0.92,
+      "noise": 26.0,
+      "light": 0.64,
+      "jpeg": 37,
+      "scale": 0.44
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Yadav Pharmacy",
+      "bill_number": "INV-15693",
+      "patient_name": "BEN ONKAR",
+      "doctor_name": null,
+      "date": "2026-06-04",
+      "line_items": [
+       {
+        "medicine": "Eltroxin 50 Tab",
+        "batch": "B19049",
+        "qty": 15.0,
+        "rate": 1.63,
+        "amount": 24.45
+       },
+       {
+        "medicine": "Cefixime 200 mg Tab",
+        "batch": "B82719",
+        "qty": 15.0,
+        "rate": 14.93,
+        "amount": 223.95
+       },
+       {
+        "medicine": "Rosuvas 10 Tab",
+        "batch": "B60966",
+        "qty": 15.0,
+        "rate": 14.02,
+        "amount": 210.3
+       },
+       {
+        "medicine": "Augmentin 625 Duo Tab",
+        "batch": "B80727",
+        "qty": 30.0,
+        "rate": 23.22,
+        "amount": 696.6
+       },
+       {
+        "medicine": "Amlong 5 Tab",
+        "batch": "B57685",
+        "qty": 15.0,
+        "rate": 4.12,
+        "amount": 61.8
+       }
+      ],
+      "discount": null,
+      "total": 1217.1
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-024",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Azee 500 Tab not prescribed",
+     "fields": [
+      "bill.line_items[2].medicine"
+     ]
+    },
+    {
+     "type": "arithmetic_error",
+     "fields": [
+      "bill.total"
+     ],
+     "detail": "total off by +71"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-024/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Atharv Bobal",
+      "registration_number": "TNMC 45213",
+      "clinic_name": "Johal Health Centre",
+      "patient_name": "Daksha Patla",
+      "patient_age": "42 Y",
+      "date": "2026-09-06",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Levocetirizine",
+        "strength": "5 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "10 days"
+       },
+       {
+        "name": "Brufen 400",
+        "strength": null,
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-024/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Puri Medicals",
+      "bill_number": "B-81115",
+      "patient_name": "D. Patla",
+      "doctor_name": "Dr. Atharv Bobal",
+      "date": "2026-09-06",
+      "line_items": [
+       {
+        "medicine": "Levocetirizine 5 mg Tab",
+        "batch": "B58128",
+        "qty": 10.0,
+        "rate": 3.11,
+        "amount": 31.1
+       },
+       {
+        "medicine": "Ibuprofen Tab",
+        "batch": "B26680",
+        "qty": 15.0,
+        "rate": 2.36,
+        "amount": 35.4
+       },
+       {
+        "medicine": "Azee 500 Tab",
+        "batch": "B46254",
+        "qty": 15.0,
+        "rate": 25.17,
+        "amount": 377.55
+       }
+      ],
+      "discount": null,
+      "total": 515.05
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-025",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-025/rx.jpg",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.78,
+      "blur": 0.92,
+      "noise": 22.7,
+      "light": 0.6,
+      "jpeg": 38,
+      "scale": 0.45
+     },
+     "occluded": [
+      "medicines[1].dosage"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Idika Patla",
+      "registration_number": "KMC 44769",
+      "clinic_name": "Som Nursing Home",
+      "patient_name": "Falguni Krishnan",
+      "patient_age": "80 Y",
+      "date": "2026-09-15",
+      "diagnosis": "Bronchitis",
+      "medicines": [
+       {
+        "name": "Atorvastatin",
+        "strength": "10 mg",
+        "dosage": "1 tab",
+        "frequency": "0-0-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Pantocid 40",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "0-0-1",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Thyronorm 50",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Cefixime",
+        "strength": "200 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-025/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": -4.08,
+      "blur": 0.92,
+      "noise": 18.0,
+      "light": 0.74,
+      "jpeg": 39,
+      "scale": 0.44
+     },
+     "occluded": [
+      "line_items[0].rate"
+     ],
+     "truth": {
+      "pharmacy_name": "Das Medicals",
+      "bill_number": "INV-22316",
+      "patient_name": "KRISHNAN FALGUNI",
+      "doctor_name": null,
+      "date": "2026-09-12",
+      "line_items": [
+       {
+        "medicine": "Atocor 10 Tab",
+        "batch": "B32791",
+        "qty": 7.0,
+        "rate": 8.15,
+        "amount": 57.05
+       },
+       {
+        "medicine": "Cefixime 200 mg Tab",
+        "batch": "B64338",
+        "qty": 10.0,
+        "rate": 12.87,
+        "amount": 128.7
+       },
+       {
+        "medicine": "Thyronorm 50 Tab",
+        "batch": "B87063",
+        "qty": 14.0,
+        "rate": 1.46,
+        "amount": 20.44
+       },
+       {
+        "medicine": "PANTOPRAZOLE 40MG TAB",
+        "batch": "B84495",
+        "qty": 14.0,
+        "rate": 9.39,
+        "amount": 131.46
+       }
+      ],
+      "discount": 33.77,
+      "total": 303.88
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-026",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-026/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.99,
+      "blur": 0.57,
+      "noise": 6.4,
+      "light": 0.87,
+      "jpeg": 47,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Unnati Srinivasan",
+      "registration_number": "TNMC 85656",
+      "clinic_name": "Sule Nursing Home",
+      "patient_name": "Devika Sura",
+      "patient_age": "44 Y",
+      "date": "2026-07-11",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Amoxicillin",
+        "strength": "500 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Amoxicillin + Clavulanic Acid",
+        "strength": "625 mg",
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-026/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.76,
+      "blur": 0.67,
+      "noise": 9.2,
+      "light": 0.92,
+      "jpeg": 57,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Muni Medical Stores",
+      "bill_number": "INV-76991",
+      "patient_name": "Devika Sura",
+      "doctor_name": null,
+      "date": "2026-07-11",
+      "line_items": [
+       {
+        "medicine": "Amoxicillin + Clavulanic Acid 625 mg Tab",
+        "batch": "B14719",
+        "qty": 20.0,
+        "rate": 24.37,
+        "amount": 487.4
+       },
+       {
+        "medicine": "Novamox 500 Cap",
+        "batch": "B53987",
+        "qty": 15.0,
+        "rate": 7.14,
+        "amount": 107.1
+       }
+      ],
+      "discount": null,
+      "total": 594.5
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-027",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Libni Srinivas vs Brijesh Dhawan"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-027/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Harsh Oommen",
+      "registration_number": "TNMC 18953",
+      "clinic_name": "Edwin Polyclinic",
+      "patient_name": "Brijesh Dhawan",
+      "patient_age": "79 Y",
+      "date": "2026-08-21",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Ibuprofen",
+        "strength": "400 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Amlodipine",
+        "strength": "5 mg",
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-027/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Varty Medicals",
+      "bill_number": "CB-37030",
+      "patient_name": "Libni Srinivas",
+      "doctor_name": "Dr. Harsh Oommen",
+      "date": "2026-08-21",
+      "line_items": [
+       {
+        "medicine": "AMLODIPINE 5MG TAB",
+        "batch": "B80782",
+        "qty": 15.0,
+        "rate": 4.86,
+        "amount": 72.9
+       },
+       {
+        "medicine": "Brufen 400 Tab",
+        "batch": "B45557",
+        "qty": 14.0,
+        "rate": 2.37,
+        "amount": 33.18
+       }
+      ],
+      "discount": null,
+      "total": 106.08
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-028",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-028/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": -2.44,
+      "blur": 1.22,
+      "noise": 24.6,
+      "light": 0.74,
+      "jpeg": 33,
+      "scale": 0.48
+     },
+     "occluded": [
+      "doctor_name"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Janaki Din",
+      "registration_number": "KMC 39663",
+      "clinic_name": "Bala Health Centre",
+      "patient_name": "Advay Jha",
+      "patient_age": "6 Y",
+      "date": "2026-08-01",
+      "diagnosis": "Allergic rhinitis",
+      "medicines": [
+       {
+        "name": "Telvas 40",
+        "strength": null,
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Rosuvastatin",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-028/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "hard",
+      "angle": -1.29,
+      "blur": 0.92,
+      "noise": 18.2,
+      "light": 0.74,
+      "jpeg": 40,
+      "scale": 0.48
+     },
+     "occluded": [
+      "pharmacy_name"
+     ],
+     "truth": {
+      "pharmacy_name": "Wable Medicals",
+      "bill_number": "INV-49826",
+      "patient_name": "JHA ADVAY",
+      "doctor_name": "Dr. Janaki Din",
+      "date": "2026-07-30",
+      "line_items": [
+       {
+        "medicine": "ROSUVASTATIN 10MG TAB",
+        "batch": "B67640",
+        "qty": 14.0,
+        "rate": 14.02,
+        "amount": 196.28
+       },
+       {
+        "medicine": "Telma 40 Tab",
+        "batch": "B66214",
+        "qty": 5.0,
+        "rate": 6.88,
+        "amount": 34.4
+       }
+      ],
+      "discount": null,
+      "total": 230.68
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-029",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "implausible_quantity",
+     "detail": "70 billed, course needs 14",
+     "fields": [
+      "bill.line_items[1].qty"
+     ]
+    },
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Allegra 120 Tab not prescribed",
+     "fields": [
+      "bill.line_items[0].medicine"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-029/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Advika Vasa",
+      "registration_number": "KMC 93883",
+      "clinic_name": "Peri Nursing Home",
+      "patient_name": "Neha Chand",
+      "patient_age": "19 Y",
+      "date": "2026-08-28",
+      "diagnosis": "UTI",
+      "medicines": [
+       {
+        "name": "Amoxicillin + Clavulanic Acid",
+        "strength": "625 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       },
+       {
+        "name": "Eltroxin 50",
+        "strength": null,
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "7 days"
+       },
+       {
+        "name": "Metronidazole",
+        "strength": "400 mg",
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-029/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Ganesh Pharmacy",
+      "bill_number": "CB-28223",
+      "patient_name": "Mrs. Neha Chand",
+      "doctor_name": "Dr. Advika Vasa",
+      "date": "2026-08-29",
+      "line_items": [
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B78912",
+        "qty": 15.0,
+        "rate": 11.5,
+        "amount": 172.5
+       },
+       {
+        "medicine": "Eltroxin 50 Tab",
+        "batch": "B98712",
+        "qty": 70.0,
+        "rate": 1.6,
+        "amount": 112.0
+       },
+       {
+        "medicine": "Clavam 625 Tab",
+        "batch": "B12992",
+        "qty": 7.0,
+        "rate": 24.03,
+        "amount": 168.21
+       },
+       {
+        "medicine": "Metronidazole 400 mg Tab",
+        "batch": "B13332",
+        "qty": 7.0,
+        "rate": 2.33,
+        "amount": 16.31
+       }
+      ],
+      "discount": null,
+      "total": 469.02
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-030",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Mox 500 Cap not prescribed",
+     "fields": [
+      "bill.line_items[2].medicine"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-030/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Yadavi Narayan",
+      "registration_number": "KMC 39500",
+      "clinic_name": "Kapoor Health Centre",
+      "patient_name": "Pranav Kapoor",
+      "patient_age": "7 Y",
+      "date": "2026-07-23",
+      "diagnosis": "Acute gastritis",
+      "medicines": [
+       {
+        "name": "Metronidazole",
+        "strength": "400 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       },
+       {
+        "name": "Metformin",
+        "strength": "500 mg",
+        "dosage": "1 tab",
+        "frequency": "HS",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-030/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Hayer Chemists",
+      "bill_number": "B-47145",
+      "patient_name": "Pranav Kapoor",
+      "doctor_name": "Dr. Yadavi Narayan",
+      "date": "2026-07-23",
+      "line_items": [
+       {
+        "medicine": "METRONIDAZOLE 400MG TAB",
+        "batch": "B25400",
+        "qty": 10.0,
+        "rate": 1.83,
+        "amount": 18.3
+       },
+       {
+        "medicine": "Glycomet 500 Tab",
+        "batch": "B41131",
+        "qty": 15.0,
+        "rate": 3.21,
+        "amount": 48.15
+       },
+       {
+        "medicine": "Mox 500 Cap",
+        "batch": "B16371",
+        "qty": 10.0,
+        "rate": 6.84,
+        "amount": 68.4
+       }
+      ],
+      "discount": null,
+      "total": 134.85
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-031",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Omez 20 Cap not prescribed",
+     "fields": [
+      "bill.line_items[2].medicine"
+     ]
+    },
+    {
+     "type": "arithmetic_error",
+     "detail": "line amount != qty x rate",
+     "fields": [
+      "bill.line_items[3].amount"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-031/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.26,
+      "blur": 0.65,
+      "noise": 10.5,
+      "light": 0.83,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Utkarsh Iyengar",
+      "registration_number": "KMC 88498",
+      "clinic_name": "Vasa Polyclinic",
+      "patient_name": "Kashvi Rattan",
+      "patient_age": "62 Y",
+      "date": "2026-07-26",
+      "diagnosis": "UTI",
+      "medicines": [
+       {
+        "name": "Amoxicillin + Clavulanic Acid",
+        "strength": "625 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "7 days"
+       },
+       {
+        "name": "Amoxicillin",
+        "strength": "500 mg",
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Zifi 200",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-031/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.79,
+      "blur": 0.57,
+      "noise": 7.3,
+      "light": 0.82,
+      "jpeg": 52,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Tailor Chemists",
+      "bill_number": "CB-44964",
+      "patient_name": "K. Rattan",
+      "doctor_name": "Dr. Utkarsh Iyengar",
+      "date": "2026-07-27",
+      "line_items": [
+       {
+        "medicine": "Mox 500 Cap",
+        "batch": "B39749",
+        "qty": 20.0,
+        "rate": 8.82,
+        "amount": 176.4
+       },
+       {
+        "medicine": "Taxim-O 200 Tab",
+        "batch": "B59924",
+        "qty": 30.0,
+        "rate": 14.48,
+        "amount": 434.4
+       },
+       {
+        "medicine": "Omez 20 Cap",
+        "batch": "B79760",
+        "qty": 10.0,
+        "rate": 5.97,
+        "amount": 59.7
+       },
+       {
+        "medicine": "AMOXICILLIN + CLAVULANIC ACID 625MG TAB",
+        "batch": "B29834",
+        "qty": 20.0,
+        "rate": 24.5,
+        "amount": 386.15
+       }
+      ],
+      "discount": null,
+      "total": 1056.65
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-032",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-032/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.2,
+      "blur": 0.55,
+      "noise": 6.4,
+      "light": 0.84,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Ayaan Mammen",
+      "registration_number": "DMC 13939",
+      "clinic_name": "Sodhi Nursing Home",
+      "patient_name": "Rachana Balakrishnan",
+      "patient_age": "24 Y",
+      "date": "2026-09-02",
+      "diagnosis": "URTI",
+      "medicines": [
+       {
+        "name": "Atorva 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Amoxicillin",
+        "strength": "500 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Allegra 120",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "BD",
+        "duration": "10 days"
+       },
+       {
+        "name": "Rosuvastatin",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "3 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-032/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.45,
+      "blur": 0.64,
+      "noise": 9.1,
+      "light": 0.83,
+      "jpeg": 47,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Lad Medicals",
+      "bill_number": "CB-51595",
+      "patient_name": "Ms. Rachana Balakrishnan",
+      "doctor_name": "Dr. Ayaan Mammen",
+      "date": "2026-09-02",
+      "line_items": [
+       {
+        "medicine": "Rozavel 10 Tab",
+        "batch": "B61661",
+        "qty": 10.0,
+        "rate": 13.04,
+        "amount": 130.4
+       },
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B53597",
+        "qty": 20.0,
+        "rate": 11.57,
+        "amount": 231.4
+       },
+       {
+        "medicine": "Novamox 500 Cap",
+        "batch": "B10969",
+        "qty": 7.0,
+        "rate": 7.26,
+        "amount": 50.82
+       },
+       {
+        "medicine": "Atorva 10 Tab",
+        "batch": "B97096",
+        "qty": 10.0,
+        "rate": 10.07,
+        "amount": 100.7
+       }
+      ],
+      "discount": null,
+      "total": 513.32
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-033",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "implausible_quantity",
+     "detail": "40 billed, course needs 5",
+     "fields": [
+      "bill.line_items[1].qty"
+     ]
+    },
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Qabil Buch vs Indali Padmanabhan"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-033/rx.jpg",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.99,
+      "blur": 0.76,
+      "noise": 9.5,
+      "light": 0.92,
+      "jpeg": 55,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Sanya Palla",
+      "registration_number": "DMC 27537",
+      "clinic_name": "Kannan Nursing Home",
+      "patient_name": "Indali Padmanabhan",
+      "patient_age": "72 Y",
+      "date": "2026-08-04",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Metronidazole",
+        "strength": "400 mg",
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Eltroxin 50",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-033/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.05,
+      "blur": 0.41,
+      "noise": 8.2,
+      "light": 0.84,
+      "jpeg": 58,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Chaudry Pharmacy",
+      "bill_number": "CB-41201",
+      "patient_name": "Qabil Buch",
+      "doctor_name": "Dr. Sanya Palla",
+      "date": "2026-08-05",
+      "line_items": [
+       {
+        "medicine": "Metrogyl 400 Tab",
+        "batch": "B21278",
+        "qty": 30.0,
+        "rate": 1.93,
+        "amount": 57.9
+       },
+       {
+        "medicine": "Eltroxin 50 Tab",
+        "batch": "B25155",
+        "qty": 40.0,
+        "rate": 1.68,
+        "amount": 67.2
+       }
+      ],
+      "discount": null,
+      "total": 125.1
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-034",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "arithmetic_error",
+     "fields": [
+      "bill.total"
+     ],
+     "detail": "total off by -347"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-034/rx.jpg",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.25,
+      "blur": 1.07,
+      "noise": 27.4,
+      "light": 0.69,
+      "jpeg": 34,
+      "scale": 0.46
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Ronith Nazareth",
+      "registration_number": "MMC 92379",
+      "clinic_name": "Jayaraman Polyclinic",
+      "patient_name": "Ishaan Singhal",
+      "patient_age": "54 Y",
+      "date": "2026-06-24",
+      "diagnosis": "Migraine",
+      "medicines": [
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Cetirizine",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "3 days"
+       },
+       {
+        "name": "Amlokind 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "3 days"
+       },
+       {
+        "name": "Montelukast",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-034/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.98,
+      "blur": 1.26,
+      "noise": 24.9,
+      "light": 0.7,
+      "jpeg": 39,
+      "scale": 0.44
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Subramanian Chemists",
+      "bill_number": "INV-84960",
+      "patient_name": "Mr. Ishaan Singhal",
+      "doctor_name": "Dr. Ronith Nazareth",
+      "date": "2026-06-25",
+      "line_items": [
+       {
+        "medicine": "Amlong 5 Tab",
+        "batch": "B15108",
+        "qty": 9.0,
+        "rate": 4.78,
+        "amount": 43.02
+       },
+       {
+        "medicine": "Montair 10 Tab",
+        "batch": "B53716",
+        "qty": 20.0,
+        "rate": 19.63,
+        "amount": 392.6
+       },
+       {
+        "medicine": "CETIRIZINE 10MG TAB",
+        "batch": "B81768",
+        "qty": 6.0,
+        "rate": 1.86,
+        "amount": 11.16
+       },
+       {
+        "medicine": "Omeprazole 20 mg Cap",
+        "batch": "B70655",
+        "qty": 15.0,
+        "rate": 5.91,
+        "amount": 88.65
+       }
+      ],
+      "discount": 53.54,
+      "total": 134.89
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-035",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-035/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -1.99,
+      "blur": 0.55,
+      "noise": 7.3,
+      "light": 0.84,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Hemangini Chad",
+      "registration_number": "TNMC 98954",
+      "clinic_name": "Dar Nursing Home",
+      "patient_name": "Aadi Srinivas",
+      "patient_age": "8 Y",
+      "date": "2026-09-01",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Moxikind-CV 625",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       },
+       {
+        "name": "Okacet",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Atorvastatin",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-035/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.81,
+      "blur": 0.71,
+      "noise": 10.3,
+      "light": 0.89,
+      "jpeg": 54,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Rama Chemists",
+      "bill_number": "INV-6598",
+      "patient_name": "A. Srinivas",
+      "doctor_name": "Dr. Hemangini Chad",
+      "date": "2026-09-01",
+      "line_items": [
+       {
+        "medicine": "Moxikind-CV 625 Tab",
+        "batch": "B59999",
+        "qty": 7.0,
+        "rate": 25.84,
+        "amount": 180.88
+       },
+       {
+        "medicine": "Cetzine Tab",
+        "batch": "B38457",
+        "qty": 21.0,
+        "rate": 2.14,
+        "amount": 44.94
+       },
+       {
+        "medicine": "Atorva 10 Tab",
+        "batch": "B27837",
+        "qty": 21.0,
+        "rate": 10.32,
+        "amount": 216.72
+       }
+      ],
+      "discount": 44.25,
+      "total": 398.29
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-036",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-036/rx.png",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Pranav Saraf",
+      "registration_number": "MMC 95143",
+      "clinic_name": "Natarajan Polyclinic",
+      "patient_name": "Harish Sridhar",
+      "patient_age": "67 Y",
+      "date": "2026-08-09",
+      "diagnosis": "Pharyngitis",
+      "medicines": [
+       {
+        "name": "Mox 500",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Atorva 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "TDS",
+        "duration": "5 days"
+       },
+       {
+        "name": "Pantoprazole",
+        "strength": "40 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-036/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Chadha Medicals",
+      "bill_number": "CB-95036",
+      "patient_name": "Mr. Harish Sridhar",
+      "doctor_name": null,
+      "date": "2026-08-10",
+      "line_items": [
+       {
+        "medicine": "Pantocid 40 Tab",
+        "batch": "B17412",
+        "qty": 10.0,
+        "rate": 8.94,
+        "amount": 89.4
+       },
+       {
+        "medicine": "Atorva 10 Tab",
+        "batch": "B39298",
+        "qty": 20.0,
+        "rate": 8.46,
+        "amount": 169.2
+       },
+       {
+        "medicine": "Novamox 500 Cap",
+        "batch": "B79338",
+        "qty": 10.0,
+        "rate": 7.35,
+        "amount": 73.5
+       }
+      ],
+      "discount": 33.21,
+      "total": 298.89
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-037",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    },
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Augmentin 625 Duo Tab not prescribed",
+     "fields": [
+      "bill.line_items[2].medicine"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-037/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": 4.77,
+      "blur": 0.97,
+      "noise": 20.3,
+      "light": 0.64,
+      "jpeg": 30,
+      "scale": 0.43
+     },
+     "occluded": [
+      "doctor_name"
+     ],
+     "truth": {
+      "doctor_name": "Dr. Neelima Chad",
+      "registration_number": "MMC 89080",
+      "clinic_name": "Dutt Clinic",
+      "patient_name": "Siya Sheth",
+      "patient_age": "8 Y",
+      "date": "2026-07-28",
+      "diagnosis": "Fever",
+      "medicines": [
+       {
+        "name": "Zerodol 100",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Telmisartan",
+        "strength": "40 mg",
+        "dosage": "1 tab",
+        "frequency": "BD",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-037/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 3.71,
+      "blur": 1.11,
+      "noise": 22.8,
+      "light": 0.67,
+      "jpeg": 27,
+      "scale": 0.52
+     },
+     "occluded": [
+      "line_items[0].medicine"
+     ],
+     "truth": {
+      "pharmacy_name": "Garde Pharmacy",
+      "bill_number": "B-48041",
+      "patient_name": "Ms. Siya Sheth",
+      "doctor_name": "Dr. Neelima Chad",
+      "date": "2026-07-18",
+      "line_items": [
+       {
+        "medicine": "Aceclofenac Tab",
+        "batch": "B37561",
+        "qty": 10.0,
+        "rate": 4.59,
+        "amount": 45.9
+       },
+       {
+        "medicine": "Telvas 40 Tab",
+        "batch": "B72926",
+        "qty": 14.0,
+        "rate": 8.48,
+        "amount": 118.72
+       },
+       {
+        "medicine": "Augmentin 625 Duo Tab",
+        "batch": "B34079",
+        "qty": 10.0,
+        "rate": 22.72,
+        "amount": 227.2
+       }
+      ],
+      "discount": null,
+      "total": 391.82
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-038",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "implausible_quantity",
+     "detail": "60 billed, course needs 10",
+     "fields": [
+      "bill.line_items[1].qty"
+     ]
+    },
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Elijah Som vs Devansh Bala"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-038/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Matthew Shroff",
+      "registration_number": "TNMC 29147",
+      "clinic_name": "Palla Polyclinic",
+      "patient_name": "Devansh Bala",
+      "patient_age": "79 Y",
+      "date": "2026-06-19",
+      "diagnosis": "Fever",
+      "medicines": [
+       {
+        "name": "Atocor 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "twice daily",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Metformin",
+        "strength": "500 mg",
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "7 days"
+       },
+       {
+        "name": "Emeset 4",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-038/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Dugal Medicals",
+      "bill_number": "CB-97396",
+      "patient_name": "Elijah Som",
+      "doctor_name": null,
+      "date": "2026-06-19",
+      "line_items": [
+       {
+        "medicine": "Metformin 500 mg Tab",
+        "batch": "B47995",
+        "qty": 20.0,
+        "rate": 2.99,
+        "amount": 59.8
+       },
+       {
+        "medicine": "Atocor 10 Tab",
+        "batch": "B71020",
+        "qty": 60.0,
+        "rate": 9.03,
+        "amount": 541.8
+       },
+       {
+        "medicine": "Ondem 4 Tab",
+        "batch": "B99682",
+        "qty": 10.0,
+        "rate": 6.02,
+        "amount": 60.2
+       }
+      ],
+      "discount": null,
+      "total": 661.8
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-039",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-039/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.22,
+      "blur": 1.35,
+      "noise": 19.4,
+      "light": 0.74,
+      "jpeg": 29,
+      "scale": 0.51
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Akshay Chauhan",
+      "registration_number": "MMC 74533",
+      "clinic_name": "Vyas Clinic",
+      "patient_name": "Ekaja Bail",
+      "patient_age": "41 Y",
+      "date": "2026-06-17",
+      "diagnosis": "UTI",
+      "medicines": [
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "10 days"
+       },
+       {
+        "name": "Atorvastatin",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "10 days"
+       },
+       {
+        "name": "Brufen 400",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "3 days"
+       },
+       {
+        "name": "Taxim-O 200",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-039/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": 0.12,
+      "blur": 0.95,
+      "noise": 19.4,
+      "light": 0.64,
+      "jpeg": 37,
+      "scale": 0.54
+     },
+     "occluded": [
+      "pharmacy_name"
+     ],
+     "truth": {
+      "pharmacy_name": "Dewan Pharmacy",
+      "bill_number": "B-96499",
+      "patient_name": "BAIL EKAJA",
+      "doctor_name": null,
+      "date": "2026-06-18",
+      "line_items": [
+       {
+        "medicine": "Omez 20 Cap",
+        "batch": "B61997",
+        "qty": 10.0,
+        "rate": 5.09,
+        "amount": 50.9
+       },
+       {
+        "medicine": "Zifi 200 Tab",
+        "batch": "B61774",
+        "qty": 42.0,
+        "rate": 11.23,
+        "amount": 471.66
+       },
+       {
+        "medicine": "Ibuprofen Tab",
+        "batch": "B97640",
+        "qty": 3.0,
+        "rate": 2.12,
+        "amount": 6.36
+       },
+       {
+        "medicine": "Atocor 10 Tab",
+        "batch": "B44432",
+        "qty": 15.0,
+        "rate": 8.33,
+        "amount": 124.95
+       }
+      ],
+      "discount": 65.39,
+      "total": 588.48
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-040",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-040/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.77,
+      "blur": 0.48,
+      "noise": 10.6,
+      "light": 0.78,
+      "jpeg": 63,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Siddharth Bala",
+      "registration_number": "MMC 44767",
+      "clinic_name": "Krishnamurthy Health Centre",
+      "patient_name": "Urishilla Hayer",
+      "patient_age": "29 Y",
+      "date": "2026-07-13",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Rosuvas 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Cefixime",
+        "strength": "200 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Paracetamol",
+        "strength": "650 mg",
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "10 days"
+       },
+       {
+        "name": "Novamox 500",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-040/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.71,
+      "blur": 0.8,
+      "noise": 10.3,
+      "light": 0.82,
+      "jpeg": 53,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Kala Chemists",
+      "bill_number": "CB-50182",
+      "patient_name": "HAYER URISHILLA",
+      "doctor_name": "Dr. Siddharth Bala",
+      "date": "2026-07-08",
+      "line_items": [
+       {
+        "medicine": "AMOXICILLIN 500MG CAP",
+        "batch": "B47176",
+        "qty": 10.0,
+        "rate": 8.82,
+        "amount": 88.2
+       },
+       {
+        "medicine": "ROSUVASTATIN 10MG TAB",
+        "batch": "B23385",
+        "qty": 15.0,
+        "rate": 13.86,
+        "amount": 207.9
+       },
+       {
+        "medicine": "Taxim-O 200 Tab",
+        "batch": "B21610",
+        "qty": 15.0,
+        "rate": 14.0,
+        "amount": 210.0
+       },
+       {
+        "medicine": "Calpol 650 Tab",
+        "batch": "B35337",
+        "qty": 10.0,
+        "rate": 1.93,
+        "amount": 19.3
+       }
+      ],
+      "discount": null,
+      "total": 525.4
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-041",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [
+    {
+     "type": "patient_name_mismatch",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ],
+     "detail": "Leela Saini vs Madhav Thaker"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-041/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Wridesh Nanda",
+      "registration_number": "KMC 37527",
+      "clinic_name": "Deep Clinic",
+      "patient_name": "Madhav Thaker",
+      "patient_age": "71 Y",
+      "date": "2026-09-14",
+      "diagnosis": "Pharyngitis",
+      "medicines": [
+       {
+        "name": "Cetirizine",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "5 days"
+       },
+       {
+        "name": "Aceclofenac",
+        "strength": "100 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-041/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Bhat Pharmacy",
+      "bill_number": "INV-77392",
+      "patient_name": "Leela Saini",
+      "doctor_name": null,
+      "date": "2026-09-16",
+      "line_items": [
+       {
+        "medicine": "Zerodol 100 Tab",
+        "batch": "B62528",
+        "qty": 15.0,
+        "rate": 6.07,
+        "amount": 91.05
+       },
+       {
+        "medicine": "Okacet Tab",
+        "batch": "B55358",
+        "qty": 10.0,
+        "rate": 2.35,
+        "amount": 23.5
+       }
+      ],
+      "discount": null,
+      "total": 114.55
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-042",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "arithmetic_error",
+     "fields": [
+      "bill.total"
+     ],
+     "detail": "total off by -119"
+    },
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Ondem 4 Tab not prescribed",
+     "fields": [
+      "bill.line_items[1].medicine"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-042/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.7,
+      "blur": 0.46,
+      "noise": 8.9,
+      "light": 0.88,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Zansi Salvi",
+      "registration_number": "MMC 84066",
+      "clinic_name": "Thaker Nursing Home",
+      "patient_name": "Peter Shanker",
+      "patient_age": "4 Y",
+      "date": "2026-09-06",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Mox 500",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "1 week"
+       },
+       {
+        "name": "Azee 500",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "5 days"
+       },
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": "1 cap",
+        "frequency": "0-0-1",
+        "duration": "3 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-042/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.79,
+      "blur": 0.44,
+      "noise": 7.5,
+      "light": 0.79,
+      "jpeg": 55,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "De Medical Stores",
+      "bill_number": "B-75099",
+      "patient_name": "SHANKER PETER",
+      "doctor_name": "Dr. Zansi Salvi",
+      "date": "2026-09-09",
+      "line_items": [
+       {
+        "medicine": "Azee 500 Tab",
+        "batch": "B15261",
+        "qty": 15.0,
+        "rate": 25.96,
+        "amount": 389.4
+       },
+       {
+        "medicine": "Ondem 4 Tab",
+        "batch": "B78305",
+        "qty": 10.0,
+        "rate": 7.02,
+        "amount": 70.2
+       },
+       {
+        "medicine": "Omeprazole 20 mg Cap",
+        "batch": "B69565",
+        "qty": 15.0,
+        "rate": 4.85,
+        "amount": 72.75
+       },
+       {
+        "medicine": "AMOXICILLIN 500MG CAP",
+        "batch": "B58748",
+        "qty": 7.0,
+        "rate": 7.94,
+        "amount": 55.58
+       }
+      ],
+      "discount": null,
+      "total": 468.93
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-043",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-043/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Yashvi Bahl",
+      "registration_number": "KMC 50473",
+      "clinic_name": "Sarraf Polyclinic",
+      "patient_name": "Faqid Viswanathan",
+      "patient_age": "38 Y",
+      "date": "2026-08-16",
+      "diagnosis": "Allergic rhinitis",
+      "medicines": [
+       {
+        "name": "Dolo 650",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Moxikind-CV 625",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Levocet 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "5 days"
+       },
+       {
+        "name": "Thyronorm 50",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "OD",
+        "duration": "10 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-043/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Goswami Chemists",
+      "bill_number": "INV-15780",
+      "patient_name": "F. Viswanathan",
+      "doctor_name": "Dr. Yashvi Bahl",
+      "date": "2026-08-18",
+      "line_items": [
+       {
+        "medicine": "Clavam 625 Tab",
+        "batch": "B55753",
+        "qty": 14.0,
+        "rate": 20.03,
+        "amount": 280.42
+       },
+       {
+        "medicine": "Levocetirizine Tab",
+        "batch": "B56624",
+        "qty": 5.0,
+        "rate": 3.16,
+        "amount": 15.8
+       },
+       {
+        "medicine": "Calpol 650 Tab",
+        "batch": "B70138",
+        "qty": 15.0,
+        "rate": 1.83,
+        "amount": 27.45
+       },
+       {
+        "medicine": "LEVOTHYROXINE 50MCG TAB",
+        "batch": "B93336",
+        "qty": 10.0,
+        "rate": 1.53,
+        "amount": 15.3
+       }
+      ],
+      "discount": null,
+      "total": 338.97
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-044",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-044/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.13,
+      "blur": 0.45,
+      "noise": 11.3,
+      "light": 0.79,
+      "jpeg": 56,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Orinder Dhaliwal",
+      "registration_number": "MMC 23674",
+      "clinic_name": "Solanki Clinic",
+      "patient_name": "Aarnav Doctor",
+      "patient_age": "20 Y",
+      "date": "2026-09-06",
+      "diagnosis": "Allergic rhinitis",
+      "medicines": [
+       {
+        "name": "Amlokind 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Allegra 120",
+        "strength": null,
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-044/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.3,
+      "blur": 0.64,
+      "noise": 8.4,
+      "light": 0.78,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Dara Medical Stores",
+      "bill_number": "CB-6808",
+      "patient_name": "Aarnav Doctor",
+      "doctor_name": null,
+      "date": "2026-09-06",
+      "line_items": [
+       {
+        "medicine": "Fexofenadine Tab",
+        "batch": "B70347",
+        "qty": 14.0,
+        "rate": 14.47,
+        "amount": 202.58
+       },
+       {
+        "medicine": "Amlong 5 Tab",
+        "batch": "B27848",
+        "qty": 15.0,
+        "rate": 3.68,
+        "amount": 55.2
+       }
+      ],
+      "discount": null,
+      "total": 257.78
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-045",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-045/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Zarna Wali",
+      "registration_number": "MMC 94688",
+      "clinic_name": "Subramanian Health Centre",
+      "patient_name": "Bhavani Nanda",
+      "patient_age": "49 Y",
+      "date": "2026-07-29",
+      "diagnosis": "URTI",
+      "medicines": [
+       {
+        "name": "Ondansetron",
+        "strength": "4 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "1 week"
+       },
+       {
+        "name": "Cefixime",
+        "strength": "200 mg",
+        "dosage": "1 tab",
+        "frequency": "twice daily",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-045/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Cherian Chemists",
+      "bill_number": "B-59943",
+      "patient_name": "Bhavani Nanda",
+      "doctor_name": "Dr. Zarna Wali",
+      "date": "2026-07-30",
+      "line_items": [
+       {
+        "medicine": "CEFIXIME 200MG TAB",
+        "batch": "B27163",
+        "qty": 10.0,
+        "rate": 13.08,
+        "amount": 130.8
+       },
+       {
+        "medicine": "Ondansetron 4 mg Tab",
+        "batch": "B66846",
+        "qty": 10.0,
+        "rate": 5.56,
+        "amount": 55.6
+       }
+      ],
+      "discount": null,
+      "total": 186.4
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-046",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-046/rx.jpg",
+     "template": "letterhead_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.36,
+      "blur": 0.67,
+      "noise": 10.6,
+      "light": 0.8,
+      "jpeg": 60,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Rayaan Malhotra",
+      "registration_number": "DMC 70768",
+      "clinic_name": "Basak Polyclinic",
+      "patient_name": "Ayush Kothari",
+      "patient_age": "32 Y",
+      "date": "2026-06-26",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Metformin",
+        "strength": "500 mg",
+        "dosage": "1 tab",
+        "frequency": "0-0-1",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Brufen 400",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Okacet",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-1-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Thyronorm 50",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-046/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.59,
+      "blur": 0.6,
+      "noise": 10.3,
+      "light": 0.88,
+      "jpeg": 45,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Chaudhari Medical Stores",
+      "bill_number": "B-7953",
+      "patient_name": "A. Kothari",
+      "doctor_name": null,
+      "date": "2026-06-26",
+      "line_items": [
+       {
+        "medicine": "Glyciphage 500 Tab",
+        "batch": "B13564",
+        "qty": 14.0,
+        "rate": 3.72,
+        "amount": 52.08
+       },
+       {
+        "medicine": "Brufen 400 Tab",
+        "batch": "B17043",
+        "qty": 5.0,
+        "rate": 1.95,
+        "amount": 9.75
+       },
+       {
+        "medicine": "Eltroxin 50 Tab",
+        "batch": "B92248",
+        "qty": 15.0,
+        "rate": 1.53,
+        "amount": 22.95
+       },
+       {
+        "medicine": "CETIRIZINE 10MG TAB",
+        "batch": "B47483",
+        "qty": 21.0,
+        "rate": 1.91,
+        "amount": 40.11
+       }
+      ],
+      "discount": null,
+      "total": 124.89
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-047",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-047/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Ayaan Bhatnagar",
+      "registration_number": "DMC 66603",
+      "clinic_name": "Savant Clinic",
+      "patient_name": "Zehaan Sethi",
+      "patient_age": "24 Y",
+      "date": "2026-08-06",
+      "diagnosis": "URTI",
+      "medicines": [
+       {
+        "name": "Fexofenadine",
+        "strength": "120 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "3 days"
+       },
+       {
+        "name": "Metronidazole",
+        "strength": "400 mg",
+        "dosage": "1 tab",
+        "frequency": "TDS",
+        "duration": "3 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-047/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Nanda Pharmacy",
+      "bill_number": "CB-77900",
+      "patient_name": "Z. Sethi",
+      "doctor_name": null,
+      "date": "2026-08-09",
+      "line_items": [
+       {
+        "medicine": "Allegra 120 Tab",
+        "batch": "B47009",
+        "qty": 6.0,
+        "rate": 14.03,
+        "amount": 84.18
+       },
+       {
+        "medicine": "Metronidazole 400 mg Tab",
+        "batch": "B97431",
+        "qty": 9.0,
+        "rate": 2.16,
+        "amount": 19.44
+       }
+      ],
+      "discount": 10.36,
+      "total": 93.26
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-048",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-048/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Ryan Malhotra",
+      "registration_number": "TNMC 10380",
+      "clinic_name": "Sethi Polyclinic",
+      "patient_name": "Yashawini Vala",
+      "patient_age": "62 Y",
+      "date": "2026-09-12",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Telma 40",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "7 days"
+       },
+       {
+        "name": "Cetirizine",
+        "strength": "10 mg",
+        "dosage": "1 tab",
+        "frequency": "TDS",
+        "duration": "10 days"
+       },
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": "1 cap",
+        "frequency": "TDS",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-048/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Trivedi Pharmacy",
+      "bill_number": "INV-98434",
+      "patient_name": "Yashawini Vala",
+      "doctor_name": "Dr. Ryan Malhotra",
+      "date": "2026-09-13",
+      "line_items": [
+       {
+        "medicine": "Omez 20 Cap",
+        "batch": "B39508",
+        "qty": 42.0,
+        "rate": 5.18,
+        "amount": 217.56
+       },
+       {
+        "medicine": "Telma 40 Tab",
+        "batch": "B93309",
+        "qty": 15.0,
+        "rate": 8.6,
+        "amount": 129.0
+       },
+       {
+        "medicine": "Cetirizine 10 mg Tab",
+        "batch": "B39123",
+        "qty": 30.0,
+        "rate": 2.39,
+        "amount": 71.7
+       }
+      ],
+      "discount": null,
+      "total": 418.26
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-049",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-049/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.41,
+      "blur": 0.59,
+      "noise": 11.7,
+      "light": 0.81,
+      "jpeg": 53,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Yug Virk",
+      "registration_number": "TNMC 11991",
+      "clinic_name": "Lad Health Centre",
+      "patient_name": "Waida Tripathi",
+      "patient_age": "17 Y",
+      "date": "2026-06-04",
+      "diagnosis": "Allergic rhinitis",
+      "medicines": [
+       {
+        "name": "Thyronorm 50",
+        "strength": null,
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Paracetamol",
+        "strength": "650 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-049/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.35,
+      "blur": 0.73,
+      "noise": 9.2,
+      "light": 0.82,
+      "jpeg": 59,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Jain Pharmacy",
+      "bill_number": "INV-52649",
+      "patient_name": "Ms. Waida Tripathi",
+      "doctor_name": "Dr. Yug Virk",
+      "date": "2026-06-05",
+      "line_items": [
+       {
+        "medicine": "Eltroxin 50 Tab",
+        "batch": "B96134",
+        "qty": 28.0,
+        "rate": 1.45,
+        "amount": 40.6
+       },
+       {
+        "medicine": "PARACETAMOL 650MG TAB",
+        "batch": "B76849",
+        "qty": 15.0,
+        "rate": 2.05,
+        "amount": 30.75
+       }
+      ],
+      "discount": 7.13,
+      "total": 64.22
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-050",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-050/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 1.38,
+      "blur": 0.53,
+      "noise": 8.5,
+      "light": 0.84,
+      "jpeg": 52,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Omaja Dara",
+      "registration_number": "DMC 22505",
+      "clinic_name": "Ramanathan Nursing Home",
+      "patient_name": "Udarsh Devan",
+      "patient_age": "17 Y",
+      "date": "2026-08-28",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Zerodol 100",
+        "strength": null,
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "5 days"
+       },
+       {
+        "name": "Amlong 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-050/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 2.15,
+      "blur": 0.79,
+      "noise": 10.7,
+      "light": 0.8,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Sathe Chemists",
+      "bill_number": "B-89616",
+      "patient_name": "Udarsh Devan",
+      "doctor_name": "Dr. Omaja Dara",
+      "date": "2026-08-29",
+      "line_items": [
+       {
+        "medicine": "Aceclofenac Tab",
+        "batch": "B93924",
+        "qty": 10.0,
+        "rate": 4.95,
+        "amount": 49.5
+       },
+       {
+        "medicine": "Amlong 5 Tab",
+        "batch": "B38335",
+        "qty": 20.0,
+        "rate": 3.87,
+        "amount": 77.4
+       }
+      ],
+      "discount": 12.69,
+      "total": 114.21
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-051",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "arithmetic_error",
+     "detail": "line amount != qty x rate",
+     "fields": [
+      "bill.line_items[0].amount"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-051/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.68,
+      "blur": 0.45,
+      "noise": 7.2,
+      "light": 0.8,
+      "jpeg": 50,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Wridesh Sangha",
+      "registration_number": "MMC 68881",
+      "clinic_name": "Bora Clinic",
+      "patient_name": "Nakul Bora",
+      "patient_age": "37 Y",
+      "date": "2026-09-03",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Azax 500",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "10 days"
+       },
+       {
+        "name": "Levocet 5",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-051/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 2.06,
+      "blur": 0.64,
+      "noise": 10.2,
+      "light": 0.89,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Kala Chemists",
+      "bill_number": "INV-74875",
+      "patient_name": "Nakul Bora",
+      "doctor_name": "Dr. Wridesh Sangha",
+      "date": "2026-09-04",
+      "line_items": [
+       {
+        "medicine": "Azax 500 Tab",
+        "batch": "B22402",
+        "qty": 15.0,
+        "rate": 23.9,
+        "amount": 439.76
+       },
+       {
+        "medicine": "Levocetirizine Tab",
+        "batch": "B92625",
+        "qty": 20.0,
+        "rate": 2.76,
+        "amount": 55.2
+       }
+      ],
+      "discount": 41.37,
+      "total": 453.59
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-052",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-052/rx.png",
+     "template": "printed",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Mohammed Pau",
+      "registration_number": "MMC 50973",
+      "clinic_name": "Dhar Nursing Home",
+      "patient_name": "Max Das",
+      "patient_age": "39 Y",
+      "date": "2026-08-19",
+      "diagnosis": "Acute gastritis",
+      "medicines": [
+       {
+        "name": "Flagyl 400",
+        "strength": null,
+        "dosage": null,
+        "frequency": "1-0-0",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Amlong 5",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": "1 cap",
+        "frequency": "HS",
+        "duration": "3 days"
+       },
+       {
+        "name": "Rosuvas 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-052/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Kulkarni Chemists",
+      "bill_number": "INV-31600",
+      "patient_name": "Max Das",
+      "doctor_name": null,
+      "date": "2026-08-19",
+      "line_items": [
+       {
+        "medicine": "Rozavel 10 Tab",
+        "batch": "B46810",
+        "qty": 10.0,
+        "rate": 14.71,
+        "amount": 147.1
+       },
+       {
+        "medicine": "Metrogyl 400 Tab",
+        "batch": "B40913",
+        "qty": 15.0,
+        "rate": 2.04,
+        "amount": 30.6
+       },
+       {
+        "medicine": "Amlokind 5 Tab",
+        "batch": "B75352",
+        "qty": 28.0,
+        "rate": 3.78,
+        "amount": 105.84
+       },
+       {
+        "medicine": "Omeprazole 20 mg Cap",
+        "batch": "B62537",
+        "qty": 3.0,
+        "rate": 5.79,
+        "amount": 17.37
+       }
+      ],
+      "discount": null,
+      "total": 300.91
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-053",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [
+    {
+     "type": "unprescribed_medicine",
+     "detail": "Flagyl 400 Tab not prescribed",
+     "fields": [
+      "bill.line_items[0].medicine"
+     ]
+    },
+    {
+     "type": "implausible_quantity",
+     "detail": "60 billed, course needs 14",
+     "fields": [
+      "bill.line_items[2].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-053/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.06,
+      "blur": 1.34,
+      "noise": 18.8,
+      "light": 0.68,
+      "jpeg": 39,
+      "scale": 0.45
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Theodore Chandra",
+      "registration_number": "KMC 17585",
+      "clinic_name": "Rao Nursing Home",
+      "patient_name": "Ekantika Sibal",
+      "patient_age": "11 Y",
+      "date": "2026-06-30",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Moxikind-CV 625",
+        "strength": null,
+        "dosage": null,
+        "frequency": "OD",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Atocor 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "3 days"
+       },
+       {
+        "name": "Ondem 4",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "TDS",
+        "duration": "x 5 days"
+       },
+       {
+        "name": "Montair 10",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-053/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": -0.83,
+      "blur": 0.96,
+      "noise": 19.4,
+      "light": 0.6,
+      "jpeg": 40,
+      "scale": 0.52
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Sur Medical Stores",
+      "bill_number": "INV-77800",
+      "patient_name": "SIBAL EKANTIKA",
+      "doctor_name": null,
+      "date": "2026-07-02",
+      "line_items": [
+       {
+        "medicine": "Flagyl 400 Tab",
+        "batch": "B32932",
+        "qty": 15.0,
+        "rate": 2.39,
+        "amount": 35.85
+       },
+       {
+        "medicine": "Ondem 4 Tab",
+        "batch": "B75247",
+        "qty": 15.0,
+        "rate": 6.08,
+        "amount": 91.2
+       },
+       {
+        "medicine": "Augmentin 625 Duo Tab",
+        "batch": "B26536",
+        "qty": 60.0,
+        "rate": 20.51,
+        "amount": 1230.6
+       },
+       {
+        "medicine": "Montelukast Tab",
+        "batch": "B76795",
+        "qty": 14.0,
+        "rate": 19.72,
+        "amount": 276.08
+       },
+       {
+        "medicine": "Atorva 10 Tab",
+        "batch": "B99760",
+        "qty": 3.0,
+        "rate": 8.66,
+        "amount": 25.98
+       }
+      ],
+      "discount": null,
+      "total": 1659.71
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-054",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-054/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Neel Sankar",
+      "registration_number": "MMC 45848",
+      "clinic_name": "Varma Health Centre",
+      "patient_name": "Finn Kapur",
+      "patient_age": "5 Y",
+      "date": "2026-06-13",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Omeprazole",
+        "strength": "20 mg",
+        "dosage": "1 cap",
+        "frequency": "BD",
+        "duration": "3 days"
+       },
+       {
+        "name": "Clavam 625",
+        "strength": null,
+        "dosage": null,
+        "frequency": "TDS",
+        "duration": "3 days"
+       },
+       {
+        "name": "Allegra 120",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "1 week"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-054/bill.png",
+     "template": "table",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Raval Medicals",
+      "bill_number": "INV-73380",
+      "patient_name": "Finn Kapur",
+      "doctor_name": "Dr. Neel Sankar",
+      "date": "2026-06-16",
+      "line_items": [
+       {
+        "medicine": "Fexofenadine Tab",
+        "batch": "B31313",
+        "qty": 7.0,
+        "rate": 11.9,
+        "amount": 83.3
+       },
+       {
+        "medicine": "Augmentin 625 Duo Tab",
+        "batch": "B62565",
+        "qty": 15.0,
+        "rate": 22.96,
+        "amount": 344.4
+       },
+       {
+        "medicine": "Omez 20 Cap",
+        "batch": "B61891",
+        "qty": 6.0,
+        "rate": 6.14,
+        "amount": 36.84
+       }
+      ],
+      "discount": 46.45,
+      "total": 418.09
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-055",
+   "pack": "claims",
+   "tier": "clean",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-055/rx.png",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Rohan Parikh",
+      "registration_number": "KMC 39507",
+      "clinic_name": "Nagar Nursing Home",
+      "patient_name": "Omkaar Sama",
+      "patient_age": "36 Y",
+      "date": "2026-06-01",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Metformin",
+        "strength": "500 mg",
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "5 days"
+       },
+       {
+        "name": "Paracetamol",
+        "strength": "650 mg",
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "7 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-055/bill.png",
+     "template": "thermal",
+     "degradation": {
+      "tier": "clean"
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Chanda Pharmacy",
+      "bill_number": "INV-1724",
+      "patient_name": "Mr. Omkaar Sama",
+      "doctor_name": "Dr. Rohan Parikh",
+      "date": "2026-06-02",
+      "line_items": [
+       {
+        "medicine": "METFORMIN 500MG TAB",
+        "batch": "B12379",
+        "qty": 15.0,
+        "rate": 2.97,
+        "amount": 44.55
+       },
+       {
+        "medicine": "Dolo 650 Tab",
+        "batch": "B46621",
+        "qty": 15.0,
+        "rate": 2.06,
+        "amount": 30.9
+       }
+      ],
+      "discount": null,
+      "total": 75.45
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-056",
+   "pack": "claims",
+   "tier": "hard",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-056/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "hard",
+      "angle": -1.12,
+      "blur": 1.33,
+      "noise": 27.4,
+      "light": 0.67,
+      "jpeg": 37,
+      "scale": 0.49
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Hamsini Shanker",
+      "registration_number": "DMC 65182",
+      "clinic_name": "Sastry Clinic",
+      "patient_name": "Qadim Bahl",
+      "patient_age": "44 Y",
+      "date": "2026-06-07",
+      "diagnosis": "Type 2 DM",
+      "medicines": [
+       {
+        "name": "Levocetirizine",
+        "strength": "5 mg",
+        "dosage": null,
+        "frequency": "1-1-1",
+        "duration": "5 days"
+       },
+       {
+        "name": "Aceclofenac",
+        "strength": "100 mg",
+        "dosage": null,
+        "frequency": "0-0-1",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Mox 500",
+        "strength": null,
+        "dosage": null,
+        "frequency": "HS",
+        "duration": "x 5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-056/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "hard",
+      "angle": -3.09,
+      "blur": 1.07,
+      "noise": 26.4,
+      "light": 0.63,
+      "jpeg": 32,
+      "scale": 0.44
+     },
+     "occluded": [
+      "line_items[2].qty"
+     ],
+     "truth": {
+      "pharmacy_name": "Badami Pharmacy",
+      "bill_number": "INV-85984",
+      "patient_name": "Mr. Qadim Bahl",
+      "doctor_name": null,
+      "date": "2026-06-08",
+      "line_items": [
+       {
+        "medicine": "AMOXICILLIN 500MG CAP",
+        "batch": "B77904",
+        "qty": 10.0,
+        "rate": 7.87,
+        "amount": 78.7
+       },
+       {
+        "medicine": "Levocetirizine 5 mg Tab",
+        "batch": "B79549",
+        "qty": 15.0,
+        "rate": 2.87,
+        "amount": 43.05
+       },
+       {
+        "medicine": "Zerodol 100 Tab",
+        "batch": "B46718",
+        "qty": 14.0,
+        "rate": 5.81,
+        "amount": 81.34
+       }
+      ],
+      "discount": 20.31,
+      "total": 182.78
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-057",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [],
+   "expected_outcome": "approve",
+   "documents": {
+    "prescription": {
+     "image": "cla-057/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.3,
+      "blur": 0.49,
+      "noise": 10.7,
+      "light": 0.89,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Zansi Merchant",
+      "registration_number": "TNMC 99364",
+      "clinic_name": "Vala Health Centre",
+      "patient_name": "Sanaya Narula",
+      "patient_age": "71 Y",
+      "date": "2026-07-06",
+      "diagnosis": "Acute gastritis",
+      "medicines": [
+       {
+        "name": "Atorva 10",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "0-0-1",
+        "duration": "1 week"
+       },
+       {
+        "name": "Telvas 40",
+        "strength": null,
+        "dosage": null,
+        "frequency": "twice daily",
+        "duration": "5 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-057/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": 0.96,
+      "blur": 0.45,
+      "noise": 9.7,
+      "light": 0.89,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Bhatt Pharmacy",
+      "bill_number": "B-21214",
+      "patient_name": "Sanaya Narula",
+      "doctor_name": null,
+      "date": "2026-07-09",
+      "line_items": [
+       {
+        "medicine": "Telvas 40 Tab",
+        "batch": "B17848",
+        "qty": 10.0,
+        "rate": 7.17,
+        "amount": 71.7
+       },
+       {
+        "medicine": "Atocor 10 Tab",
+        "batch": "B99382",
+        "qty": 7.0,
+        "rate": 11.18,
+        "amount": 78.26
+       }
+      ],
+      "discount": null,
+      "total": 149.96
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-058",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    },
+    {
+     "type": "implausible_quantity",
+     "detail": "50 billed, course needs 14",
+     "fields": [
+      "bill.line_items[2].qty"
+     ]
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-058/rx.jpg",
+     "template": "printed",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.06,
+      "blur": 0.55,
+      "noise": 11.2,
+      "light": 0.85,
+      "jpeg": 64,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Henry Chad",
+      "registration_number": "MMC 95617",
+      "clinic_name": "Lanka Nursing Home",
+      "patient_name": "Daksh Karnik",
+      "patient_age": "66 Y",
+      "date": "2026-07-03",
+      "diagnosis": "Dyslipidemia",
+      "medicines": [
+       {
+        "name": "Pantocid 40",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "1 week"
+       },
+       {
+        "name": "Eltroxin 50",
+        "strength": null,
+        "dosage": null,
+        "frequency": "BD",
+        "duration": "7 days"
+       },
+       {
+        "name": "Azithromycin",
+        "strength": "500 mg",
+        "dosage": "1 tab",
+        "frequency": "1-0-1",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Ondansetron",
+        "strength": "4 mg",
+        "dosage": null,
+        "frequency": "1-0-1",
+        "duration": "2 weeks"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-058/bill.jpg",
+     "template": "thermal",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.7,
+      "blur": 0.47,
+      "noise": 10.0,
+      "light": 0.8,
+      "jpeg": 62,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Magar Medical Stores",
+      "bill_number": "INV-52885",
+      "patient_name": "Daksh Karnik",
+      "doctor_name": "Dr. Henry Chad",
+      "date": "2026-06-30",
+      "line_items": [
+       {
+        "medicine": "Azee 500 Tab",
+        "batch": "B77780",
+        "qty": 30.0,
+        "rate": 26.5,
+        "amount": 795.0
+       },
+       {
+        "medicine": "LEVOTHYROXINE 50MCG TAB",
+        "batch": "B21980",
+        "qty": 15.0,
+        "rate": 1.56,
+        "amount": 23.4
+       },
+       {
+        "medicine": "PANTOPRAZOLE 40MG TAB",
+        "batch": "B65659",
+        "qty": 50.0,
+        "rate": 7.44,
+        "amount": 372.0
+       },
+       {
+        "medicine": "Emeset 4 Tab",
+        "batch": "B61508",
+        "qty": 28.0,
+        "rate": 7.37,
+        "amount": 206.36
+       }
+      ],
+      "discount": null,
+      "total": 1396.76
+     }
+    }
+   }
+  },
+  {
+   "pair_id": "cla-059",
+   "pack": "claims",
+   "tier": "scanned",
+   "discrepancies": [
+    {
+     "type": "bill_before_prescription",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ],
+     "detail": "bill predates Rx"
+    }
+   ],
+   "expected_outcome": "flag",
+   "documents": {
+    "prescription": {
+     "image": "cla-059/rx.jpg",
+     "template": "pad_hand",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -0.44,
+      "blur": 0.45,
+      "noise": 7.9,
+      "light": 0.8,
+      "jpeg": 46,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "doctor_name": "Dr. Anamika Dayal",
+      "registration_number": "DMC 66061",
+      "clinic_name": "Sami Nursing Home",
+      "patient_name": "Anmol Golla",
+      "patient_age": "4 Y",
+      "date": "2026-08-20",
+      "diagnosis": "Viral fever",
+      "medicines": [
+       {
+        "name": "Brufen 400",
+        "strength": null,
+        "dosage": "1 tab",
+        "frequency": "OD",
+        "duration": "2 weeks"
+       },
+       {
+        "name": "Montelukast",
+        "strength": "10 mg",
+        "dosage": null,
+        "frequency": "TDS",
+        "duration": "3 days"
+       }
+      ]
+     }
+    },
+    "bill": {
+     "image": "cla-059/bill.jpg",
+     "template": "table",
+     "degradation": {
+      "tier": "scanned",
+      "angle": -2.43,
+      "blur": 0.4,
+      "noise": 7.4,
+      "light": 0.78,
+      "jpeg": 54,
+      "scale": 1.0
+     },
+     "occluded": [],
+     "truth": {
+      "pharmacy_name": "Kuruvilla Medical Stores",
+      "bill_number": "INV-27294",
+      "patient_name": "GOLLA ANMOL",
+      "doctor_name": null,
+      "date": "2026-08-16",
+      "line_items": [
+       {
+        "medicine": "MONTELUKAST 10MG TAB",
+        "batch": "B20376",
+        "qty": 10.0,
+        "rate": 17.46,
+        "amount": 174.6
+       },
+       {
+        "medicine": "Brufen 400 Tab",
+        "batch": "B35765",
+        "qty": 14.0,
+        "rate": 2.0,
+        "amount": 28.0
+       }
+      ],
+      "discount": null,
+      "total": 202.6
+     }
+    }
+   }
+  }
+ ]
+}

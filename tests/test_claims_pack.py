@@ -146,3 +146,25 @@ def test_unreadable_medicine_name_needs_review():
     bill.line_items[0].medicine = missing("illegible")
     decision, codes = run(rx_doc(), bill)
     assert decision.outcome == Outcome.NEEDS_REVIEW and "unprescribed_medicine" in codes
+
+
+def test_combination_generic_matches_brand():
+    assert canonical_drug("Amoxicillin + Clavulanic Acid 625 mg") == canonical_drug("Augmentin 625 Duo")
+
+
+def test_unknown_drug_info_when_confident_review_when_not():
+    from papertrail.packs.claims.validators import drug_name_findings
+
+    class NoHit:
+        def lookup(self, name):
+            from papertrail.core.validators.rxnorm import DrugLookup
+            return DrugLookup(query=name, normalized_query=name.lower(), found=False, suggestion="cefuroxime")
+
+    assert drug_name_findings("r", "Zifi-CV 500", NoHit(), 1.0)[0].code == "drug_not_in_reference"
+    low = drug_name_findings("r", "Zifl-CV 500", NoHit(), 0.4)[0]
+    assert low.code == "unknown_drug" and low.severity == "soft" and "cefuroxime" in low.message
+
+
+def test_unknown_brand_has_no_canonical_key():
+    assert canonical_drug("Zifi 200") is None and canonical_drug("Glyciphage 500") is None
+    assert canonical_drug("Glycomet 500") == "metformin"
