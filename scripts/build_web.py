@@ -44,7 +44,7 @@ def main() -> None:
         {"name": p.name, "title": p.title, "description": p.description, "benchmarked": p.benchmarked,
          "doc_types": [{"name": d.name, "title": d.title, "description": d.description} for d in p.doc_types],
          "checks": [{"code": c.code, "description": c.description} for c in p.crosschecks()]}
-        for p in list_packs()
+        for p in sorted(list_packs(), key=lambda p: (not p.benchmarked, p.name))
     ]
     (PUBLIC / "data" / "packs.json").write_text(json.dumps(packs, indent=1))
     repo = os.getenv("PAPERTRAIL_REPO_URL", "")  # set once the GitHub repo exists

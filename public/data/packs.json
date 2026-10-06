@@ -36,46 +36,6 @@
   ]
  },
  {
-  "name": "expenses",
-  "title": "Expense reimbursement",
-  "description": "Employee expense claims checked against the receipt: amount, policy window and duplicates.",
-  "benchmarked": false,
-  "doc_types": [
-   {
-    "name": "receipt",
-    "title": "merchant receipt",
-    "description": "a till, restaurant, fuel or travel receipt issued by a merchant"
-   },
-   {
-    "name": "expense_claim",
-    "title": "expense claim form",
-    "description": "an employee reimbursement form naming the claimant, expense and amount claimed"
-   }
-  ],
-  "checks": [
-   {
-    "code": "claim_amount_mismatch",
-    "description": "Claimed amount does not exceed the receipt total"
-   },
-   {
-    "code": "expense_date_mismatch",
-    "description": "Claim expense date equals the receipt date"
-   },
-   {
-    "code": "outside_policy_window",
-    "description": "Receipt is within 30 days of the claim"
-   },
-   {
-    "code": "merchant_mismatch",
-    "description": "Claim merchant matches the receipt merchant"
-   },
-   {
-    "code": "duplicate_receipt",
-    "description": "Receipt was not already claimed"
-   }
-  ]
- },
- {
   "name": "payables",
   "title": "Accounts payable (invoice to PO)",
   "description": "GST invoices checked for validity and matched line by line against the purchase order.",
@@ -112,6 +72,46 @@
    {
     "code": "rate_above_po",
     "description": "Invoice rate within 2% of the PO rate"
+   }
+  ]
+ },
+ {
+  "name": "expenses",
+  "title": "Expense reimbursement",
+  "description": "Employee expense claims checked against the receipt: amount, policy window and duplicates.",
+  "benchmarked": false,
+  "doc_types": [
+   {
+    "name": "receipt",
+    "title": "merchant receipt",
+    "description": "a till, restaurant, fuel or travel receipt issued by a merchant"
+   },
+   {
+    "name": "expense_claim",
+    "title": "expense claim form",
+    "description": "an employee reimbursement form naming the claimant, expense and amount claimed"
+   }
+  ],
+  "checks": [
+   {
+    "code": "claim_amount_mismatch",
+    "description": "Claimed amount does not exceed the receipt total"
+   },
+   {
+    "code": "expense_date_mismatch",
+    "description": "Claim expense date equals the receipt date"
+   },
+   {
+    "code": "outside_policy_window",
+    "description": "Receipt is within 30 days of the claim"
+   },
+   {
+    "code": "merchant_mismatch",
+    "description": "Claim merchant matches the receipt merchant"
+   },
+   {
+    "code": "duplicate_receipt",
+    "description": "Receipt was not already claimed"
    }
   ]
  }

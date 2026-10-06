@@ -6,6 +6,7 @@ const MERMAID_URL = "https://cdn.jsdelivr.net/npm/mermaid@12.1.0/dist/mermaid.es
 const MAX_BYTES = 5 * 1024 * 1024;
 const SESSION_RUN_CAP = 8;
 const REVIEW_THRESHOLD = 0.75;
+const TIER_LABEL = { clean: "clean image", scanned: "scanned copy", hard: "hard scan" };
 
 const $ = (sel, el = document) => el.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -88,7 +89,7 @@ function selectPack(name) {
   $("#samples").innerHTML = samples.length ? samples.map((s) => `
     <button class="sample" data-id="${esc(s.id)}">
       <span class="t">${esc(s.title)}</span>
-      <span class="m"><span class="badge">${esc(s.tier)} scan</span>${s.seeded.length
+      <span class="m"><span class="badge">${esc(TIER_LABEL[s.tier] || s.tier)}</span>${s.seeded.length
         ? s.seeded.map((k) => `<span class="badge">${esc(k.replaceAll("_", " "))}</span>`).join("")
         : '<span class="badge">no seeded issue</span>'}</span>
     </button>`).join("") : '<p class="hint">No samples built yet.</p>';
