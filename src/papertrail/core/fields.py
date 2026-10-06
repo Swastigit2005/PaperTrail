@@ -25,6 +25,7 @@ T = TypeVar("T")
 
 _WORD_CONFIDENCE = {"high": 0.9, "medium": 0.6, "med": 0.6, "low": 0.3}
 _CLIP = 160
+_FIELD_KEYS = frozenset({"value", "confidence", "evidence", "null_reason"})
 
 
 def _clip(value: Any) -> str | None:
@@ -56,7 +57,7 @@ def _coerce_confidence(raw: Any) -> float:
 
 def _as_field_dict(data: Any) -> dict[str, Any]:
     """Normalise anything an LLM might emit for a field into the Field dict shape."""
-    if isinstance(data, dict) and ("value" in data or "null_reason" in data):
+    if isinstance(data, dict) and set(data) <= _FIELD_KEYS | {"note", "notes", "source"}:
         out = dict(data)
         out["confidence"] = _coerce_confidence(out.get("confidence", 0.5))
         out["evidence"] = _clip(out.get("evidence"))

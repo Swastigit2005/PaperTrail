@@ -55,7 +55,7 @@ def _encode(img: Image.Image, max_side: int, quality: int) -> bytes:
 def dhash(img: Image.Image, size: int = 8) -> int:
     """64-bit difference hash: robust to rescaling and recompression, used for duplicate detection."""
     small = img.convert("L").resize((size + 1, size), Image.Resampling.LANCZOS)
-    pixels = list(small.getdata())
+    pixels = list(small.tobytes())
     bits = 0
     for row in range(size):
         for col in range(size):
