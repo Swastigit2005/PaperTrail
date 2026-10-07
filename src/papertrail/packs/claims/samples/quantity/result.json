@@ -1,0 +1,612 @@
+{
+ "pack": "claims",
+ "sample": "quantity",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "prescription": {
+   "doc_type": "prescription",
+   "title": "medical prescription",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "doctor_name": {
+     "value": "Dr. Guneet Sengupta",
+     "confidence": 0.98,
+     "evidence": "Dr. Guneet Sengupta",
+     "null_reason": null
+    },
+    "registration_number": {
+     "value": "MCMC 64671",
+     "confidence": 0.95,
+     "evidence": "MCMC 64671",
+     "null_reason": null
+    },
+    "clinic_name": {
+     "value": "Apte Health Centre",
+     "confidence": 0.98,
+     "evidence": "Apte Health Centre",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Dayamai Mani",
+     "confidence": 0.95,
+     "evidence": "Dayamai Mani",
+     "null_reason": null
+    },
+    "patient_age": {
+     "value": "24 Y",
+     "confidence": 0.98,
+     "evidence": "24 Y",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-08-12",
+     "confidence": 0.95,
+     "evidence": "12/08/2026",
+     "null_reason": null
+    },
+    "diagnosis": {
+     "value": "Type 2 DM",
+     "confidence": 0.98,
+     "evidence": "Type 2 DM",
+     "null_reason": null
+    },
+    "medicines": [
+     {
+      "name": {
+       "value": "Atorvastatin",
+       "confidence": 0.98,
+       "evidence": "Atorvastatin",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "10 mg",
+       "confidence": 0.98,
+       "evidence": "10 mg",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.98,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "TDS",
+       "confidence": 0.98,
+       "evidence": "TDS",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "5 days",
+       "confidence": 0.98,
+       "evidence": "5 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Omeprazole",
+       "confidence": 0.98,
+       "evidence": "Omeprazole",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "20 mg",
+       "confidence": 0.98,
+       "evidence": "20 mg",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "BD",
+       "confidence": 0.98,
+       "evidence": "BD",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "3 days",
+       "confidence": 0.98,
+       "evidence": "3 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Ondem",
+       "confidence": 0.95,
+       "evidence": "Ondem",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "4",
+       "confidence": 0.9,
+       "evidence": "4",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "BD",
+       "confidence": 0.98,
+       "evidence": "BD",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "10 days",
+       "confidence": 0.98,
+       "evidence": "10 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Allegra",
+       "confidence": 0.98,
+       "evidence": "Allegra",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "120",
+       "confidence": 0.95,
+       "evidence": "120",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.98,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "1-0-0",
+       "confidence": 0.98,
+       "evidence": "1-0-0",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "2 weeks",
+       "confidence": 0.98,
+       "evidence": "2 weeks",
+       "null_reason": null
+      }
+     }
+    ]
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.88,
+   "usage": {
+    "prompt_tokens": 2569,
+    "completion_tokens": 604,
+    "total_tokens": 3173,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "90284bbe21d8e121efd6be201f54d3fdaa803169053d01b40a1ec2ec30591000",
+    "dhash": "719409c080802404"
+   }
+  },
+  "bill": {
+   "doc_type": "bill",
+   "title": "pharmacy bill",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "pharmacy_name": {
+     "value": "Swaminathan Pharmacy",
+     "confidence": 0.98,
+     "evidence": "Swaminathan Pharmacy",
+     "null_reason": null
+    },
+    "bill_number": {
+     "value": "CB-77450",
+     "confidence": 0.98,
+     "evidence": "CB-77450",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "D. Mani",
+     "confidence": 0.98,
+     "evidence": "D. Mani",
+     "null_reason": null
+    },
+    "doctor_name": {
+     "value": "Dr. Guneet Sengupta",
+     "confidence": 0.98,
+     "evidence": "Dr. Guneet Sengupta",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-08-10",
+     "confidence": 0.95,
+     "evidence": "10/08/2026",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "medicine": {
+       "value": "Ondem 4 Tab",
+       "confidence": 0.98,
+       "evidence": "Ondem 4 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B23062",
+       "confidence": 0.98,
+       "evidence": "B23062",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 70.0,
+       "confidence": 0.98,
+       "evidence": "70",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 5.62,
+       "confidence": 0.98,
+       "evidence": "5.62",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 393.4,
+       "confidence": 0.98,
+       "evidence": "393.4",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Atorva 10 Tab",
+       "confidence": 0.98,
+       "evidence": "Atorva 10 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B41953",
+       "confidence": 0.98,
+       "evidence": "B41953",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 15.0,
+       "confidence": 0.98,
+       "evidence": "15",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8.25,
+       "confidence": 0.98,
+       "evidence": "8.25",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 123.75,
+       "confidence": 0.98,
+       "evidence": "123.75",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Allegra 120 Tab",
+       "confidence": 0.98,
+       "evidence": "Allegra 120 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B32665",
+       "confidence": 0.98,
+       "evidence": "B32665",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 15.0,
+       "confidence": 0.98,
+       "evidence": "15",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 12.24,
+       "confidence": 0.98,
+       "evidence": "12.24",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 183.6,
+       "confidence": 0.98,
+       "evidence": "183.6",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Omeprazole 20 mg Cap",
+       "confidence": 0.98,
+       "evidence": "Omeprazole 20 mg Cap",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B70778",
+       "confidence": 0.98,
+       "evidence": "B70778",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 15.0,
+       "confidence": 0.98,
+       "evidence": "15",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 5.07,
+       "confidence": 0.98,
+       "evidence": "5.07",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 76.05,
+       "confidence": 0.98,
+       "evidence": "76.05",
+       "null_reason": null
+      }
+     }
+    ],
+    "discount": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "total": {
+     "value": 776.8,
+     "confidence": 0.98,
+     "evidence": "776.8",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.26,
+   "usage": {
+    "prompt_tokens": 2423,
+    "completion_tokens": 629,
+    "total_tokens": 3052,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "0cc63b8a20f165f6d54e037eae2663e852e88a6496e552821b517322c2f2bc0d",
+    "dhash": "8a9cb595c6200080"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[0].name 'Atorvastatin' found in RxNorm (RXCUI 83367)",
+    "fields": [
+     "prescription.medicines[0].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "83367",
+     "ingredients": [
+      "atorvastatin"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[1].name 'Omeprazole' found in RxNorm (RXCUI 7646)",
+    "fields": [
+     "prescription.medicines[1].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "7646",
+     "ingredients": [
+      "omeprazole"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[2].name 'Ondem' is a known brand of ondansetron",
+    "fields": [
+     "prescription.medicines[2].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "ondansetron"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[3].name 'Allegra' is a known brand of fexofenadine",
+    "fields": [
+     "prescription.medicines[3].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "fexofenadine"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[0].medicine 'Ondem 4 Tab' is a known brand of ondansetron",
+    "fields": [
+     "bill.line_items[0].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "ondansetron"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[1].medicine 'Atorva 10 Tab' is a known brand of atorvastatin",
+    "fields": [
+     "bill.line_items[1].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "atorvastatin"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[2].medicine 'Allegra 120 Tab' is a known brand of fexofenadine",
+    "fields": [
+     "bill.line_items[2].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "fexofenadine"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[3].medicine 'Omeprazole 20 mg Cap' found in RxNorm (RXCUI 7646)",
+    "fields": [
+     "bill.line_items[3].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "7646",
+     "ingredients": [
+      "omeprazole"
+     ]
+    }
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "unprescribed_medicine",
+    "description": "Every billed medicine was prescribed",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "patient_name_mismatch",
+    "description": "Patient name matches on both documents",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "bill_before_prescription",
+    "description": "Bill dated on/after the prescription, within 30 days",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "bill_before_prescription",
+      "severity": "hard",
+      "message": "bill dated 2026-08-10, 2 day(s) before the prescription (2026-08-12)",
+      "fields": [
+       "bill.date",
+       "prescription.date"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   },
+   {
+    "code": "implausible_quantity",
+    "description": "Billed quantity fits dose x frequency x duration",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "implausible_quantity",
+      "severity": "hard",
+      "message": "bill.line_items[0] bills 70 units of 'Ondem 4 Tab' but the course (1 x BD x 10 days) needs 20 (allowing up to 30)",
+      "fields": [
+       "bill.line_items[0].qty",
+       "prescription.medicines[2].dosage",
+       "prescription.medicines[2].frequency",
+       "prescription.medicines[2].duration"
+      ],
+      "unverifiable": false,
+      "detail": {
+       "expected": 20.0,
+       "allowed": 30
+      }
+     }
+    ]
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "bill_before_prescription",
+     "severity": "hard",
+     "message": "bill dated 2026-08-10, 2 day(s) before the prescription (2026-08-12)",
+     "fields": [
+      "bill.date",
+      "prescription.date"
+     ]
+    },
+    {
+     "code": "implausible_quantity",
+     "severity": "hard",
+     "message": "bill.line_items[0] bills 70 units of 'Ondem 4 Tab' but the course (1 x BD x 10 days) needs 20 (allowing up to 30)",
+     "fields": [
+      "bill.line_items[0].qty",
+      "prescription.medicines[2].dosage",
+      "prescription.medicines[2].frequency",
+      "prescription.medicines[2].duration"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}
