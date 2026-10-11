@@ -4,129 +4,170 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PaperTrail</title>
-  <meta name="description" content="Document intake with vision LLMs: extraction, validation and cross-document checks for insurance claims and invoice-to-PO matching, benchmarked.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='3' fill='%232a78d6'/%3E%3Cpath d='M11 11h10M11 16h10M11 21h6' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <meta name="description" content="PaperTrail reads two related documents with AI, checks that they agree, and tells you whether to approve, double-check or reject them, with reasons.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='3' fill='%232f5bd3'/%3E%3Cpath d='M11 12l3 3 6-6M11 21h10' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="notice" role="note">
-    <span aria-hidden="true">⚠</span>
-    Demo with synthetic data, not for real claims or payments. Every document here is fake.
-  </div>
-
-  <header class="top">
-    <div class="brand">
-      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect x="6" y="3" width="20" height="26" rx="3" fill="var(--accent)"/><path d="M11 11h10M11 16h10M11 21h6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
-      <div>
-        <h1>PaperTrail</h1>
-        <p class="tagline">Reads business documents, checks them against each other, and routes each case: approve, review or flag, with reasons.</p>
-      </div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="logo" href="#try" aria-label="PaperTrail home">
+        <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect x="6" y="3" width="20" height="26" rx="4" fill="var(--accent)"/><path d="M11 12l3 3 6-6M11 21h10" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>PaperTrail</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#try" data-page="try">Try it</a>
+        <a href="#how" data-page="how">How it works</a>
+        <a href="#accuracy" data-page="accuracy">How accurate is it?</a>
+        <a id="repo-link" href="#" target="_blank" rel="noopener" class="nav-gh" hidden>Code ↗</a>
+      </nav>
     </div>
-    <a class="gh" id="repo-link" href="https://github.com/" target="_blank" rel="noopener">View code</a>
   </header>
 
-  <nav class="tabs" role="tablist" aria-label="Sections">
-    <button role="tab" data-tab="try" aria-selected="true">Try a pack</button>
-    <button role="tab" data-tab="queue" aria-selected="false">Review queue <span class="count" id="queue-count">0</span></button>
-    <button role="tab" data-tab="bench" aria-selected="false">Benchmark</button>
-    <button role="tab" data-tab="how" aria-selected="false">How it works</button>
-  </nav>
-
-  <main>
-    <!-- TRY A PACK -->
-    <section id="tab-try" class="tab-panel" role="tabpanel">
-      <div class="pack-picker" id="pack-picker" role="radiogroup" aria-label="Pack"></div>
-
-      <div class="layout">
-        <aside class="inputs">
-          <h2>Sample pairs</h2>
-          <p class="hint">Precomputed with the real engine. Instant, no quota used.</p>
-          <div id="samples" class="samples"></div>
-
-          <h2 class="mt">Try the upload flow</h2>
-          <p class="hint">Drop two documents (images or a PDF's first page, max 5 MB each): an example from below, or your
-            own file with fake data only.</p>
-          <form id="upload-form" class="upload">
-            <div class="file-row" data-slot="0">
-              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Drop or choose document 1</span></label>
-              <select aria-label="Document 1 type"></select>
-            </div>
-            <div class="file-row" data-slot="1">
-              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Drop or choose document 2</span></label>
-              <select aria-label="Document 2 type"></select>
-            </div>
-            <fieldset>
-              <legend>Extraction</legend>
-              <label><input type="radio" name="pipeline" value="vlm" checked> Vision LLM</label>
-              <label><input type="radio" name="pipeline" value="ocr+llm"> OCR + LLM <small>(OCR runs in your browser)</small></label>
-            </fieldset>
-            <fieldset>
-              <legend>Matching</legend>
-              <label><input type="radio" name="matching" value="rules+llm" checked> Rules + LLM</label>
-              <label><input type="radio" name="matching" value="rules"> Rules only</label>
-            </fieldset>
-            <button type="submit" class="primary" id="run-btn">Process documents</button>
-            <p class="status" id="status" aria-live="polite"></p>
-          </form>
-          <h2 class="mt">Example documents</h2>
-          <div id="examples" class="examples"></div>
-        </aside>
-
-        <section class="results" id="results" aria-live="polite">
-          <div class="empty">
-            <p>Pick a sample pair on the left to see a full case: extracted fields with confidence, validation, cross-document checks and the routing decision.</p>
-          </div>
-        </section>
+  <!-- ============================== TRY IT ============================== -->
+  <main id="page-try" class="page">
+    <section class="hero">
+      <div class="hero-text">
+        <span class="pill">Live demo · all documents are made-up examples</span>
+        <h1>Catch paperwork mistakes <em>before</em> you pay.</h1>
+        <p>PaperTrail reads two related documents with AI, checks that they agree with each other, and tells you whether to
+          <strong class="t-good">approve</strong>, <strong class="t-warn">double-check</strong> or <strong class="t-bad">stop</strong>, and why.</p>
       </div>
+      <ol class="steps" aria-label="How to use the demo">
+        <li><span class="num">1</span><div><strong>Pick an example</strong><span>in the “Demo documents” panel</span></div></li>
+        <li><span class="num">2</span><div><strong>Drop both documents</strong><span>or click “Try this example”</span></div></li>
+        <li><span class="num">3</span><div><strong>Read the verdict</strong><span>with every check explained</span></div></li>
+      </ol>
     </section>
 
-    <!-- REVIEW QUEUE -->
-    <section id="tab-queue" class="tab-panel" role="tabpanel" hidden>
-      <h2>Review queue</h2>
-      <p class="hint">Every case in this browser session that needs a human: flagged or needing review. The engine never makes the final call.</p>
-      <div id="queue"></div>
-    </section>
+    <div class="workspace">
+      <!-- ---------- side panel: demo documents ---------- -->
+      <aside class="library" aria-label="Demo documents">
+        <div class="library-head">
+          <h2>Demo documents</h2>
+          <p>Choose a situation, then drag its documents into the boxes. Or click <strong>Try this example</strong>.</p>
+        </div>
+        <div class="usecases" id="usecases" role="tablist" aria-label="Situation"></div>
+        <p class="story" id="story"></p>
+        <div class="scenarios" id="scenarios"></div>
+        <a class="download-all" id="download-all" href="#" download>⬇ Download these examples (.zip)</a>
+      </aside>
 
-    <!-- BENCHMARK -->
-    <section id="tab-bench" class="tab-panel" role="tabpanel" hidden>
-      <article class="md" id="bench-md"><p class="hint">Loading benchmark…</p></article>
-    </section>
+      <!-- ---------- main: drop slots + verdict ---------- -->
+      <section class="main">
+        <div class="card checker">
+          <div class="card-head">
+            <h2 id="checker-title">Check two documents</h2>
+            <p id="checker-sub">Drop the two documents below. We read both, compare them, and give you a verdict.</p>
+          </div>
+          <div class="slots" id="slots"></div>
+          <div class="actions">
+            <button class="btn-primary" id="run-btn" disabled>Check documents</button>
+            <button class="btn-link" id="clear-btn" type="button">Clear</button>
+            <details class="advanced">
+              <summary>Advanced options</summary>
+              <div class="adv-grid">
+                <fieldset>
+                  <legend>How should the AI read the documents?</legend>
+                  <label><input type="radio" name="pipeline" value="vlm" checked> Look at the image directly <small>(vision AI, most accurate)</small></label>
+                  <label><input type="radio" name="pipeline" value="ocr+llm"> Read the text first, then understand it <small>(text recognition + AI)</small></label>
+                </fieldset>
+                <fieldset>
+                  <legend>How strictly should items be matched?</legend>
+                  <label><input type="radio" name="matching" value="rules+llm" checked> Smart <small>(knows that “Dolo 650” is paracetamol)</small></label>
+                  <label><input type="radio" name="matching" value="rules"> Exact rules only</label>
+                </fieldset>
+              </div>
+            </details>
+          </div>
+          <div class="progress" id="progress" hidden></div>
+          <p class="message" id="message" role="status" aria-live="polite"></p>
+        </div>
 
-    <!-- HOW IT WORKS -->
-    <section id="tab-how" class="tab-panel" role="tabpanel" hidden>
-      <h2>Architecture</h2>
-      <div class="mermaid-wrap"><pre class="mermaid" id="arch">
-flowchart LR
-  IN["Document images<br/>photo · scan · PDF"] --> DET{"Doc-type detection<br/>keywords, then vision LLM<br/>(manual override)"}
-  DET --> VLM["VLM direct<br/>Groq vision model"]
-  DET --> OCR["OCR + LLM<br/>Tesseract, then text model"]
-  VLM --> F["Field&lt;T&gt; per value<br/>value · confidence · evidence · null_reason"]
-  OCR --> F
-  F --> V["Per-document validators<br/>RxNorm · GSTIN · arithmetic · dates"]
-  F --> X["Cross-document checks<br/>rules first, LLM only for fuzzy matches"]
-  V --> D{"Decision policy"}
-  X --> D
-  D --> A1["approve"]
-  D --> A2["needs review"]
-  D --> A3["flag"]
-  A2 --> H["Human reviewer<br/>makes the final call"]
-  A3 --> H
-  P[("Packs<br/>claims · payables · expenses")] -. "schemas · validators · checks · policy" .-> V
-  P -.-> X
-  P -.-> D
-      </pre></div>
-      <h2 class="mt">Packs</h2>
-      <div id="packs-info" class="packs-info"></div>
-      <h2 class="mt">Add a pack in a day</h2>
-      <article class="md" id="pack-guide"><p class="hint">Loading guide…</p></article>
-    </section>
+        <div id="result" class="result" aria-live="polite">
+          <div class="placeholder">
+            <div class="ph-icon" aria-hidden="true">🔍</div>
+            <h3>Your verdict will appear here</h3>
+            <p>Not sure where to start? Click <strong>Try this example</strong> in the “Demo documents” panel.</p>
+          </div>
+        </div>
+
+        <section class="recent" id="recent" hidden>
+          <h2>Your recent checks</h2>
+          <div id="recent-list"></div>
+        </section>
+      </section>
+    </div>
   </main>
 
-  <footer>
-    <p>Built on Groq (free tier), Pydantic, Tesseract and RxNorm. Base idea and RxNorm validator adapted from
-      <a href="https://github.com/Sumanth077/Hands-On-AI-Engineering/tree/main/OCR/medical_prescription_digitizer" target="_blank" rel="noopener">Hands-On-AI-Engineering</a> (MIT).</p>
+  <!-- ============================== HOW IT WORKS ============================== -->
+  <main id="page-how" class="page narrow" hidden>
+    <section class="prose-hero">
+      <h1>How PaperTrail works</h1>
+      <p>When a bill, invoice or receipt arrives from another organisation, someone usually has to retype it and check it
+        against another document by hand. PaperTrail does that first pass for them, then hands the decision to a person.</p>
+    </section>
+    <div class="flow">
+      <div class="flow-step"><div class="flow-ico">📄</div><h3>1. Read</h3><p>An AI model looks at each document, a photo, scan or PDF, and writes down every detail: names, dates, items, amounts. If something is unreadable, it says so instead of guessing.</p></div>
+      <div class="flow-step"><div class="flow-ico">🧮</div><h3>2. Check each document</h3><p>Simple, reliable rules verify each document on its own: do the totals add up? Is the GST number genuine? Is the medicine name real?</p></div>
+      <div class="flow-step"><div class="flow-ico">🔗</div><h3>3. Compare the two</h3><p>The documents are checked against each other: same patient? Was every billed item actually ordered or prescribed? AI only helps when names differ, like a brand vs its generic.</p></div>
+      <div class="flow-step"><div class="flow-ico">⚖️</div><h3>4. Recommend</h3><p>You get one of three verdicts, <b class="t-good">approve</b>, <b class="t-warn">double-check</b> or <b class="t-bad">stop</b>, with the exact reasons. A person always makes the final call.</p></div>
+    </div>
+
+    <h2 class="sec">Three real-world situations</h2>
+    <div class="usecase-explain" id="usecase-explain"></div>
+
+    <h2 class="sec">Why this is a useful AI project</h2>
+    <ul class="why">
+      <li><b>Never guesses:</b> every value comes with how sure the AI was, and where on the page it read it.</li>
+      <li><b>Explainable:</b> every verdict points at the exact field that caused it.</li>
+      <li><b>Measured:</b> it was tested on 120 document pairs with known problems planted in them (see <a href="#accuracy">How accurate is it?</a>).</li>
+      <li><b>Extensible:</b> a new kind of paperwork is a small plug-in, not a rewrite.</li>
+    </ul>
+
+    <details class="engineers">
+      <summary>For engineers: architecture and adding a new document type</summary>
+      <div class="mermaid-wrap"><pre class="mermaid" id="arch">
+flowchart LR
+  IN["Document images<br/>photo · scan · PDF"] --> DET{"Which document is it?<br/>keywords, then vision AI"}
+  DET --> VLM["Vision AI reads the image<br/>(Groq vision model)"]
+  DET --> OCR["Text recognition + AI<br/>(Tesseract, then text model)"]
+  VLM --> F["Every value: value · confidence ·<br/>evidence · reason if unreadable"]
+  OCR --> F
+  F --> V["Checks on each document<br/>RxNorm · GSTIN · arithmetic · dates"]
+  F --> X["Document-vs-document checks<br/>rules first, AI only for fuzzy names"]
+  V --> D{"Verdict"}
+  X --> D
+  D --> A1["approve"]
+  D --> A2["double-check"]
+  D --> A3["stop"]
+  A2 --> H["A person decides"]
+  A3 --> H
+      </pre></div>
+      <article class="md" id="pack-guide"></article>
+    </details>
+  </main>
+
+  <!-- ============================== ACCURACY ============================== -->
+  <main id="page-accuracy" class="page narrow" hidden>
+    <section class="prose-hero">
+      <h1>How accurate is it?</h1>
+      <p>We generated 120 realistic document pairs (60 insurance claims, 60 supplier invoices) as clean images, office
+        scans and badly damaged scans. In half of them we deliberately planted a problem, then measured how often PaperTrail
+        noticed. These numbers are read straight from the saved test results.</p>
+    </section>
+    <div id="acc-cards" class="acc-packs"></div>
+    <details class="engineers">
+      <summary>Full technical report (charts, error analysis, every configuration)</summary>
+      <article class="md" id="bench-md"><p class="muted">Loading…</p></article>
+    </details>
+  </main>
+
+  <footer class="footer">
+    <p>PaperTrail is a portfolio project. Everything shown is made-up example data. Please don't upload real medical or
+      financial documents. Built with Groq, Pydantic, Tesseract and RxNorm.</p>
   </footer>
 
   <dialog id="zoom"><img alt=""><button class="close" aria-label="Close">×</button></dialog>

@@ -1,0 +1,422 @@
+{
+ "claims__ocr_llm": {
+  "pack": "claims",
+  "config": "ocr_llm",
+  "pipeline": "ocr+llm",
+  "matching": "rules+llm",
+  "n_pairs": 60,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.5576923076923077,
+    "recall": 0.6590909090909091,
+    "false_alarm_rate": 0.3333333333333333
+   }
+  },
+  "decision": {
+   "n": 60,
+   "accuracy": 0.36666666666666664,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.06666666666666667,
+   "clean_flagged": 0.3333333333333333,
+   "confusion": {
+    "approve": {
+     "approve": 2,
+     "needs_review": 18,
+     "flag": 10
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 10,
+     "flag": 20
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": 4.071,
+   "model_latency_p95_s": 9.933,
+   "tokens_per_pair_mean": 3033.2833333333333,
+   "tokens_per_pair_p95": 4024.0
+  },
+  "validation_catch_rate": {
+   "arithmetic_error": 0.7777777777777778
+  },
+  "extraction_f1": 0.7206240858117992
+ },
+ "claims__oracle_llm": {
+  "pack": "claims",
+  "config": "oracle_llm",
+  "pipeline": "oracle",
+  "matching": "rules+llm",
+  "n_pairs": 60,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.9555555555555556,
+    "recall": 0.9772727272727273,
+    "false_alarm_rate": 0.06666666666666667
+   }
+  },
+  "decision": {
+   "n": 60,
+   "accuracy": 0.9666666666666667,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.9333333333333333,
+   "clean_flagged": 0.06666666666666667,
+   "confusion": {
+    "approve": {
+     "approve": 28,
+     "needs_review": 0,
+     "flag": 2
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 30
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": null,
+   "model_latency_p95_s": null,
+   "tokens_per_pair_mean": null,
+   "tokens_per_pair_p95": null
+  },
+  "validation_catch_rate": {
+   "arithmetic_error": 1.0
+  },
+  "extraction_f1": null
+ },
+ "claims__oracle_rules": {
+  "pack": "claims",
+  "config": "oracle_rules",
+  "pipeline": "oracle",
+  "matching": "rules",
+  "n_pairs": 60,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.671875,
+    "recall": 0.9772727272727273,
+    "false_alarm_rate": 0.4666666666666667
+   }
+  },
+  "decision": {
+   "n": 60,
+   "accuracy": 0.7666666666666667,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.5333333333333333,
+   "clean_flagged": 0.4666666666666667,
+   "confusion": {
+    "approve": {
+     "approve": 16,
+     "needs_review": 0,
+     "flag": 14
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 30
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": null,
+   "model_latency_p95_s": null,
+   "tokens_per_pair_mean": null,
+   "tokens_per_pair_p95": null
+  },
+  "validation_catch_rate": {
+   "arithmetic_error": 1.0
+  },
+  "extraction_f1": null
+ },
+ "claims__vlm_llm": {
+  "pack": "claims",
+  "config": "vlm_llm",
+  "pipeline": "vlm",
+  "matching": "rules+llm",
+  "n_pairs": 45,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.8260869565217391,
+    "recall": 1.0,
+    "false_alarm_rate": 0.3684210526315789
+   }
+  },
+  "decision": {
+   "n": 45,
+   "accuracy": 0.8222222222222222,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.5789473684210527,
+   "clean_flagged": 0.3684210526315789,
+   "confusion": {
+    "approve": {
+     "approve": 11,
+     "needs_review": 1,
+     "flag": 7
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 26
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": 3.954,
+   "model_latency_p95_s": 11.316,
+   "tokens_per_pair_mean": 6162.177777777778,
+   "tokens_per_pair_p95": 6733.0
+  },
+  "validation_catch_rate": {
+   "arithmetic_error": 1.0
+  },
+  "extraction_f1": 0.9148994767281741
+ },
+ "payables__ocr_llm": {
+  "pack": "payables",
+  "config": "ocr_llm",
+  "pipeline": "ocr+llm",
+  "matching": "rules+llm",
+  "n_pairs": 60,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.23404255319148937,
+    "recall": 0.5945945945945946,
+    "false_alarm_rate": 0.8
+   }
+  },
+  "decision": {
+   "n": 60,
+   "accuracy": 0.4666666666666667,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.0,
+   "clean_flagged": 0.8,
+   "confusion": {
+    "approve": {
+     "approve": 0,
+     "needs_review": 6,
+     "flag": 24
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 2,
+     "flag": 28
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": 5.071,
+   "model_latency_p95_s": 24.525,
+   "tokens_per_pair_mean": 3405.2166666666667,
+   "tokens_per_pair_p95": 4258.0
+  },
+  "validation_catch_rate": {
+   "invalid_gstin": 1.0,
+   "total_mismatch": 1.0
+  },
+  "extraction_f1": 0.7977986863127995
+ },
+ "payables__oracle_llm": {
+  "pack": "payables",
+  "config": "oracle_llm",
+  "pipeline": "oracle",
+  "matching": "rules+llm",
+  "n_pairs": 60,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_alarm_rate": 0.0
+   }
+  },
+  "decision": {
+   "n": 60,
+   "accuracy": 1.0,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 1.0,
+   "clean_flagged": 0.0,
+   "confusion": {
+    "approve": {
+     "approve": 30,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 30
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": null,
+   "model_latency_p95_s": null,
+   "tokens_per_pair_mean": null,
+   "tokens_per_pair_p95": null
+  },
+  "validation_catch_rate": {
+   "invalid_gstin": 1.0,
+   "total_mismatch": 1.0
+  },
+  "extraction_f1": null
+ },
+ "payables__oracle_rules": {
+  "pack": "payables",
+  "config": "oracle_rules",
+  "pipeline": "oracle",
+  "matching": "rules",
+  "n_pairs": 60,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.9230769230769231,
+    "recall": 0.972972972972973,
+    "false_alarm_rate": 0.03333333333333333
+   }
+  },
+  "decision": {
+   "n": 60,
+   "accuracy": 0.9833333333333333,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.9666666666666667,
+   "clean_flagged": 0.03333333333333333,
+   "confusion": {
+    "approve": {
+     "approve": 29,
+     "needs_review": 0,
+     "flag": 1
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 30
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": null,
+   "model_latency_p95_s": null,
+   "tokens_per_pair_mean": null,
+   "tokens_per_pair_p95": null
+  },
+  "validation_catch_rate": {
+   "invalid_gstin": 1.0,
+   "total_mismatch": 1.0
+  },
+  "extraction_f1": null
+ },
+ "payables__vlm_llm": {
+  "pack": "payables",
+  "config": "vlm_llm",
+  "pipeline": "vlm",
+  "matching": "rules+llm",
+  "n_pairs": 44,
+  "dataset": {
+   "seed": 7,
+   "total_pairs": 60
+  },
+  "detection": {
+   "micro": {
+    "precision": 0.52,
+    "recall": 0.9285714285714286,
+    "false_alarm_rate": 0.38095238095238093
+   }
+  },
+  "decision": {
+   "n": 44,
+   "accuracy": 0.75,
+   "discrepant_not_auto_approved": 1.0,
+   "clean_auto_approved": 0.5238095238095238,
+   "clean_flagged": 0.38095238095238093,
+   "confusion": {
+    "approve": {
+     "approve": 11,
+     "needs_review": 2,
+     "flag": 8
+    },
+    "needs_review": {
+     "approve": 0,
+     "needs_review": 0,
+     "flag": 0
+    },
+    "flag": {
+     "approve": 0,
+     "needs_review": 1,
+     "flag": 22
+    }
+   }
+  },
+  "ops": {
+   "model_latency_p50_s": 4.594,
+   "model_latency_p95_s": 17.869,
+   "tokens_per_pair_mean": 5491.309523809524,
+   "tokens_per_pair_p95": 6213.0
+  },
+  "validation_catch_rate": {
+   "invalid_gstin": 1.0,
+   "total_mismatch": 1.0
+  },
+  "extraction_f1": 0.9513419157756927
+ }
+}

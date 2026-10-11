@@ -14,11 +14,12 @@
 
 ## Try it in 30 seconds
 
-1. Open the live demo and pick a use case: **Claims**, **Payables** or **Expenses**.
-2. Click a sample pair to see a full case, or drag two of the **example documents** (bottom left) into the upload
-   slots and press **Process documents**. There are 5 synthetic pairs per use case, also in [`examples/`](examples/)
-   and as a zip download in the demo.
-3. Click any field chip in the reasons to highlight that field in both documents.
+1. Open the live demo. In the **Demo documents** panel, pick a situation: health insurance claim, supplier invoice
+   or employee expense.
+2. Click **Try this example** on any card, or drag its two documents into the boxes and press **Check documents**.
+   There are 5 synthetic pairs per situation, also in [`examples/`](examples/) and as a zip download in the demo.
+3. Read the verdict (looks good / double-check / problem found), then click any row of **What we checked** to
+   highlight where it came from in the documents.
 
 The example documents are recognised by their file hash and served from extractions precomputed with the live engine,
 so they work instantly even when the free-tier models are at their limit. Your own files go to the live models.

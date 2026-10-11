@@ -4,285 +4,309 @@ const PDFJS_URL = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.4.299/build/pdf.min
 const PDFJS_WORKER = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.4.299/build/pdf.worker.min.mjs";
 const MERMAID_URL = "https://cdn.jsdelivr.net/npm/mermaid@12.1.0/dist/mermaid.esm.min.mjs";
 const MAX_BYTES = 5 * 1024 * 1024;
-const SESSION_RUN_CAP = 8;
-const REVIEW_THRESHOLD = 0.75;
-const TIER_LABEL = { clean: "clean image", scanned: "scanned copy", hard: "hard scan" };
+const SESSION_LIVE_CAP = 8;
+const UNSURE_BELOW = 0.75;
 
 const $ = (sel, el = document) => el.querySelector(sel);
+const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// --- storage (all best-effort: private windows may block it) ---------------------------------
-const store = {
-  get(area, key, fallback) {
-    try { const v = window[area].getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
+// ---------------------------------------------------------------------------------------------
+// Plain-language vocabulary
+// ---------------------------------------------------------------------------------------------
+const USECASES = {
+  claims: {
+    icon: "🏥", name: "Health insurance claim", sub: "Prescription + pharmacy bill",
+    story: "An insurer receives a patient's <b>prescription</b> and <b>pharmacy bill</b>. Did the patient only buy what the doctor prescribed, at sensible quantities?",
+    checks: ["Every billed medicine was prescribed (brand or generic name)", "Same patient on both documents", "Bill dated after the prescription", "Quantity fits the prescribed course", "Bill totals add up", "Medicine names are real (checked against RxNorm)"],
   },
-  set(area, key, value) {
-    try { window[area].setItem(key, JSON.stringify(value)); } catch { /* storage unavailable */ }
+  payables: {
+    icon: "🧾", name: "Supplier invoice", sub: "Invoice + purchase order",
+    story: "Before paying a supplier, the accounts team compares the <b>invoice</b> with the <b>purchase order</b> they issued. Is everything billed exactly as agreed?",
+    checks: ["Invoice comes from the supplier on the order", "Every invoiced item was ordered", "No more units than ordered", "Prices match the agreed rates", "GST numbers are genuine", "Tax and totals are calculated correctly"],
+  },
+  expenses: {
+    icon: "💳", name: "Employee expense", sub: "Receipt + expense claim",
+    story: "An employee asks to be reimbursed. Does the <b>claim form</b> match the <b>receipt</b>, is it recent enough, and has this receipt been claimed before?",
+    checks: ["Claimed amount is not more than the receipt", "Receipt is within the 30-day policy", "Same date and shop on both", "Receipt has not been claimed already"],
   },
 };
+const DOC = {
+  prescription: { name: "Doctor's prescription", icon: "🩺" },
+  bill: { name: "Pharmacy bill", icon: "💊" },
+  invoice: { name: "Supplier invoice", icon: "🧾" },
+  purchase_order: { name: "Purchase order", icon: "📋" },
+  receipt: { name: "Shop receipt", icon: "🧾" },
+  expense_claim: { name: "Expense claim form", icon: "📝" },
+};
+const ISSUE = {
+  unprescribed_medicine: "a medicine nobody prescribed", patient_name_mismatch: "bill is for a different patient",
+  bill_before_prescription: "bill dated before the prescription", implausible_quantity: "far too much medicine billed",
+  arithmetic_error: "totals don't add up", gstin_mismatch: "invoice from a different supplier",
+  invalid_gstin: "fake GST number", rate_above_po: "price higher than agreed", qty_over_po: "more units than ordered",
+  line_not_on_po: "an item that was never ordered", wrong_tax_split: "wrong type of tax charged",
+  total_mismatch: "wrong grand total", claim_amount_mismatch: "claims more than the receipt",
+  duplicate_receipt: "receipt already claimed before", outside_policy_window: "receipt too old for the policy",
+};
+// code -> [what we checked, what went wrong]
+const CHECK = {
+  unprescribed_medicine: ["Every billed medicine was prescribed", "The bill charges for medicine the doctor didn't prescribe"],
+  patient_name_mismatch: ["Same patient on both documents", "The patient names don't match"],
+  bill_before_prescription: ["Bill dated on or after the prescription", "The bill date doesn't fit the prescription"],
+  bill_too_late: ["Bill dated within 30 days of the prescription", "The bill is long after the prescription"],
+  implausible_quantity: ["Quantities fit the prescribed course", "Far more medicine was billed than prescribed"],
+  arithmetic_error: ["Amounts and totals add up", "The amounts or totals don't add up"],
+  unknown_drug: ["Medicine names were recognised", "A medicine name may have been misread"],
+  implausible_date: ["Dates look realistic", "A date looks wrong"],
+  gstin_mismatch: ["Invoice is from the supplier on the purchase order", "The invoice is from a different supplier"],
+  po_reference_mismatch: ["Invoice quotes the right purchase order", "The invoice quotes a different purchase order"],
+  line_not_on_po: ["Every invoiced item was ordered", "The invoice includes something that was never ordered"],
+  hsn_mismatch: ["Product codes match the order", "A product code differs from the order"],
+  qty_over_po: ["No more units billed than ordered", "More units were billed than ordered"],
+  rate_above_po: ["Prices match the agreed rates", "A price is higher than agreed"],
+  invalid_gstin: ["GST numbers are genuine", "A GST number is not valid"],
+  total_mismatch: ["Grand total = amount before tax + tax", "The grand total is wrong"],
+  wrong_tax_split: ["Right type of GST for the states involved", "The wrong type of GST was charged"],
+  invalid_gst_slab: ["GST rate is a legal rate", "The GST rate isn't a valid rate"],
+  po_arithmetic_error: ["Purchase order amounts add up", "The purchase order amounts don't add up"],
+  claim_amount_mismatch: ["Claimed amount is not more than the receipt", "The claim is for more than the receipt"],
+  expense_date_mismatch: ["Same date on the claim and the receipt", "The dates on the claim and receipt differ"],
+  outside_policy_window: ["Receipt is within the 30-day policy", "The receipt is outside the 30-day policy"],
+  merchant_mismatch: ["Same shop on the claim and the receipt", "The shop names don't match"],
+  duplicate_receipt: ["This receipt hasn't been claimed before", "This receipt was already claimed"],
+  receipt_total_mismatch: ["Receipt items add up to the total", "The receipt items don't add up"],
+  expense_after_claim: ["Expense happened before the claim was filed", "The expense date is after the claim date"],
+  non_positive_claim: ["Claimed amount is positive", "The claimed amount isn't valid"],
+  low_confidence: ["Every important detail was clearly readable", "Some important details were hard to read"],
+  critical_field_missing: ["All key details were found", "Some key details are missing or unreadable"],
+};
+// per-document checks always shown (they only produce findings when something is wrong)
+const VALIDATOR_ROWS = {
+  claims: ["arithmetic_error", "unknown_drug"],
+  payables: ["invalid_gstin", "arithmetic_error", "total_mismatch", "wrong_tax_split"],
+  expenses: ["receipt_total_mismatch"],
+};
+const OPTIONAL_ROWS = ["implausible_date", "invalid_gst_slab", "expense_after_claim", "non_positive_claim", "po_arithmetic_error"];
+const FIELD = {
+  doctor_name: "Doctor", registration_number: "Doctor's registration no.", clinic_name: "Clinic", patient_name: "Patient",
+  patient_age: "Age", date: "Date", diagnosis: "Diagnosis", medicines: "Medicines", name: "Medicine", strength: "Strength",
+  dosage: "Dose", frequency: "How often", duration: "For how long", pharmacy_name: "Pharmacy", bill_number: "Bill no.",
+  line_items: "Items", medicine: "Medicine", batch: "Batch", qty: "Quantity", rate: "Unit price", amount: "Amount",
+  discount: "Discount", total: "Total", seller_name: "Supplier", seller_gstin: "Supplier GST no.", buyer_name: "Buyer",
+  buyer_gstin: "Buyer GST no.", invoice_number: "Invoice no.", invoice_date: "Invoice date",
+  po_reference: "Purchase order quoted", place_of_supply: "Place of supply", description: "Description", hsn: "Product code (HSN)",
+  gst_rate: "GST %", taxable_value: "Amount before tax", cgst: "Central GST", sgst: "State GST", igst: "Integrated GST",
+  grand_total: "Grand total", po_number: "Purchase order no.", po_date: "Order date", vendor_name: "Supplier",
+  vendor_gstin: "Supplier GST no.", merchant: "Shop", receipt_number: "Receipt no.", items: "Items", tax: "Tax",
+  payment_mode: "Paid by", employee_name: "Employee", employee_id: "Employee ID", claim_date: "Claim date",
+  expense_date: "Expense date", category: "Category", amount_claimed: "Amount claimed", purpose: "Purpose",
+};
+const ITEM_WORD = { line_items: "item", medicines: "medicine", items: "item" };
+const label = (k) => FIELD[k] || k.replaceAll("_", " ").replace(/^\w/, (c) => c.toUpperCase());
 
-const state = { packs: [], samples: {}, pack: "claims", sample: null, current: null };
+function humanRef(ref) {
+  const m = ref.match(/^([a-z_]+)\.([a-z_]+)(?:\[(\d+)\])?(?:\.([a-z_]+))?$/);
+  if (!m) return ref;
+  const [, doc, field, idx, sub] = m;
+  const parts = [DOC[doc]?.name || label(doc)];
+  if (idx !== undefined) parts.push(`${ITEM_WORD[field] || "row"} ${Number(idx) + 1}`);
+  parts.push(label(sub || field).toLowerCase());
+  return parts.join(" › ");
+}
+function humanize(text) {
+  return String(text ?? "")
+    .replace(/case sample-([a-z0-9_]+)/g, (_, id) => {
+      const s = (state.samples[state.pack] || []).find((x) => x.id === id);
+      return s ? `an earlier claim (demo example “${s.title}”)` : "an earlier claim";
+    })
+    .replace(/case (case-[a-z0-9]+)/g, "an earlier claim in this visit")
+    .replace(/\b(prescription|bill|invoice|purchase_order|receipt|expense_claim)\.[a-z_]+(?:\[\d+\])?(?:\.[a-z_]+)?/g, (r) => `“${humanRef(r)}”`);
+}
+function fmt(v) {
+  if (v === null || v === undefined) return "";
+  if (typeof v === "number") return v.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+  if (/^\d{4}-\d{2}-\d{2}$/.test(v)) {
+    const [y, m, d] = v.split("-");
+    return new Date(Date.UTC(+y, +m - 1, +d)).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  }
+  return String(v);
+}
+const pct = (v) => (v === null || v === undefined ? "–" : `${Math.round(v * 100)}%`);
 
-// --- boot ------------------------------------------------------------------------------------
-async function getJSON(url, fallbackUrl) {
-  try {
-    const r = await fetch(url);
-    if (r.ok) return await r.json();
-  } catch { /* fall through */ }
-  if (fallbackUrl) { const r = await fetch(fallbackUrl); if (r.ok) return r.json(); }
-  throw new Error(`could not load ${url}`);
+// ---------------------------------------------------------------------------------------------
+// storage (best effort)
+// ---------------------------------------------------------------------------------------------
+const store = {
+  get(area, key, fallback) { try { const v = window[area].getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
+  set(area, key, value) { try { window[area].setItem(key, JSON.stringify(value)); } catch { /* unavailable */ } },
+};
+
+const state = { packs: [], samples: {}, pack: "claims", slots: {}, busy: false, resultCache: {} };
+
+async function getJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`could not load ${url}`);
+  return r.json();
 }
 
+// ---------------------------------------------------------------------------------------------
+// routing
+// ---------------------------------------------------------------------------------------------
+const loaded = {};
+function route() {
+  const page = (location.hash || "#try").slice(1);
+  const valid = ["try", "how", "accuracy"].includes(page) ? page : "try";
+  $$(".page").forEach((p) => { p.hidden = p.id !== `page-${valid}`; });
+  $$(".nav a[data-page]").forEach((a) => a.classList.toggle("active", a.dataset.page === valid));
+  if (valid === "how" && !loaded.how) { loaded.how = true; renderHow(); }
+  if (valid === "accuracy" && !loaded.acc) { loaded.acc = true; renderAccuracy(); }
+  window.scrollTo({ top: 0 });
+}
+
+// ---------------------------------------------------------------------------------------------
+// boot
+// ---------------------------------------------------------------------------------------------
 async function boot() {
-  setupTabs();
   const [packs, samples, site] = await Promise.all([
-    getJSON("/data/packs.json", "/api/packs"),
+    getJSON("/data/packs.json").catch(() => getJSON("/api/packs")),
     getJSON("/samples/index.json").catch(() => ({})),
     getJSON("/data/site.json").catch(() => ({})),
   ]);
   state.packs = packs;
   state.samples = samples;
-  if (site.repo_url) $("#repo-link").href = site.repo_url;
-  else $("#repo-link").hidden = true;
-  renderPackPicker();
-  selectPack(state.pack);
-  renderQueue();
-  $("#upload-form").addEventListener("submit", onUpload);
-  document.querySelectorAll(".file span").forEach((s) => { s.dataset.empty = s.textContent; });
-  setupDropZones();
+  if (site.repo_url) { $("#repo-link").href = site.repo_url; $("#repo-link").hidden = false; }
+  window.addEventListener("hashchange", route);
+  route();
+  renderUsecases();
+  selectPack("claims");
+  $("#run-btn").addEventListener("click", () => run());
+  $("#clear-btn").addEventListener("click", () => { clearSlots(); showPlaceholder(); setMessage(""); });
   $("#zoom .close").addEventListener("click", () => $("#zoom").close());
   $("#zoom").addEventListener("click", (e) => { if (e.target.id === "zoom") $("#zoom").close(); });
+  renderRecent();
 }
 
-function setupTabs() {
-  const tabs = document.querySelectorAll(".tabs button");
-  const loaded = {};
-  tabs.forEach((btn) => btn.addEventListener("click", () => {
-    tabs.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
-    document.querySelectorAll(".tab-panel").forEach((p) => { p.hidden = p.id !== `tab-${btn.dataset.tab}`; });
-    if (btn.dataset.tab === "bench" && !loaded.bench) { loaded.bench = true; loadBenchmark(); }
-    if (btn.dataset.tab === "how" && !loaded.how) { loaded.how = true; loadHow(); }
-    if (btn.dataset.tab === "queue") renderQueue();
-  }));
-}
+const packInfo = (name) => state.packs.find((p) => p.name === name);
+const docTypes = (pack = state.pack) => (packInfo(pack)?.doc_types || []).map((d) => d.name);
 
-// --- pack + samples ----------------------------------------------------------------------------
-function renderPackPicker() {
-  $("#pack-picker").innerHTML = state.packs.map((p) => `
-    <button class="pack-card" role="radio" aria-checked="false" data-pack="${esc(p.name)}">
-      ${p.benchmarked ? "" : '<span class="tag">demo only</span>'}
-      <strong>${esc(p.title)}</strong><span>${esc(p.description)}</span>
+// ---------------------------------------------------------------------------------------------
+// side panel: use cases + scenarios
+// ---------------------------------------------------------------------------------------------
+function renderUsecases() {
+  const order = ["claims", "payables", "expenses"].filter((p) => packInfo(p));
+  $("#usecases").innerHTML = order.map((p) => `
+    <button class="usecase" role="tab" aria-selected="false" data-pack="${p}">
+      <span class="ico" aria-hidden="true">${USECASES[p].icon}</span>
+      <span><strong>${USECASES[p].name}</strong><span class="sub">${USECASES[p].sub}</span></span>
     </button>`).join("");
-  document.querySelectorAll(".pack-card").forEach((b) => b.addEventListener("click", () => selectPack(b.dataset.pack)));
+  $$(".usecase").forEach((b) => b.addEventListener("click", () => { selectPack(b.dataset.pack); showPlaceholder(); setMessage(""); }));
 }
-
-function packInfo(name) { return state.packs.find((p) => p.name === name); }
 
 function selectPack(name) {
   state.pack = name;
-  document.querySelectorAll(".pack-card").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.pack === name)));
-  const samples = state.samples[name] || [];
-  $("#samples").innerHTML = samples.length ? samples.map((s) => `
-    <button class="sample" data-id="${esc(s.id)}">
-      <span class="t">${esc(s.title)}</span>
-      <span class="m"><span class="badge">${esc(TIER_LABEL[s.tier] || s.tier)}</span>${s.seeded.length
-        ? s.seeded.map((k) => `<span class="badge">${esc(k.replaceAll("_", " "))}</span>`).join("")
-        : '<span class="badge">no seeded issue</span>'}</span>
-    </button>`).join("") : '<p class="hint">No samples built yet.</p>';
-  document.querySelectorAll(".sample").forEach((b) => b.addEventListener("click", () => loadSample(b.dataset.id)));
-  const types = packInfo(name)?.doc_types || [];
-  document.querySelectorAll(".file-row select").forEach((sel, i) => {
-    sel.innerHTML = '<option value="auto">Auto-detect</option>' +
-      types.map((t, j) => `<option value="${esc(t.name)}" ${i === j ? "" : ""}>${esc(t.title)}</option>`).join("");
+  $$(".usecase").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.pack === name)));
+  $("#story").innerHTML = USECASES[name].story;
+  const [a, b] = docTypes(name);
+  $("#checker-title").textContent = `Check a ${USECASES[name].name.toLowerCase()}`;
+  $("#checker-sub").textContent = `Drop the ${DOC[a].name.toLowerCase()} and the ${DOC[b].name.toLowerCase()} below. We read both, compare them, and give you a verdict.`;
+  $("#download-all").href = `/examples/${name}.zip`;
+  renderScenarios();
+  clearSlots();
+}
+
+function expectBadge(s) {
+  if (!s.seeded.length) return '<span class="expect good">✓ Expected: looks good</span>';
+  return `<span class="expect bad">✕ Hidden problem: ${esc(s.seeded.map((k) => ISSUE[k] || k.replaceAll("_", " ")).join(" + "))}</span>`;
+}
+
+function renderScenarios() {
+  const list = state.samples[state.pack] || [];
+  $("#scenarios").innerHTML = list.map((s, n) => `
+    <article class="scenario" data-id="${esc(s.id)}">
+      <div class="sc-top"><span class="sc-n">#${n + 1}</span><span class="sc-title">${esc(s.title)}</span></div>
+      ${expectBadge(s)}
+      <div class="sc-docs">${docTypes().filter((dt) => s.documents[dt]).map((dt) => {
+        const url = `/samples/${state.pack}/${s.id}/${s.documents[dt]}`;
+        return `<a class="mini" draggable="true" href="${esc(url)}" data-id="${esc(s.id)}" data-dt="${esc(dt)}"
+                  title="Drag into the ${esc(DOC[dt].name)} box (or click to add it)">
+          <img src="${esc(url)}" alt="" loading="lazy"><span>${esc(DOC[dt].name)}<span class="grip">⠿ drag me</span></span></a>`;
+      }).join("")}</div>
+      <button class="btn-try" data-try="${esc(s.id)}">Try this example →</button>
+    </article>`).join("") || '<p class="muted">No examples available.</p>';
+  $$(".mini").forEach((a) => {
+    a.addEventListener("dragstart", (e) => {
+      e.dataTransfer.effectAllowed = "copy";
+      e.dataTransfer.setData("application/x-papertrail", JSON.stringify({ pack: state.pack, id: a.dataset.id, dt: a.dataset.dt }));
+      e.dataTransfer.setData("text/uri-list", new URL(a.getAttribute("href"), location.href).href);
+    });
+    a.addEventListener("click", (e) => {  // a click places it too (handy on touch screens)
+      e.preventDefault();
+      placeExample(state.pack, a.dataset.id, a.dataset.dt);
+    });
   });
-  renderExamples();
-  setSlot(0, null);
-  setSlot(1, null);
-  if (samples.length) loadSample(samples[0].id);
-}
-
-async function loadSample(id) {
-  document.querySelectorAll(".sample").forEach((b) => b.classList.toggle("active", b.dataset.id === id));
-  const meta = (state.samples[state.pack] || []).find((s) => s.id === id);
-  const base = `/samples/${state.pack}/${id}`;
-  try {
-    const result = await getJSON(`${base}/result.json`);
-    const images = Object.fromEntries(Object.entries(meta.documents).map(([dt, f]) => [dt, `${base}/${f}`]));
-    showCase({ ...result, images, source: "sample", title: meta.title, seeded: meta.seeded });
-  } catch (e) {
-    $("#results").innerHTML = `<div class="empty">Could not load this sample (${esc(e.message)}).</div>`;
-  }
-}
-
-// --- rendering a case ---------------------------------------------------------------------------
-const OUTCOME = {
-  approve: { label: "Approve", icon: "✓" },
-  needs_review: { label: "Needs review", icon: "!" },
-  flag: { label: "Flag", icon: "✕" },
-};
-const SEV_ICON = { hard: "✕", soft: "!", info: "✓" };
-
-function confClass(c) { return c >= 0.9 ? "c-high" : c >= REVIEW_THRESHOLD ? "c-mid" : "c-low"; }
-
-function fmtValue(v) {
-  if (typeof v === "number") return v.toLocaleString("en-IN", { maximumFractionDigits: 2 });
-  return esc(v);
-}
-
-function isField(o) { return o && typeof o === "object" && "value" in o && "confidence" in o; }
-
-function fieldRows(dt, data) {
-  const rows = [];
-  const leaf = (path, f) => {
-    const ref = `${dt}.${path}`;
-    const value = f.value === null
-      ? `<span class="null">null: ${esc(f.null_reason || "not found")}</span>`
-      : fmtValue(f.value);
-    const pct = Math.round((f.confidence ?? 0) * 100);
-    const ev = f.evidence && f.value !== null && String(f.evidence) !== String(f.value)
-      ? `<div class="hint mono" style="margin:2px 0 0">“${esc(f.evidence)}”</div>` : "";
-    rows.push(`<tr data-ref="${esc(ref)}"><td class="path">${esc(path)}</td><td>${value}${ev}</td>
-      <td><span class="conf ${confClass(f.confidence)}" title="confidence ${pct}%"><span class="bar"><i style="width:${pct}%"></i></span>${pct}%</span></td></tr>`);
-  };
-  for (const [key, val] of Object.entries(data)) {
-    if (Array.isArray(val)) {
-      rows.push(`<tr class="group"><td colspan="3">${esc(key)} (${val.length})</td></tr>`);
-      val.forEach((item, i) => {
-        for (const [k, f] of Object.entries(item)) if (isField(f)) leaf(`${key}[${i}].${k}`, f);
-      });
-    } else if (isField(val)) {
-      leaf(key, val);
-    }
-  }
-  return rows.join("");
-}
-
-function chips(fields) {
-  if (!fields?.length) return "";
-  return `<span class="chips">${fields.map((f) => `<button class="chip" data-ref="${esc(f)}">${esc(f)}</button>`).join("")}</span>`;
-}
-
-function pipelineLabel(c) {
-  const kinds = new Set(Object.values(c.documents).map((d) => d.pipeline || c.pipeline));
-  if (kinds.size > 1) return "vision LLM, with OCR + LLM fallback";
-  return kinds.has("ocr+llm") ? "OCR + LLM" : "vision LLM";
-}
-
-function showCase(c) {
-  state.current = c;
-  const pack = packInfo(c.pack);
-  const ev = c.evaluation;
-  const d = ev.decision;
-  const o = OUTCOME[d.outcome];
-  const docTypes = pack.doc_types.map((t) => t.name).filter((t) => c.documents[t]);
-  const tokens = Object.values(c.documents).reduce((s, x) => s + (x.usage?.total_tokens || 0), 0);
-  const latency = Object.values(c.documents).reduce((s, x) => s + (x.latency_s || 0), 0);
-  const models = [...new Set(Object.values(c.documents).map((x) => x.model))].join(", ");
-
-  const docsHtml = docTypes.map((dt) => {
-    const x = c.documents[dt];
-    const valid = ev.validations.filter((f) => f.fields.some((r) => r.startsWith(`${dt}.`)));
-    return `<article class="doc">
-      <header><h3>${esc(x.title)}</h3><span>${x.detection?.method === "override" ? "type set manually" : `detected by ${esc(x.detection?.method)}`}</span></header>
-      <div class="img" data-src="${esc(c.images?.[dt] || "")}">${c.images?.[dt] ? `<img src="${esc(c.images[dt])}" alt="${esc(x.title)} image" loading="lazy">` : ""}</div>
-      ${valid.length ? `<div class="valid">${valid.map((f) => `<div><span class="ico ${f.severity}">${SEV_ICON[f.severity]}</span><span>${esc(f.message)}</span></div>`).join("")}</div>` : ""}
-      <table class="fields"><thead><tr><th>Field</th><th>Value</th><th style="width:80px">Confidence</th></tr></thead>
-      <tbody>${fieldRows(dt, x.data)}</tbody></table>
-    </article>`;
-  }).join("");
-
-  const checksHtml = ev.crosschecks.map((ck) => {
-    const msgs = ck.findings.filter((f) => f.severity !== "info" || ck.status === "pass")
-      .map((f) => `<div>${esc(f.message)} ${chips(f.fields)}</div>`).join("");
-    const label = { pass: "✓ pass", fail: "✕ mismatch", unverifiable: "! can't verify", error: "! error" }[ck.status];
-    return `<tr class="${ck.status}"><td>${esc(ck.description)}<div class="hint mono" style="margin:2px 0 0">${esc(ck.code)}</div></td>
-      <td><span class="pill ${ck.status}">${label}</span></td><td>${msgs || '<span class="hint">consistent</span>'}</td></tr>`;
-  }).join("");
-
-  $("#results").innerHTML = `
-    <section class="decision">
-      <div class="decision-head">
-        <span class="outcome ${d.outcome}"><span aria-hidden="true">${o.icon}</span>${o.label}</span>
-        <span class="who">Recommendation only. A human makes the final call.</span>
-        <div class="actions"><button class="btn" id="export">Export JSON</button></div>
-      </div>
-      <ul class="reasons">${d.reasons.map((r) => `<li><span class="ico ${r.severity}" aria-label="${r.severity}">${SEV_ICON[r.severity]}</span>
-        <span>${esc(r.message)} ${chips(r.fields)}</span></li>`).join("")}</ul>
-      ${(ev.notes || []).map((n) => `<p class="note">${esc(n)}</p>`).join("")}
-      <p class="meta">${c.source === "sample" ? `Sample: ${esc(c.title)}. Precomputed with the live engine. ` : "Live run. "}
-        Extraction: ${esc(pipelineLabel(c))} (${esc(models)}), matching: ${esc(ev.matching || c.matching)},
-        ${tokens.toLocaleString()} tokens, ${latency.toFixed(1)}s model time.
-        ${c.seeded?.length ? `Seeded issues: ${c.seeded.map(esc).join(", ")}.` : ""}</p>
-    </section>
-    <p class="conf-legend"><span><span class="conf c-high"><span class="bar"><i style="width:100%"></i></span></span> ≥ 90% confident</span>
-      <span><span class="conf c-mid"><span class="bar"><i style="width:80%"></i></span></span> 75–90%</span>
-      <span><span class="conf c-low"><span class="bar"><i style="width:50%"></i></span></span> &lt; 75%: routed to review if critical</span></p>
-    <div class="docs">${docsHtml}</div>
-    <section class="panel"><h3>Cross-document checks</h3>
-      <table class="checks"><thead><tr><th>Check</th><th>Status</th><th>Details (click a field to highlight it)</th></tr></thead>
-      <tbody>${checksHtml}</tbody></table></section>`;
-
-  $("#export").addEventListener("click", () => {
-    const blob = new Blob([JSON.stringify({ ...c, images: undefined }, null, 2)], { type: "application/json" });
-    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `papertrail-${c.pack}-${Date.now()}.json` });
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-  document.querySelectorAll("#results .chip").forEach((ch) => ch.addEventListener("click", () => highlight(ch.dataset.ref)));
-  document.querySelectorAll("#results .doc .img").forEach((el) => el.addEventListener("click", () => {
-    if (!el.dataset.src) return;
-    $("#zoom img").src = el.dataset.src;
-    $("#zoom").showModal();
+  $$("[data-try]").forEach((b) => b.addEventListener("click", async () => {
+    $$(".scenario").forEach((el) => el.classList.toggle("active", el.dataset.id === b.dataset.try));
+    await Promise.all(docTypes().map((dt) => placeExample(state.pack, b.dataset.try, dt)));
+    $(".checker").scrollIntoView({ behavior: "smooth", block: "start" });
+    run();
   }));
 }
 
-function highlight(ref) {
-  const rows = document.querySelectorAll("#results tr[data-ref]");
-  let first = null;
-  rows.forEach((tr) => {
-    const r = tr.dataset.ref;
-    const hit = r === ref || r.startsWith(`${ref}.`) || r.startsWith(`${ref}[`);
-    tr.classList.toggle("hl", hit);
-    if (hit && !first) first = tr;
+// ---------------------------------------------------------------------------------------------
+// drop slots
+// ---------------------------------------------------------------------------------------------
+function clearSlots() {
+  state.slots = {};
+  renderSlots();
+}
+
+function renderSlots() {
+  $("#slots").innerHTML = docTypes().map((dt) => {
+    const s = state.slots[dt];
+    if (s) {
+      return `<div class="slot filled" data-dt="${dt}">
+        <div class="filled-view">${s.url ? `<img src="${esc(s.url)}" alt="">` : '<div class="slot-ico">📄</div>'}
+          <div><div class="ok">✓ ${esc(DOC[dt].name)} added</div><div class="fname">${esc(s.file.name)}</div>
+          ${s.example ? '<span class="tag">demo document · instant result</span>' : '<span class="tag">your file · read live by AI</span>'}</div></div>
+        <button class="remove" data-remove="${dt}" aria-label="Remove ${esc(DOC[dt].name)}">✕ Remove</button></div>`;
+    }
+    return `<label class="slot" data-dt="${dt}">
+      <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" aria-label="${esc(DOC[dt].name)}">
+      <div><div class="slot-ico" aria-hidden="true">${DOC[dt].icon}</div><div class="slot-name">${esc(DOC[dt].name)}</div>
+        <div class="slot-hint">Drag it here, or click to choose a file</div></div></label>`;
+  }).join("");
+  $$(".slot").forEach((el) => {
+    const dt = el.dataset.dt;
+    el.querySelector("input")?.addEventListener("change", (e) => e.target.files[0] && placeFile(e.target.files[0], dt));
+    el.addEventListener("dragover", (e) => { e.preventDefault(); el.classList.add("over"); });
+    el.addEventListener("dragleave", () => el.classList.remove("over"));
+    el.addEventListener("drop", async (e) => {
+      e.preventDefault();
+      el.classList.remove("over");
+      const ref = e.dataTransfer.getData("application/x-papertrail");
+      if (ref) { const r = JSON.parse(ref); return placeExample(r.pack, r.id, r.dt); }
+      if (e.dataTransfer.files.length) return placeFile(e.dataTransfer.files[0], dt);
+    });
   });
-  first?.scrollIntoView({ behavior: "smooth", block: "center" });
+  $$("[data-remove]").forEach((b) => b.addEventListener("click", (e) => {
+    e.preventDefault();
+    delete state.slots[b.dataset.remove];
+    renderSlots();
+  }));
+  $("#run-btn").disabled = state.busy || docTypes().some((dt) => !state.slots[dt]);
 }
 
-// --- live upload --------------------------------------------------------------------------------
-function setStatus(msg, err = false) {
-  const s = $("#status");
-  s.textContent = msg;
-  s.classList.toggle("err", err);
-}
-
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) return resolve();
-    const s = Object.assign(document.createElement("script"), { src, onload: resolve, onerror: () => reject(new Error(`could not load ${src}`)) });
-    document.head.appendChild(s);
-  });
-}
-
-async function fileToImageBlob(file) {
-  if (file.size > MAX_BYTES) throw new Error(`${file.name} is larger than 5 MB`);
-  let source;
-  if (file.type === "application/pdf") {
-    const pdfjs = await import(PDFJS_URL);
-    pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
-    const pdf = await pdfjs.getDocument({ data: await file.arrayBuffer() }).promise;
-    const page = await pdf.getPage(1);
-    const viewport = page.getViewport({ scale: 2 });
-    source = Object.assign(document.createElement("canvas"), { width: viewport.width, height: viewport.height });
-    await page.render({ canvas: source, canvasContext: source.getContext("2d"), viewport }).promise;
-  } else if (["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-    source = await createImageBitmap(file, { imageOrientation: "from-image" });
-  } else {
-    throw new Error(`${file.name}: use JPG, PNG, WEBP or PDF`);
-  }
-  const scale = Math.min(1, 1600 / Math.max(source.width, source.height));
-  const canvas = Object.assign(document.createElement("canvas"), { width: Math.round(source.width * scale), height: Math.round(source.height * scale) });
-  canvas.getContext("2d").drawImage(source, 0, 0, canvas.width, canvas.height);
-  return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
+async function placeExample(pack, id, dt) {
+  if (pack !== state.pack) selectPack(pack);
+  const s = state.samples[pack].find((x) => x.id === id);
+  const n = state.samples[pack].indexOf(s) + 1;
+  const url = `/samples/${pack}/${id}/${s.documents[dt]}`;
+  const blob = await (await fetch(url)).blob();
+  const file = new File([blob], `${pack}-${n}-${id}-${s.documents[dt]}`, { type: blob.type || "image/jpeg" });
+  state.slots[dt] = { file, url: URL.createObjectURL(file), example: { pack, sample: s, doc_type: dt } };
+  renderSlots();
+  setMessage("");
 }
 
 async function sha256(blob) {
@@ -290,25 +314,56 @@ async function sha256(blob) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-let ocrWorker = null;
-async function browserOCR(blob, label) {
-  if (!ocrWorker) {
-    setStatus("Loading OCR engine in your browser (first time only)…");
-    await loadScript(TESSERACT_URL);
-    ocrWorker = await window.Tesseract.createWorker("eng");
+async function findExample(file) {
+  const hash = await sha256(file);
+  for (const [pack, list] of Object.entries(state.samples)) {
+    for (const s of list) for (const [dt, h] of Object.entries(s.hashes || {})) if (h === hash) return { pack, sample: s, doc_type: dt };
   }
-  setStatus(`Running OCR on ${label}…`);
-  const { data } = await ocrWorker.recognize(blob);
-  return data.text;
+  return null;
+}
+
+async function placeFile(file, dt) {
+  if (file.size > MAX_BYTES) return setMessage(`${file.name} is larger than 5 MB. Please use a smaller file.`, true);
+  if (!["image/jpeg", "image/png", "image/webp", "application/pdf"].includes(file.type)) {
+    return setMessage("Please use a JPG, PNG or WEBP image, or a PDF (we read its first page).", true);
+  }
+  const ex = await findExample(file);  // a downloaded demo document dropped from the desktop
+  if (ex) return placeExample(ex.pack, ex.sample.id, ex.doc_type);
+  const url = file.type === "application/pdf" ? "" : URL.createObjectURL(file);
+  state.slots[dt] = { file, url, example: null };
+  renderSlots();
+  setMessage("");
+}
+
+// ---------------------------------------------------------------------------------------------
+// running a check
+// ---------------------------------------------------------------------------------------------
+function setMessage(text, err = false) {
+  const m = $("#message");
+  m.textContent = text;
+  m.classList.toggle("err", err);
+}
+
+function setProgress(steps, active) {
+  const el = $("#progress");
+  el.hidden = !steps;
+  if (!steps) return;
+  el.innerHTML = steps.map((s, i) => `<div class="pstep ${i < active ? "done" : i === active ? "doing" : ""}">
+    <span class="dot">${i < active ? "✓" : ""}</span>${esc(s)}</div>`).join("");
+}
+
+async function sampleResult(pack, id) {
+  const key = `${pack}/${id}`;
+  if (!state.resultCache[key]) state.resultCache[key] = await getJSON(`/samples/${key}/result.json`);
+  return state.resultCache[key];
 }
 
 async function api(path, options) {
   const r = await fetch(path, options);
   let body = null;
-  try { body = await r.json(); } catch { /* non-JSON error */ }
+  try { body = await r.json(); } catch { /* not JSON */ }
   if (!r.ok) {
-    const wait = r.status === 429 && body?.retry_after ? ` (about ${body.retry_after}s)` : "";
-    const err = new Error((body?.message || body?.detail || `request failed (${r.status})`) + wait);
+    const err = new Error(body?.message || body?.detail || `The server returned an error (${r.status}).`);
     err.status = r.status;
     err.fallback = body?.fallback || null;
     throw err;
@@ -316,256 +371,320 @@ async function api(path, options) {
   return body;
 }
 
-// --- upload slots, drag & drop, example gallery ----------------------------------------------------
-const slots = [null, null];
-
-function setSlot(i, file) {
-  slots[i] = file;
-  const row = document.querySelectorAll(".file-row")[i];
-  const label = row.querySelector(".file");
-  label.classList.toggle("has", Boolean(file));
-  label.querySelector("span").textContent = file ? file.name : label.querySelector("span").dataset.empty;
-  try {  // keep the native input in sync where the browser allows it
-    const dt = new DataTransfer();
-    if (file) dt.items.add(file);
-    row.querySelector("input").files = dt.files;
-  } catch { /* older browsers: slots[] is the source of truth */ }
-}
-
-async function fileFromUrl(url, name) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`could not load ${name}`);
-  const blob = await r.blob();
-  return new File([blob], name, { type: blob.type || "image/jpeg" });
-}
-
-function setupDropZones() {
-  document.querySelectorAll(".file-row").forEach((row, i) => {
-    const label = row.querySelector(".file");
-    row.querySelector("input").addEventListener("change", (e) => setSlot(i, e.target.files[0] || null));
-    label.addEventListener("dragover", (e) => { e.preventDefault(); label.classList.add("over"); });
-    label.addEventListener("dragleave", () => label.classList.remove("over"));
-    label.addEventListener("drop", async (e) => {
-      e.preventDefault();
-      label.classList.remove("over");
-      try {
-        if (e.dataTransfer.files.length) return setSlot(i, e.dataTransfer.files[0]);
-        const ref = e.dataTransfer.getData("application/x-papertrail");
-        if (ref) {
-          const { url, name } = JSON.parse(ref);
-          return setSlot(i, await fileFromUrl(url, name));
-        }
-      } catch (err) { setStatus(err.message, true); }
-    });
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) return resolve();
+    document.head.appendChild(Object.assign(document.createElement("script"), { src, onload: resolve, onerror: () => reject(new Error("could not load the text-recognition engine")) }));
   });
 }
 
-function renderExamples() {
-  const list = state.samples[state.pack] || [];
-  const el = $("#examples");
-  if (!list.length) { el.innerHTML = ""; return; }
-  el.innerHTML = `<p class="hint">Drag a document onto a slot above, or use a whole pair. These files are synthetic and
-      their results are precomputed, so they work even when the free-tier models are busy.
-      <a href="/examples/${esc(state.pack)}.zip" download>Download all ${list.length * 2} files (.zip)</a></p>
-    <div class="ex-list">${list.map((s, n) => `
-      <div class="ex">
-        <div class="ex-title">${n + 1}. ${esc(s.title)}</div>
-        <div class="ex-row">${Object.entries(s.documents).map(([dt, f]) => {
-          const url = `/samples/${state.pack}/${s.id}/${f}`;
-          const name = `${state.pack}-${String(n + 1).padStart(2, "0")}-${s.id}-${f}`;
-          return `<a class="thumb" href="${esc(url)}" download="${esc(name)}" draggable="true"
-              data-url="${esc(url)}" data-name="${esc(name)}" title="Drag onto a slot (${esc(dt.replaceAll("_", " "))})">
-              <img src="${esc(url)}" alt="${esc(dt)}" loading="lazy"><span>${esc(dt.replaceAll("_", " "))}</span></a>`;
-        }).join("")}
-          <button type="button" class="btn small" data-use="${esc(s.id)}">Use pair</button></div>
-      </div>`).join("")}</div>`;
-  el.querySelectorAll(".thumb").forEach((a) => a.addEventListener("dragstart", (e) => {
-    e.dataTransfer.setData("application/x-papertrail", JSON.stringify({ url: a.dataset.url, name: a.dataset.name }));
-    e.dataTransfer.setData("text/uri-list", new URL(a.dataset.url, location.href).href);
-  }));
-  el.querySelectorAll("[data-use]").forEach((b) => b.addEventListener("click", async () => {
-    const s = list.find((x) => x.id === b.dataset.use);
-    const n = list.indexOf(s) + 1;
-    const files = await Promise.all(Object.values(s.documents).map((f) =>
-      fileFromUrl(`/samples/${state.pack}/${s.id}/${f}`, `${state.pack}-${String(n).padStart(2, "0")}-${s.id}-${f}`)));
-    files.forEach((f, i) => setSlot(i, f));
-    document.querySelectorAll(".file-row select").forEach((sel) => { sel.value = "auto"; });
-    setStatus(`Loaded example pair ${n}. Press “Process documents”.`);
-  }));
-}
-
-// sha256 of the original bytes -> precomputed extraction of a known example document
-async function findExample(file) {
-  const hash = await sha256(file);
-  for (const [pack, list] of Object.entries(state.samples)) {
-    for (const s of list) {
-      for (const [dt, h] of Object.entries(s.hashes || {})) {
-        if (h === hash) return { pack, sample: s, doc_type: dt };
-      }
-    }
+let ocrWorker = null;
+async function browserOCR(blob) {
+  if (!ocrWorker) {
+    await loadScript(TESSERACT_URL);
+    ocrWorker = await window.Tesseract.createWorker("eng");
   }
-  return null;
+  return (await ocrWorker.recognize(blob)).data.text;
 }
 
-const resultCache = {};
-async function sampleResult(pack, id) {
-  const key = `${pack}/${id}`;
-  if (!resultCache[key]) resultCache[key] = await getJSON(`/samples/${key}/result.json`);
-  return resultCache[key];
+async function toImageBlob(file) {
+  let source;
+  if (file.type === "application/pdf") {
+    const pdfjs = await import(PDFJS_URL);
+    pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+    const page = await (await pdfjs.getDocument({ data: await file.arrayBuffer() }).promise).getPage(1);
+    const viewport = page.getViewport({ scale: 2 });
+    source = Object.assign(document.createElement("canvas"), { width: viewport.width, height: viewport.height });
+    await page.render({ canvas: source, canvasContext: source.getContext("2d"), viewport }).promise;
+  } else {
+    source = await createImageBitmap(file, { imageOrientation: "from-image" });
+  }
+  const scale = Math.min(1, 1600 / Math.max(source.width, source.height));
+  const canvas = Object.assign(document.createElement("canvas"), { width: Math.round(source.width * scale), height: Math.round(source.height * scale) });
+  canvas.getContext("2d").drawImage(source, 0, 0, canvas.width, canvas.height);
+  return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
 }
 
-async function extractLive(file, blob, chosen, pipeline, label) {
-  const send = async (ocrText) => {
+async function readLive(slot, dt, pipeline, onFallback) {
+  const blob = await toImageBlob(slot.file);
+  const cacheKey = `pt.x2.${state.pack}.${pipeline}.${dt}.${await sha256(blob)}`;
+  const cached = store.get("localStorage", cacheKey, null);
+  if (cached) return { res: cached, blob, live: false };
+  const send = (ocrText) => {
     const form = new FormData();
-    form.append("file", blob, `${file.name.replace(/\.[^.]+$/, "")}.jpg`);
+    form.append("file", blob, "document.jpg");
     form.append("pack", state.pack);
-    form.append("doc_type", chosen);
+    form.append("doc_type", dt);
     form.append("pipeline", pipeline);
     if (ocrText) form.append("ocr_text", ocrText);
     return api("/api/extract", { method: "POST", body: form });
   };
+  let res;
   if (pipeline === "ocr+llm") {
-    const text = await browserOCR(blob, label);
-    setStatus(`Extracting ${label} with the text model…`);
-    return send(text);
+    res = await send(await browserOCR(blob));
+  } else {
+    try {
+      res = await send(null);
+    } catch (err) {
+      if (err.fallback !== "ocr") throw err;
+      onFallback();
+      res = await send(await browserOCR(blob));
+    }
   }
-  setStatus(`Extracting ${label} with the vision model…`);
-  try {
-    return await send(null);
-  } catch (err) {
-    if (err.fallback !== "ocr") throw err;
-    setStatus(`Vision model is at its free-tier limit: reading ${label} in your browser instead…`);
-    const text = await browserOCR(blob, label);
-    setStatus(`Extracting ${label} with a fallback text model…`);
-    return send(text);
-  }
+  store.set("localStorage", cacheKey, res);
+  return { res, blob, live: true };
 }
 
-async function onUpload(e) {
-  e.preventDefault();
-  const rows = [...document.querySelectorAll(".file-row")];
-  const files = slots.slice();
-  if (files.some((f) => !f)) return setStatus("Add both documents first (drag an example or choose a file).", true);
-  const pipeline = new FormData(e.target).get("pipeline");
-  const matching = new FormData(e.target).get("matching");
-  const btn = $("#run-btn");
-  btn.disabled = true;
+async function run() {
+  const types = docTypes();
+  if (state.busy || types.some((dt) => !state.slots[dt])) return;
+  state.busy = true;
+  renderSlots();
+  setMessage("");
+  const pipeline = document.querySelector('input[name="pipeline"]:checked').value;
+  const matching = document.querySelector('input[name="matching"]:checked').value;
+  const steps = [...types.map((dt) => `Reading the ${DOC[dt].name.toLowerCase()}`), "Comparing the two", "Verdict"];
   try {
     const documents = {};
     const images = {};
-    const examples = [];
+    const notes = [];
     let live = 0;
-    for (const [i, file] of files.entries()) {
-      const label = `document ${i + 1}`;
-      if (file.size > MAX_BYTES) throw new Error(`${file.name} is larger than 5 MB`);
-      const ex = await findExample(file);
-      let res;
-      if (ex && ex.pack !== state.pack) {
-        throw new Error(`${file.name} is a ${ex.pack} example; switch to that use case or pick a ${state.pack} document.`);
-      }
-      if (ex) {
-        setStatus(`Recognised ${label} as example “${ex.sample.title}”: using its precomputed extraction.`);
-        res = { ...(await sampleResult(ex.pack, ex.sample.id)).documents[ex.doc_type], precomputed: true };
-        examples.push(ex);
-        images[ex.doc_type] = URL.createObjectURL(file);
+    const examples = [];
+    for (const [i, dt] of types.entries()) {
+      setProgress(steps, i);
+      const slot = state.slots[dt];
+      if (slot.example) {
+        await sleep(350);  // the result is saved; the pause only lets you see the steps
+        documents[dt] = (await sampleResult(slot.example.pack, slot.example.sample.id)).documents[slot.example.doc_type];
+        images[dt] = slot.url;
+        examples.push(slot.example);
       } else {
-        const runs = store.get("sessionStorage", "pt.runs", 0);
-        if (runs + live >= SESSION_RUN_CAP) {
-          throw new Error(`Session limit of ${SESSION_RUN_CAP} live documents reached (free tier). The example documents still work.`);
-        }
-        setStatus(`Preparing ${label}…`);
-        const blob = await fileToImageBlob(file);
-        const chosen = rows[i].querySelector("select").value;
-        const cacheKey = `pt.x.${state.pack}.${pipeline}.${chosen}.${await sha256(blob)}`;
-        res = store.get("localStorage", cacheKey, null);
-        if (!res) {
-          res = await extractLive(file, blob, chosen, pipeline, label);
-          store.set("localStorage", cacheKey, res);
-          live += 1;
-        }
-        images[res.doc_type] = URL.createObjectURL(blob);
+        const used = store.get("sessionStorage", "pt.live", 0) + live;
+        if (used >= SESSION_LIVE_CAP) throw new Error(`You've used the ${SESSION_LIVE_CAP} free live reads for this visit. The demo documents still work instantly.`);
+        const { res, blob, live: wasLive } = await readLive(slot, dt, pipeline, () => {
+          notes.push(`The vision AI was at its free daily limit, so the ${DOC[dt].name.toLowerCase()} was read with text recognition and a backup AI model instead.`);
+          setMessage(`Vision AI is busy; reading the ${DOC[dt].name.toLowerCase()} with text recognition instead (a few seconds)…`);
+        });
+        documents[dt] = res;
+        images[dt] = slot.url || URL.createObjectURL(blob);
+        live += wasLive ? 1 : 0;
       }
-      if (documents[res.doc_type]) throw new Error(`Both documents look like a ${res.title}. Set the types manually.`);
-      documents[res.doc_type] = res;
     }
-    const caseId = `case-${Date.now().toString(36)}`;
-    const samePair = examples.length === 2 && examples[0].sample.id === examples[1].sample.id;
+    setProgress(steps, types.length);
     let evaluation;
-    if (samePair) {  // the whole case was precomputed with the live engine
+    const samePair = examples.length === types.length && examples.every((e) => e.sample.id === examples[0].sample.id);
+    if (samePair) {
+      await sleep(300);
       evaluation = (await sampleResult(state.pack, examples[0].sample.id)).evaluation;
-      evaluation = { ...evaluation, history_add: [] };
     } else {
-      setStatus("Validating and cross-checking…");
       evaluation = await api("/api/evaluate", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          pack: state.pack, case_id: caseId, matching,
-          documents: Object.fromEntries(Object.entries(documents).map(([dt, x]) => [dt, x.data])),
-          images: Object.fromEntries(Object.entries(documents).map(([dt, x]) => [dt, { dhash: x.image.dhash }])),
+          pack: state.pack, case_id: `case-${Date.now().toString(36)}`, matching,
+          documents: Object.fromEntries(types.map((dt) => [dt, documents[dt].data])),
+          images: Object.fromEntries(types.map((dt) => [dt, { dhash: documents[dt].image?.dhash }]).filter(([, v]) => v.dhash)),
           history: store.get("sessionStorage", `pt.history.${state.pack}`, []),
         }),
       });
-      store.set("sessionStorage", `pt.history.${state.pack}`,
-        [...store.get("sessionStorage", `pt.history.${state.pack}`, []), ...evaluation.history_add]);
+      store.set("sessionStorage", `pt.history.${state.pack}`, [...store.get("sessionStorage", `pt.history.${state.pack}`, []), ...(evaluation.history_add || [])]);
     }
-    const notes = Object.values(documents).flatMap((d) => d.notes || []);
-    if (examples.length) notes.unshift(`${examples.length === 2 ? "Both documents are" : "One document is"} a bundled example: its extraction was precomputed with the live engine, so no model quota was used.`);
-    evaluation = { ...evaluation, notes: [...notes, ...(evaluation.notes || [])] };
-    store.set("sessionStorage", "pt.runs", store.get("sessionStorage", "pt.runs", 0) + live);
-    const usedPipeline = Object.values(documents).some((d) => d.pipeline === "ocr+llm") ? "ocr+llm" : "vlm";
-    const c = { pack: state.pack, pipeline: usedPipeline, matching: evaluation.matching || matching, documents, evaluation,
-      images, source: "upload", title: "Your upload" };
-    document.querySelectorAll(".sample").forEach((b) => b.classList.remove("active"));
-    showCase(c);
-    addToQueue(c, caseId);
-    const left = SESSION_RUN_CAP - store.get("sessionStorage", "pt.runs", 0);
-    setStatus(live ? `Done. ${left} live documents left in this session.` : "Done (example documents: instant, no quota used).");
+    store.set("sessionStorage", "pt.live", store.get("sessionStorage", "pt.live", 0) + live);
+    setProgress(steps, steps.length);
+    for (const d of Object.values(documents)) for (const n of d.notes || []) if (!notes.includes(n) && !notes.length) notes.push(n);
+    const c = {
+      pack: state.pack, documents, evaluation, images, examples: examples.length, live,
+      notes: [...notes, ...(evaluation.notes || [])], scenario: samePair ? examples[0].sample : null, at: Date.now(),
+    };
+    showResult(c);
+    addRecent(c);
+    setTimeout(() => setProgress(null), 900);
   } catch (err) {
-    setStatus(err.message, true);
+    setProgress(null);
+    setMessage(err.message + (err.status === 429 ? " Tip: the demo documents always work instantly." : ""), true);
   } finally {
-    btn.disabled = false;
+    state.busy = false;
+    renderSlots();
   }
 }
 
-// --- review queue ---------------------------------------------------------------------------------
-function addToQueue(c, caseId) {
-  if (c.evaluation.decision.outcome === "approve") return;
-  const q = store.get("sessionStorage", "pt.queue", []);
-  q.unshift({ id: caseId, at: new Date().toLocaleTimeString(), pack: c.pack, outcome: c.evaluation.decision.outcome,
-    reasons: c.evaluation.decision.reasons.map((r) => r.message), case: { ...c, images: undefined } });
-  store.set("sessionStorage", "pt.queue", q.slice(0, 20));
-  renderQueue();
+// ---------------------------------------------------------------------------------------------
+// verdict
+// ---------------------------------------------------------------------------------------------
+const VERDICT = {
+  approve: { icon: "✓", label: "Looks good", title: "Everything matches. Safe to approve." },
+  needs_review: { icon: "!", label: "Double-check", title: "Nothing is clearly wrong, but a person should take a look." },
+  flag: { icon: "✕", label: "Problem found", title: "Don't approve this yet." },
+};
+
+function rowStatus(findings) {
+  if (!findings.length) return "pass";
+  return findings.some((f) => f.severity === "hard" && !f.unverifiable) ? "fail" : "unsure";
 }
 
-function renderQueue() {
-  const q = store.get("sessionStorage", "pt.queue", []);
-  $("#queue-count").textContent = q.length;
-  $("#queue").innerHTML = q.length ? q.map((item, i) => `
-    <div class="qitem"><div class="row">
-      <span class="outcome ${item.outcome}" style="font-size:14px"><span aria-hidden="true">${OUTCOME[item.outcome].icon}</span>${OUTCOME[item.outcome].label}</span>
-      <strong>${esc(packInfo(item.pack)?.title || item.pack)}</strong><span class="hint" style="margin:0">${esc(item.at)}</span>
-      <button class="btn" data-i="${i}" style="margin-left:auto">Open</button></div>
-      <ul>${item.reasons.map((r) => `<li>${esc(r)}</li>`).join("")}</ul></div>`).join("")
-    : '<div class="empty">Nothing waiting. Upload a pair on the "Try a pack" tab: anything flagged or needing review lands here.</div>';
-  document.querySelectorAll("#queue .btn").forEach((b) => b.addEventListener("click", () => {
-    const item = store.get("sessionStorage", "pt.queue", [])[Number(b.dataset.i)];
-    document.querySelector('.tabs button[data-tab="try"]').click();
-    selectPackSilently(item.pack);
-    showCase(item.case);
+function checklist(c) {
+  const ev = c.evaluation;
+  const rows = [];
+  const always = VALIDATOR_ROWS[c.pack] || [];
+  for (const code of [...always, ...OPTIONAL_ROWS]) {
+    const fs = ev.validations.filter((f) => f.code === code && f.severity !== "info");
+    if (!fs.length && !always.includes(code)) continue;  // optional rows only appear when something is off
+    rows.push({ code, status: rowStatus(fs), details: fs.map((f) => humanize(f.message)), fields: fs.flatMap((f) => f.fields) });
+  }
+  for (const o of ev.crosschecks) {
+    const fs = o.findings.filter((f) => f.severity !== "info");
+    rows.push({ code: o.code, status: o.status === "pass" ? "pass" : rowStatus(fs), details: fs.map((f) => humanize(f.message)), fields: fs.flatMap((f) => f.fields) });
+  }
+  const reading = ev.decision.reasons.filter((r) => ["low_confidence", "critical_field_missing"].includes(r.code));
+  rows.push({ code: reading[0]?.code || "low_confidence", status: reading.length ? "unsure" : "pass",
+    details: reading.map((r) => humanize(r.message)), fields: reading.flatMap((r) => r.fields) });
+  const order = { fail: 0, unsure: 1, pass: 2 };
+  return rows.sort((a, b) => order[a.status] - order[b.status]);
+}
+
+function showResult(c) {
+  const d = c.evaluation.decision;
+  const v = VERDICT[d.outcome];
+  const rows = checklist(c);
+  const problems = rows.filter((r) => r.status === "fail").length;
+  const unsure = rows.filter((r) => r.status === "unsure").length;
+  const passed = rows.filter((r) => r.status === "pass").length;
+  const summary = d.outcome === "flag"
+    ? `${problems} problem${problems === 1 ? "" : "s"} found; ${passed} of ${rows.length} checks passed.`
+    : d.outcome === "needs_review"
+      ? `${passed} of ${rows.length} checks passed; ${unsure} need${unsure === 1 ? "s" : ""} a person to confirm.`
+      : `All ${rows.length} checks passed.`;
+  const reasons = d.reasons.filter((r) => r.code !== "all_clear").slice(0, 4);
+  const types = docTypes(c.pack);
+
+  $("#result").innerHTML = `
+    <section class="verdict ${d.outcome}">
+      <div class="v-head"><div class="v-icon" aria-hidden="true">${v.icon}</div>
+        <div><div class="v-label">${v.label}</div><div class="v-title">${esc(v.title)}</div><div class="v-sub">${esc(summary)}</div></div></div>
+      ${reasons.length ? `<ul class="v-reasons">${reasons.map((r) => `<li data-fields="${esc(JSON.stringify(r.fields))}" title="Click to highlight it in the documents">
+          <strong>${r.severity === "hard" ? "✕" : "!"} ${esc(CHECK[r.code]?.[1] || "Needs attention")}</strong>
+          <span>${esc(humanize(r.message))}</span></li>`).join("")}</ul>` : ""}
+      ${c.scenario ? `<p class="v-note">This was demo example “${esc(c.scenario.title)}”. ${c.scenario.seeded.length ? `The problem hidden in it: <b>${esc(c.scenario.seeded.map((k) => ISSUE[k] || k).join(" + "))}</b>.` : "No problem was hidden in it."}</p>` : ""}
+      <p class="v-human">PaperTrail only recommends. A person always makes the final decision.</p>
+    </section>
+
+    <section class="card">
+      <h3 class="section-title">What we checked</h3>
+      <p class="section-sub">Click a row to highlight where it comes from in the documents below.</p>
+      <ul class="checklist">${rows.map((r) => `
+        <li class="check ${r.status} ${r.fields.length ? "clickable" : ""}" data-fields="${esc(JSON.stringify(r.fields))}">
+          <span class="ci" aria-hidden="true">${r.status === "pass" ? "✓" : r.status === "fail" ? "✕" : "!"}</span>
+          <div><div class="ct">${esc(CHECK[r.code]?.[0] || r.code)}</div>${r.status !== "pass" && r.details.length ? `<div class="cd">${r.details.map(esc).join("<br>")}</div>` : ""}</div>
+          <span class="cs">${r.status === "pass" ? "OK" : r.status === "fail" ? "Problem" : "Check"}</span></li>`).join("")}</ul>
+    </section>
+
+    <section class="card">
+      <h3 class="section-title">What the AI read</h3>
+      <p class="section-sub">Every detail the AI wrote down from each document. Click a picture to enlarge it.</p>
+      <div class="docs">${types.map((dt) => docCard(c, dt)).join("")}</div>
+      <p class="legend"><span class="unsure-tag">unsure</span> means the AI wasn't confident about this value, so a person should double-check it. “–” means the value isn't on the document or couldn't be read (the AI never guesses).</p>
+    </section>
+
+    <section class="card"><details class="behind"><summary>Behind the scenes (for the technically curious)</summary><div class="tech">
+      ${behind(c)}
+    </div></details></section>`;
+
+  $$("#result [data-fields]").forEach((el) => el.addEventListener("click", () => highlight(JSON.parse(el.dataset.fields))));
+  $$("#result .doc-img").forEach((el) => el.addEventListener("click", () => { $("#zoom img").src = el.dataset.src; $("#zoom").showModal(); }));
+  $("#export")?.addEventListener("click", () => download(c));
+  $("#result").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function docCard(c, dt) {
+  const x = c.documents[dt];
+  const data = x.data || {};
+  const scalar = Object.entries(data).filter(([, v]) => !Array.isArray(v));
+  const lists = Object.entries(data).filter(([, v]) => Array.isArray(v));
+  const cell = (f) => {
+    if (!f || f.value === null || f.value === undefined) return `<span class="na" title="${esc(f?.null_reason || "")}">–</span>`;
+    return `${esc(fmt(f.value))}${f.confidence < UNSURE_BELOW ? '<span class="unsure-tag">unsure</span>' : ""}`;
+  };
+  const img = c.images?.[dt];
+  return `<article class="doc">
+    <div class="doc-head"><h4>${DOC[dt].icon} ${esc(DOC[dt].name)}</h4></div>
+    ${img ? `<div class="doc-img" data-src="${esc(img)}"><img src="${esc(img)}" alt="${esc(DOC[dt].name)}"></div>` : ""}
+    <table class="facts"><tbody>${scalar.map(([k, f]) => `<tr data-ref="${dt}.${k}"><td>${esc(label(k))}</td><td>${cell(f)}</td></tr>`).join("")}</tbody></table>
+    ${lists.map(([k, items]) => {
+      const cols = items.length ? Object.keys(items[0]).filter((col) => items.some((it) => it[col]?.value !== null && it[col]?.value !== undefined)) : [];
+      return `<div class="items-wrap"><h5>${esc(label(k))} (${items.length})</h5>${items.length ? `<table class="items">
+        <thead><tr>${cols.map((col) => `<th>${esc(label(col))}</th>`).join("")}</tr></thead>
+        <tbody>${items.map((it, i) => `<tr>${cols.map((col) => `<td data-ref="${dt}.${k}[${i}].${col}">${cell(it[col])}</td>`).join("")}</tr>`).join("")}</tbody>
+      </table>` : '<p class="muted">None found.</p>'}</div>`;
+    }).join("")}
+  </article>`;
+}
+
+function behind(c) {
+  const docs = Object.values(c.documents);
+  const models = [...new Set(docs.map((d) => d.model))].join(", ");
+  const tokens = docs.reduce((s, d) => s + (d.usage?.total_tokens || 0), 0);
+  const secs = docs.reduce((s, d) => s + (d.latency_s || 0), 0);
+  const ev = c.evaluation;
+  return [
+    c.examples ? `<p>${c.examples === docs.length ? "Both documents are" : "One document is"} a bundled demo document. It was read once by the live AI and the result was saved, so it shows instantly and uses no AI quota.</p>` : "",
+    ...c.notes.map((n) => `<p>${esc(n)}</p>`),
+    `<p><b>AI model(s):</b> ${esc(models)} · <b>matching:</b> ${esc(ev.matching === "rules" ? "exact rules" : "rules, plus AI for differently-named items")} · <b>tokens:</b> ${tokens.toLocaleString()} · <b>AI reading time:</b> ${secs.toFixed(1)}s</p>`,
+    `<p><b>Raw decision reasons:</b></p><pre>${esc(ev.decision.reasons.map((r) => `[${r.severity}] ${r.code}: ${r.message}`).join("\n"))}</pre>`,
+    '<p><button class="btn-sm" id="export">Download the full result (JSON)</button></p>',
+  ].join("");
+}
+
+function highlight(fields) {
+  $$("#result .hl").forEach((el) => el.classList.remove("hl"));
+  let first = null;
+  for (const ref of fields || []) {
+    $$("#result [data-ref]").forEach((el) => {
+      const r = el.dataset.ref;
+      if (r === ref || r.startsWith(`${ref}.`) || r.startsWith(`${ref}[`)) { el.classList.add("hl"); first = first || el; }
+    });
+  }
+  first?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function download(c) {
+  const blob = new Blob([JSON.stringify({ ...c, images: undefined }, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `papertrail-${c.pack}-${c.at}.json` });
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function showPlaceholder() {
+  $("#result").innerHTML = `<div class="placeholder"><div class="ph-icon" aria-hidden="true">🔍</div><h3>Your verdict will appear here</h3>
+    <p>Not sure where to start? Click <strong>Try this example</strong> in the “Demo documents” panel.</p></div>`;
+}
+
+// ---------------------------------------------------------------------------------------------
+// recent checks (this browser tab only)
+// ---------------------------------------------------------------------------------------------
+const recent = [];
+function addRecent(c) {
+  recent.unshift(c);
+  recent.splice(8);
+  renderRecent();
+}
+function renderRecent() {
+  $("#recent").hidden = !recent.length;
+  $("#recent-list").innerHTML = recent.map((c, i) => `<div class="recent-item" data-i="${i}">
+    <span class="badge ${c.evaluation.decision.outcome}">${VERDICT[c.evaluation.decision.outcome].label}</span>
+    <span>${USECASES[c.pack].icon} ${esc(c.scenario ? c.scenario.title : `${USECASES[c.pack].name}: your documents`)}</span>
+    <span class="muted" style="margin-left:auto">${new Date(c.at).toLocaleTimeString()}</span></div>`).join("");
+  $$(".recent-item").forEach((el) => el.addEventListener("click", () => {
+    const c = recent[Number(el.dataset.i)];
+    if (c.pack !== state.pack) selectPack(c.pack);
+    showResult(c);
   }));
 }
 
-function selectPackSilently(name) {
-  state.pack = name;
-  document.querySelectorAll(".pack-card").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.pack === name)));
-}
-
-// --- benchmark + how it works ---------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
+// How it works + accuracy pages
+// ---------------------------------------------------------------------------------------------
 function renderMarkdown(md, base) {
-  const html = window.marked.parse(md);
-  const clean = window.DOMPurify.sanitize(html);
   const div = document.createElement("div");
-  div.innerHTML = clean;
+  div.innerHTML = window.DOMPurify.sanitize(window.marked.parse(md));
   div.querySelectorAll("img").forEach((img) => {
     const src = img.getAttribute("src");
     if (src && !/^(https?:|\/|data:)/.test(src)) img.src = `${base}/${src}`;
@@ -573,35 +692,52 @@ function renderMarkdown(md, base) {
   return div.innerHTML;
 }
 
-async function loadBenchmark() {
-  const el = $("#bench-md");
-  try {
-    let r = await fetch("/benchmark/BENCHMARK.md");
-    if (!r.ok) r = await fetch("/api/benchmark");
-    el.innerHTML = renderMarkdown(await r.text(), "/benchmark");
-  } catch {
-    el.innerHTML = '<p class="hint">Benchmark not available.</p>';
-  }
+function renderHow() {
+  $("#usecase-explain").innerHTML = Object.values(USECASES).map((u) => `<div class="ue">
+    <div style="font-size:26px">${u.icon}</div><h3>${u.name}</h3><p>${u.story}</p>
+    <ul>${u.checks.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join("");
+  $(".engineers", $("#page-how")).addEventListener("toggle", async (e) => {
+    if (!e.target.open || loaded.arch) return;
+    loaded.arch = true;
+    try {
+      const { default: mermaid } = await import(MERMAID_URL);
+      mermaid.initialize({ startOnLoad: false, theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral", securityLevel: "strict" });
+      await mermaid.run({ nodes: [$("#arch")] });
+    } catch { /* the diagram text stays readable */ }
+    try { $("#pack-guide").innerHTML = renderMarkdown(await (await fetch("/docs/ADDING_A_PACK.md")).text(), "/docs"); } catch { /* optional */ }
+  });
 }
 
-async function loadHow() {
-  try {
-    const { default: mermaid } = await import(MERMAID_URL);
-    const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-    mermaid.initialize({ startOnLoad: false, theme: dark ? "dark" : "neutral", securityLevel: "strict" });
-    await mermaid.run({ nodes: [$("#arch")] });
-  } catch { /* diagram source stays readable as text */ }
-  $("#packs-info").innerHTML = state.packs.map((p) => `<div class="card"><strong>${esc(p.title)}</strong>
-    <div class="hint" style="margin:2px 0 0">${p.doc_types.map((d) => esc(d.title)).join(" + ")}</div>
-    <ul>${p.checks.map((c) => `<li>${esc(c.description)}</li>`).join("")}</ul></div>`).join("");
-  try {
-    const r = await fetch("/docs/ADDING_A_PACK.md");
-    $("#pack-guide").innerHTML = renderMarkdown(await r.text(), "/docs");
-  } catch {
-    $("#pack-guide").innerHTML = '<p class="hint">Guide not available.</p>';
-  }
+async function renderAccuracy() {
+  let summary = {};
+  try { summary = await getJSON("/benchmark/summary.json"); } catch { /* shown as unavailable */ }
+  const names = { claims: "Health insurance claims", payables: "Supplier invoices" };
+  $("#acc-cards").innerHTML = ["claims", "payables"].map((pack) => {
+    const r = summary[`${pack}__vlm_llm`];
+    if (!r) return `<section class="acc-pack"><h2>${names[pack]}</h2><p class="muted">Results not available yet.</p></section>`;
+    const ocr = summary[`${pack}__ocr_llm`];
+    const oracle = summary[`${pack}__oracle_llm`];
+    const m = r.detection.micro;
+    const partial = r.n_pairs < r.dataset.total_pairs ? ` (${r.n_pairs} of ${r.dataset.total_pairs} tested so far)` : "";
+    return `<section class="acc-pack"><h2>${USECASES[pack].icon} ${names[pack]}</h2>
+      <p class="sub">${r.n_pairs} document pairs read by the vision AI${partial}.</p>
+      <div class="stats">
+        <div class="stat"><div class="big t-good">${pct(m.recall)}</div><div class="lbl">of planted problems caught</div><div class="exp">How often a hidden mistake was flagged.</div></div>
+        <div class="stat"><div class="big">${pct(m.false_alarm_rate)}</div><div class="lbl">false alarms</div><div class="exp">Clean pairs that were wrongly raised. Lower is better.</div></div>
+        <div class="stat"><div class="big">${pct(r.extraction_f1)}</div><div class="lbl">reading accuracy</div><div class="exp">Field-level F1: how correctly details were read.</div></div>
+        <div class="stat"><div class="big">${pct(r.decision.accuracy)}</div><div class="lbl">right verdict</div><div class="exp">Approve / double-check / stop, exactly as expected.</div></div>
+      </div>
+      ${oracle ? `<p class="acc-note"><b>Where the mistakes come from:</b> given perfectly read documents, the checking logic catches ${pct(oracle.detection.micro.recall)} of problems with ${pct(oracle.detection.micro.false_alarm_rate)} false alarms${
+        oracle.detection.micro.false_alarm_rate <= m.false_alarm_rate && oracle.detection.micro.recall >= m.recall - 0.05
+          ? ", so most remaining errors come from <i>reading</i> the documents, not from the checks" : ""}.</p>` : ""}
+      ${ocr ? `<p class="acc-note"><b>Vision AI vs. text recognition:</b> reading the text first with OCR instead caught ${pct(ocr.detection.micro.recall)} of problems with ${pct(ocr.detection.micro.false_alarm_rate)} false alarms (reading accuracy ${pct(ocr.extraction_f1)}).</p>` : ""}
+    </section>`;
+  }).join("");
+  $(".engineers", $("#page-accuracy")).addEventListener("toggle", async (e) => {
+    if (!e.target.open || loaded.bench) return;
+    loaded.bench = true;
+    try { $("#bench-md").innerHTML = renderMarkdown(await (await fetch("/benchmark/BENCHMARK.md")).text(), "/benchmark"); } catch { $("#bench-md").textContent = "Report not available."; }
+  });
 }
 
-boot().catch((e) => {
-  $("#results").innerHTML = `<div class="empty">Could not start the demo: ${esc(e.message)}</div>`;
-});
+boot().catch((e) => { $("#result").innerHTML = `<div class="placeholder"><h3>Could not start the demo</h3><p>${esc(e.message)}</p></div>`; });

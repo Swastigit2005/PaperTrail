@@ -108,6 +108,15 @@ def main() -> None:
 
     results = ROOT / "bench" / "results"
     n = _copy_tree(results, PUBLIC / "benchmark", ("BENCHMARK.md", "*.png", "failures/*.jpg"))
+    # slim copies of the scored results for the plain-language "How accurate is it?" page
+    summary = {}
+    for f in sorted(results.glob("*__*.json")):
+        r = json.loads(f.read_text())
+        summary[f.stem] = {k: r.get(k) for k in ("pack", "config", "pipeline", "matching", "n_pairs", "dataset",
+                                                 "detection", "decision", "ops", "validation_catch_rate")}
+        summary[f.stem]["detection"] = {"micro": r["detection"]["micro"]}
+        summary[f.stem]["extraction_f1"] = r.get("extraction", {}).get("all", {}).get("normalized", {}).get("f1")
+    (PUBLIC / "benchmark" / "summary.json").write_text(json.dumps(summary, indent=1))
     shutil.copy2(ROOT / "docs" / "ADDING_A_PACK.md", PUBLIC / "docs" / "ADDING_A_PACK.md")
     print(f"public/: {len(packs)} packs, {sum(len(v) for v in index.values())} samples, {n} benchmark files")
 
