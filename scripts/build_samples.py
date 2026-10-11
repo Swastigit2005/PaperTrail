@@ -43,6 +43,9 @@ SAMPLES: dict[str, list[dict[str, Any]]] = {
          "kinds": ["unprescribed_medicine"], "tier": "scanned"},
         {"id": "quantity", "title": "Billed quantity far exceeds the prescribed course",
          "kinds": ["implausible_quantity", "bill_before_prescription"], "tier": "clean"},
+        {"id": "patient", "title": "Bill is for a different patient", "kinds": ["patient_name_mismatch"],
+         "tier": "scanned"},
+        {"id": "arithmetic", "title": "Bill totals do not add up", "kinds": ["arithmetic_error"], "tier": "clean"},
     ],
     "payables": [
         {"id": "clean", "title": "Clean invoice (paraphrased lines)", "kinds": [], "tier": "clean"},
@@ -50,12 +53,19 @@ SAMPLES: dict[str, list[dict[str, Any]]] = {
          "tier": "scanned"},
         {"id": "tax", "title": "Wrong tax split and invalid GSTIN", "kinds": ["wrong_tax_split", "invalid_gstin"],
          "tier": "clean"},
+        {"id": "extra_line", "title": "Invoice bills an item that was never ordered", "kinds": ["line_not_on_po"],
+         "tier": "scanned"},
+        {"id": "vendor", "title": "Different vendor GSTIN and a wrong grand total",
+         "kinds": ["gstin_mismatch", "total_mismatch"], "tier": "clean"},
     ],
     "expenses": [
         {"id": "clean", "title": "Clean meal claim", "extra": 0.0, "tier": "clean"},
         {"id": "inflated", "title": "Claimed amount exceeds the receipt", "extra": 350.0, "tier": "scanned"},
         {"id": "duplicate", "title": "Same receipt claimed again (duplicate)", "extra": 0.0, "tier": "scanned",
          "duplicate_of": "clean"},
+        {"id": "late", "title": "Receipt older than the 30-day policy window", "extra": 0.0, "late": 40,
+         "tier": "clean"},
+        {"id": "clean_2", "title": "Clean team-lunch claim (phone scan)", "extra": 0.0, "tier": "scanned"},
     ],
 }
 RENDER = {"claims": (("prescription", claims.render_prescription), ("bill", claims.render_bill)),
@@ -77,12 +87,13 @@ def render_pack(pack: str, out: Path, rng: random.Random, fake: Faker) -> list[d
                 canvases = {"receipt": canvases["receipt"], "expense_claim": expenses.render_claim(
                     truth["expense_claim"], rng)}
             else:
-                truth = expenses.build_case(rng, fake, spec["extra"])
+                truth = expenses.build_case(rng, fake, spec["extra"], spec.get("late", 0))
                 canvases = {"receipt": expenses.render_receipt(truth["receipt"], rng),
                             "expense_claim": expenses.render_claim(truth["expense_claim"], rng)}
                 receipts[spec["id"]] = (truth, canvases)
             discrepancies = (["claim_amount_mismatch"] if spec["extra"] else []) + \
-                (["duplicate_receipt"] if spec.get("duplicate_of") else [])
+                (["duplicate_receipt"] if spec.get("duplicate_of") else []) + \
+                (["outside_policy_window"] if spec.get("late") else [])
         else:
             module = claims if pack == "claims" else payables
             case = module.build_case(rng, fake, list(spec["kinds"]))
@@ -94,7 +105,10 @@ def render_pack(pack: str, out: Path, rng: random.Random, fake: Faker) -> list[d
         for dt, canvas in canvases.items():
             img, _ = degrade(canvas.img, spec["tier"], rng)
             img.thumbnail((1400, 1400))
-            img.save(folder / f"{dt}.jpg", quality=88)
+            target = folder / f"{dt}.jpg"
+            # never overwrite: scan noise is not bit-reproducible and results are keyed on image bytes
+            if not target.exists():
+                img.save(target, quality=88)
             docs[dt] = f"{dt}.jpg"
         entries.append({"id": spec["id"], "title": spec["title"], "tier": spec["tier"], "documents": docs,
                         "seeded": discrepancies, "duplicate_of": spec.get("duplicate_of"),

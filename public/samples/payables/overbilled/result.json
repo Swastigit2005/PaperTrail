@@ -1,0 +1,497 @@
+{
+ "pack": "payables",
+ "sample": "overbilled",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "invoice": {
+   "doc_type": "invoice",
+   "title": "GST tax invoice",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "seller_name": {
+     "value": "Swaminathan, Sastry and Khatri",
+     "confidence": 0.98,
+     "evidence": "Swaminathan, Sastry and Khatri",
+     "null_reason": null
+    },
+    "seller_gstin": {
+     "value": "02VEJCE3865D2Z2",
+     "confidence": 0.98,
+     "evidence": "02VEJCE3865D2Z2",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Buch Inc",
+     "confidence": 0.98,
+     "evidence": "Buch Inc",
+     "null_reason": null
+    },
+    "buyer_gstin": {
+     "value": "02OEICT9882Z1ZA",
+     "confidence": 0.98,
+     "evidence": "02OEICT9882Z1ZA",
+     "null_reason": null
+    },
+    "invoice_number": {
+     "value": "INV/26-27/0370",
+     "confidence": 0.98,
+     "evidence": "INV/26-27/0370",
+     "null_reason": null
+    },
+    "invoice_date": {
+     "value": "2026-08-13",
+     "confidence": 0.98,
+     "evidence": "13/08/2026",
+     "null_reason": null
+    },
+    "po_reference": {
+     "value": "PO-2026-0123",
+     "confidence": 0.98,
+     "evidence": "PO-2026-0123",
+     "null_reason": null
+    },
+    "place_of_supply": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Dry erase markers x4",
+       "confidence": 0.98,
+       "evidence": "Dry erase markers x4",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9608",
+       "confidence": 0.98,
+       "evidence": "9608",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 24.0,
+       "confidence": 0.98,
+       "evidence": "24",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 140.0,
+       "confidence": 0.98,
+       "evidence": "140.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 3360.0,
+       "confidence": 0.98,
+       "evidence": "3360.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Logitech M235 cordless mouse",
+       "confidence": 0.98,
+       "evidence": "Logitech M235 cordless mouse",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8471",
+       "confidence": 0.98,
+       "evidence": "8471",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 4.0,
+       "confidence": 0.98,
+       "evidence": "4",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 799.73,
+       "confidence": 0.98,
+       "evidence": "799.73",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 3198.92,
+       "confidence": 0.98,
+       "evidence": "3198.92",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     }
+    ],
+    "taxable_value": {
+     "value": 6558.92,
+     "confidence": 0.98,
+     "evidence": "6558.92",
+     "null_reason": null
+    },
+    "cgst": {
+     "value": 590.3,
+     "confidence": 0.98,
+     "evidence": "590.3",
+     "null_reason": null
+    },
+    "sgst": {
+     "value": 590.3,
+     "confidence": 0.98,
+     "evidence": "590.3",
+     "null_reason": null
+    },
+    "igst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "grand_total": {
+     "value": 7739.53,
+     "confidence": 0.98,
+     "evidence": "7739.53",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.45,
+   "usage": {
+    "prompt_tokens": 2122,
+    "completion_tokens": 624,
+    "total_tokens": 2746,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "8e37413c6d26fc1360caea450ad0ecdc0d863be5f88c7bbdcb67441359093280",
+    "dhash": "af3e9d7dbe7e7e7e"
+   }
+  },
+  "purchase_order": {
+   "doc_type": "purchase_order",
+   "title": "purchase order",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "po_number": {
+     "value": "PO-2026-0123",
+     "confidence": 0.98,
+     "evidence": "PO-2026-0123",
+     "null_reason": null
+    },
+    "po_date": {
+     "value": "2026-08-01",
+     "confidence": 0.95,
+     "evidence": "01/08/2026",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Buch Inc",
+     "confidence": 0.98,
+     "evidence": "Buch Inc",
+     "null_reason": null
+    },
+    "vendor_name": {
+     "value": "Swaminathan, Sastry and Khatri",
+     "confidence": 0.98,
+     "evidence": "Swaminathan, Sastry and Khatri",
+     "null_reason": null
+    },
+    "vendor_gstin": {
+     "value": "02VEJCE3865D2Z2",
+     "confidence": 0.95,
+     "evidence": "02VEJCE3865D2Z2",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "LED tube light 20W",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9405",
+       "confidence": 0.95,
+       "evidence": "9405",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 20.0,
+       "confidence": 0.98,
+       "evidence": "20",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 313.0,
+       "confidence": 0.98,
+       "evidence": "313.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 6260.0,
+       "confidence": 0.98,
+       "evidence": "6,260.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Whiteboard markers assorted (set of 4)",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9608",
+       "confidence": 0.95,
+       "evidence": "9608",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 20.0,
+       "confidence": 0.98,
+       "evidence": "20",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 140.0,
+       "confidence": 0.98,
+       "evidence": "140.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 2800.0,
+       "confidence": 0.98,
+       "evidence": "2,800.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Copier paper A4 75 GSM (500 sheets)",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "4802",
+       "confidence": 0.95,
+       "evidence": "4802",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 25.0,
+       "confidence": 0.98,
+       "evidence": "25",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 299.0,
+       "confidence": 0.98,
+       "evidence": "299.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 7475.0,
+       "confidence": 0.98,
+       "evidence": "7,475.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Wireless mouse",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8471",
+       "confidence": 0.95,
+       "evidence": "8471",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 4.0,
+       "confidence": 0.98,
+       "evidence": "4",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 684.0,
+       "confidence": 0.98,
+       "evidence": "684.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 2736.0,
+       "confidence": 0.98,
+       "evidence": "2,736.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Stapler heavy duty",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8472",
+       "confidence": 0.95,
+       "evidence": "8472",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 12.0,
+       "confidence": 0.98,
+       "evidence": "12",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 443.0,
+       "confidence": 0.98,
+       "evidence": "443.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 5316.0,
+       "confidence": 0.98,
+       "evidence": "5,316.00",
+       "null_reason": null
+      }
+     }
+    ],
+    "total": {
+     "value": 587.0,
+     "confidence": 0.9,
+     "evidence": "587.00",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.89,
+   "usage": {
+    "prompt_tokens": 1845,
+    "completion_tokens": 805,
+    "total_tokens": 2650,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "af0b14ad96d4f7f2587aa905c5226ec6d4964b71078a22a9e169ae0dd8b75493",
+    "dhash": "3e5eb59582028181"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [],
+  "crosschecks": [
+   {
+    "code": "gstin_mismatch",
+    "description": "Invoice seller GSTIN equals the PO vendor GSTIN",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "po_reference_mismatch",
+    "description": "Invoice references this PO number",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "line_not_on_po",
+    "description": "Every invoice line is on the PO (description + HSN)",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "qty_over_po",
+    "description": "Billed quantity does not exceed the ordered quantity",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "qty_over_po",
+      "severity": "hard",
+      "message": "invoice bills 24 of 'Whiteboard markers assorted (set of 4)', PO ordered 20",
+      "fields": [
+       "invoice.line_items[0].qty",
+       "purchase_order.line_items[1].qty"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   },
+   {
+    "code": "rate_above_po",
+    "description": "Invoice rate within 2% of the PO rate",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "rate_above_po",
+      "severity": "hard",
+      "message": "invoice rate 799.73 for 'Logitech M235 cordless mouse' is 16.9% above the PO rate 684.00",
+      "fields": [
+       "invoice.line_items[1].rate",
+       "purchase_order.line_items[3].rate"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "qty_over_po",
+     "severity": "hard",
+     "message": "invoice bills 24 of 'Whiteboard markers assorted (set of 4)', PO ordered 20",
+     "fields": [
+      "invoice.line_items[0].qty",
+      "purchase_order.line_items[1].qty"
+     ]
+    },
+    {
+     "code": "rate_above_po",
+     "severity": "hard",
+     "message": "invoice rate 799.73 for 'Logitech M235 cordless mouse' is 16.9% above the PO rate 684.00",
+     "fields": [
+      "invoice.line_items[1].rate",
+      "purchase_order.line_items[3].rate"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

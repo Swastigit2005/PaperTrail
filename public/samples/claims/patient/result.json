@@ -1,0 +1,491 @@
+{
+ "pack": "claims",
+ "sample": "patient",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "prescription": {
+   "doc_type": "prescription",
+   "title": "medical prescription",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "doctor_name": {
+     "value": "Dr. Mekhala Krishnamurthy",
+     "confidence": 0.98,
+     "evidence": "Dr. Mekhala Krishnamurthy",
+     "null_reason": null
+    },
+    "registration_number": {
+     "value": "KMC 78147",
+     "confidence": 0.95,
+     "evidence": "KMC 78147",
+     "null_reason": null
+    },
+    "clinic_name": {
+     "value": "Puri Clinic",
+     "confidence": 0.98,
+     "evidence": "Puri Clinic",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Naksh Kade",
+     "confidence": 0.98,
+     "evidence": "Naksh Kade",
+     "null_reason": null
+    },
+    "patient_age": {
+     "value": "28 Y",
+     "confidence": 0.98,
+     "evidence": "28 Y",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-06-23",
+     "confidence": 0.98,
+     "evidence": "23-06-2026",
+     "null_reason": null
+    },
+    "diagnosis": {
+     "value": "Bronchitis",
+     "confidence": 0.98,
+     "evidence": "Bronchitis",
+     "null_reason": null
+    },
+    "medicines": [
+     {
+      "name": {
+       "value": "Omez 20",
+       "confidence": 0.95,
+       "evidence": "Omez 20",
+       "null_reason": null
+      },
+      "strength": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "TDS",
+       "confidence": 0.98,
+       "evidence": "TDS",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "5 days",
+       "confidence": 0.98,
+       "evidence": "5 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Glycomet 500",
+       "confidence": 0.95,
+       "evidence": "Glycomet 500",
+       "null_reason": null
+      },
+      "strength": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.98,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "0-0-1",
+       "confidence": 0.98,
+       "evidence": "0-0-1",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "7 days",
+       "confidence": 0.98,
+       "evidence": "7 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Telmisartan 40 mg",
+       "confidence": 0.95,
+       "evidence": "Telmisartan 40 mg",
+       "null_reason": null
+      },
+      "strength": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "BD",
+       "confidence": 0.98,
+       "evidence": "BD",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "2 weeks",
+       "confidence": 0.98,
+       "evidence": "2 weeks",
+       "null_reason": null
+      }
+     }
+    ]
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.98,
+   "usage": {
+    "prompt_tokens": 2569,
+    "completion_tokens": 514,
+    "total_tokens": 3083,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "85652b407423741a63d3efc39a9fd075fa96d5435e33d061fca95d30866d3c60",
+    "dhash": "848e1dcac0810084"
+   }
+  },
+  "bill": {
+   "doc_type": "bill",
+   "title": "pharmacy bill",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "pharmacy_name": {
+     "value": "VARGHESE MEDICALS",
+     "confidence": 0.98,
+     "evidence": "VARGHESE MEDICALS",
+     "null_reason": null
+    },
+    "bill_number": {
+     "value": "CB-33370",
+     "confidence": 0.98,
+     "evidence": "CB-33370",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Priya Parikh",
+     "confidence": 0.98,
+     "evidence": "Priya Parikh",
+     "null_reason": null
+    },
+    "doctor_name": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "date": {
+     "value": "2026-06-25",
+     "confidence": 0.98,
+     "evidence": "25/06/2026",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "medicine": {
+       "value": "Omez 20 Cap",
+       "confidence": 0.98,
+       "evidence": "Omez 20 Cap",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B44424",
+       "confidence": 0.95,
+       "evidence": "B44424",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 20.0,
+       "confidence": 0.98,
+       "evidence": "20",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 5.06,
+       "confidence": 0.98,
+       "evidence": "5.06",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 101.2,
+       "confidence": 0.98,
+       "evidence": "101.2",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Glycomet 500 Tab",
+       "confidence": 0.98,
+       "evidence": "Glycomet 500 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B53517",
+       "confidence": 0.95,
+       "evidence": "B53517",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 7.0,
+       "confidence": 0.98,
+       "evidence": "7",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 2.86,
+       "confidence": 0.98,
+       "evidence": "2.86",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 20.02,
+       "confidence": 0.98,
+       "evidence": "20.02",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Telmisartan 40 mg Tab",
+       "confidence": 0.98,
+       "evidence": "Telmisartan 40 mg Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B60711",
+       "confidence": 0.95,
+       "evidence": "B60711",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 30.0,
+       "confidence": 0.98,
+       "evidence": "30",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8.3,
+       "confidence": 0.98,
+       "evidence": "8.3",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 249.0,
+       "confidence": 0.98,
+       "evidence": "249.0",
+       "null_reason": null
+      }
+     }
+    ],
+    "discount": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "total": {
+     "value": 370.22,
+     "confidence": 0.98,
+     "evidence": "370.22",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.84,
+   "usage": {
+    "prompt_tokens": 2423,
+    "completion_tokens": 523,
+    "total_tokens": 2946,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "0b5649545d0977443c09cae97c01e30a1097ef54dbbb0c22862399d79908a965",
+    "dhash": "69ce9f0582000001"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[0].name 'Omez 20' is a known brand of omeprazole",
+    "fields": [
+     "prescription.medicines[0].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "omeprazole"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[1].name 'Glycomet 500' is a known brand of metformin",
+    "fields": [
+     "prescription.medicines[1].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "metformin"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[2].name 'Telmisartan 40 mg' found in RxNorm (RXCUI 73494)",
+    "fields": [
+     "prescription.medicines[2].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "73494",
+     "ingredients": [
+      "telmisartan"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[0].medicine 'Omez 20 Cap' is a known brand of omeprazole",
+    "fields": [
+     "bill.line_items[0].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "omeprazole"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[1].medicine 'Glycomet 500 Tab' is a known brand of metformin",
+    "fields": [
+     "bill.line_items[1].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "metformin"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[2].medicine 'Telmisartan 40 mg Tab' found in RxNorm (RXCUI 73494)",
+    "fields": [
+     "bill.line_items[2].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "73494",
+     "ingredients": [
+      "telmisartan"
+     ]
+    }
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "unprescribed_medicine",
+    "description": "Every billed medicine was prescribed",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "patient_name_mismatch",
+    "description": "Patient name matches on both documents",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "patient_name_mismatch",
+      "severity": "hard",
+      "message": "bill patient 'Priya Parikh' vs prescription patient 'Naksh Kade'",
+      "fields": [
+       "bill.patient_name",
+       "prescription.patient_name"
+      ],
+      "unverifiable": false,
+      "detail": {
+       "similarity": 27.27272727272727
+      }
+     }
+    ]
+   },
+   {
+    "code": "bill_before_prescription",
+    "description": "Bill dated on/after the prescription, within 30 days",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "implausible_quantity",
+    "description": "Billed quantity fits dose x frequency x duration",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "patient_name_mismatch",
+     "severity": "hard",
+     "message": "bill patient 'Priya Parikh' vs prescription patient 'Naksh Kade'",
+     "fields": [
+      "bill.patient_name",
+      "prescription.patient_name"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

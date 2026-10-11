@@ -3,7 +3,8 @@
     python -m bench.generate_synthetic --seed 7 --claims 60 --payables 60
 
 Writes ``bench/data/synthetic/<pack>/manifest.json`` plus one folder of images per pair.
-Reproducible: the same seed produces the same documents, truth and images.
+Reproducible: the same seed produces the same documents, truth and layouts. Scan noise (Pillow's
+effect_noise) is not seeded, so scanned/hard-tier pixels vary slightly between generations.
 All names, companies, GSTINs and numbers are fake.
 """
 

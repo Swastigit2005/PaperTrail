@@ -1,0 +1,494 @@
+{
+ "pack": "claims",
+ "sample": "arithmetic",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "prescription": {
+   "doc_type": "prescription",
+   "title": "medical prescription",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "doctor_name": {
+     "value": "Dr. Gaurav Yogi",
+     "confidence": 0.98,
+     "evidence": "Dr. Gaurav Yogi",
+     "null_reason": null
+    },
+    "registration_number": {
+     "value": "KMC 93826",
+     "confidence": 0.95,
+     "evidence": "KMC 93826",
+     "null_reason": null
+    },
+    "clinic_name": {
+     "value": "Master Health Centre",
+     "confidence": 0.98,
+     "evidence": "Master Health Centre",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Brinda Oak",
+     "confidence": 0.98,
+     "evidence": "Brinda Oak",
+     "null_reason": null
+    },
+    "patient_age": {
+     "value": "63 Y",
+     "confidence": 0.98,
+     "evidence": "63 Y",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-09-04",
+     "confidence": 0.95,
+     "evidence": "04/09/2026",
+     "null_reason": null
+    },
+    "diagnosis": {
+     "value": "Bronchitis",
+     "confidence": 0.98,
+     "evidence": "Bronchitis",
+     "null_reason": null
+    },
+    "medicines": [
+     {
+      "name": {
+       "value": "Pan 40",
+       "confidence": 0.95,
+       "evidence": "Pan 40",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "40",
+       "confidence": 0.9,
+       "evidence": "40",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.8,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "1-0-0",
+       "confidence": 0.95,
+       "evidence": "1-0-0",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "2 weeks",
+       "confidence": 0.95,
+       "evidence": "2 weeks",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Novamox 500",
+       "confidence": 0.95,
+       "evidence": "Novamox 500",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "500",
+       "confidence": 0.9,
+       "evidence": "500",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.8,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "1-0-0",
+       "confidence": 0.95,
+       "evidence": "1-0-0",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "5 days",
+       "confidence": 0.95,
+       "evidence": "5 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Montair 10",
+       "confidence": 0.95,
+       "evidence": "Montair 10",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "10",
+       "confidence": 0.9,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.95,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "0-0-1",
+       "confidence": 0.95,
+       "evidence": "0-0-1",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "3 days",
+       "confidence": 0.95,
+       "evidence": "3 days",
+       "null_reason": null
+      }
+     }
+    ]
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.58,
+   "usage": {
+    "prompt_tokens": 2569,
+    "completion_tokens": 497,
+    "total_tokens": 3066,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "1a389ce05104875bf837347b8ec2e742af0f92593447f82dc1af994a6d247a1a",
+    "dhash": "849c1180c8801404"
+   }
+  },
+  "bill": {
+   "doc_type": "bill",
+   "title": "pharmacy bill",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "pharmacy_name": {
+     "value": "MANI PHARMACY",
+     "confidence": 0.98,
+     "evidence": "MANI PHARMACY",
+     "null_reason": null
+    },
+    "bill_number": {
+     "value": "B-54203",
+     "confidence": 0.98,
+     "evidence": "B-54203",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Brinda Oak",
+     "confidence": 0.98,
+     "evidence": "Brinda Oak",
+     "null_reason": null
+    },
+    "doctor_name": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "date": {
+     "value": "2026-09-04",
+     "confidence": 0.95,
+     "evidence": "04/09/2026",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "medicine": {
+       "value": "Novamox 500 Cap",
+       "confidence": 0.98,
+       "evidence": "Novamox 500 Cap",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B59419",
+       "confidence": 0.95,
+       "evidence": "B59419",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.98,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 7.91,
+       "confidence": 0.98,
+       "evidence": "7.91",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 79.1,
+       "confidence": 0.98,
+       "evidence": "79.1",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Montelukast Tab",
+       "confidence": 0.98,
+       "evidence": "Montelukast Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B54496",
+       "confidence": 0.95,
+       "evidence": "B54496",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 3.0,
+       "confidence": 0.98,
+       "evidence": "3",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 16.55,
+       "confidence": 0.98,
+       "evidence": "16.55",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 49.65,
+       "confidence": 0.98,
+       "evidence": "49.65",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Pantocid 40 Tab",
+       "confidence": 0.98,
+       "evidence": "Pantocid 40 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B91202",
+       "confidence": 0.95,
+       "evidence": "B91202",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 14.0,
+       "confidence": 0.98,
+       "evidence": "14",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 7.48,
+       "confidence": 0.98,
+       "evidence": "7.48",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 104.72,
+       "confidence": 0.98,
+       "evidence": "104.72",
+       "null_reason": null
+      }
+     }
+    ],
+    "discount": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "total": {
+     "value": 524.47,
+     "confidence": 0.98,
+     "evidence": "524.47",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.46,
+   "usage": {
+    "prompt_tokens": 2423,
+    "completion_tokens": 515,
+    "total_tokens": 2938,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "9556e8cb99c9d116de2d8ea2fed5e082b2903f3a4fed6b6658e8338f7f74ef8b",
+    "dhash": "e0cc190d82e20400"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[0].name 'Pan 40' is a known brand of pantoprazole",
+    "fields": [
+     "prescription.medicines[0].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "pantoprazole"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[1].name 'Novamox 500' is a known brand of amoxicillin",
+    "fields": [
+     "prescription.medicines[1].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "amoxicillin"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[2].name 'Montair 10' is a known brand of montelukast",
+    "fields": [
+     "prescription.medicines[2].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "montelukast"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[0].medicine 'Novamox 500 Cap' is a known brand of amoxicillin",
+    "fields": [
+     "bill.line_items[0].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "amoxicillin"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[1].medicine 'Montelukast Tab' found in RxNorm (RXCUI 88249)",
+    "fields": [
+     "bill.line_items[1].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "88249",
+     "ingredients": [
+      "montelukast"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[2].medicine 'Pantocid 40 Tab' is a known brand of pantoprazole",
+    "fields": [
+     "bill.line_items[2].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "pantoprazole"
+     ]
+    }
+   },
+   {
+    "code": "arithmetic_error",
+    "severity": "hard",
+    "message": "bill.total 524.47 does not equal the sum of its parts 233.47",
+    "fields": [
+     "bill.total",
+     "bill.line_items[0].amount",
+     "bill.line_items[1].amount",
+     "bill.line_items[2].amount"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "expected": 233.47,
+     "found": 524.47
+    }
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "unprescribed_medicine",
+    "description": "Every billed medicine was prescribed",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "patient_name_mismatch",
+    "description": "Patient name matches on both documents",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "bill_before_prescription",
+    "description": "Bill dated on/after the prescription, within 30 days",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "implausible_quantity",
+    "description": "Billed quantity fits dose x frequency x duration",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "arithmetic_error",
+     "severity": "hard",
+     "message": "bill.total 524.47 does not equal the sum of its parts 233.47",
+     "fields": [
+      "bill.total",
+      "bill.line_items[0].amount",
+      "bill.line_items[1].amount",
+      "bill.line_items[2].amount"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

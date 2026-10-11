@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 import time
 from datetime import date
@@ -133,6 +134,33 @@ def run_pair(pair: dict[str, Any], pack: Pack, config: str, ctx: CheckContext, e
     return record
 
 
+LEDGER = ROOT / "logs" / "token_ledger.jsonl"
+
+
+def ledger_used(model: str, window_s: float = 86400) -> int:
+    """Tokens this benchmark billed for ``model`` in the last 24h (Groq's daily limit is a rolling window)."""
+    if not LEDGER.exists():
+        return 0
+    now = time.time()
+    total = 0
+    for line in LEDGER.read_text().splitlines():
+        try:
+            e = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if e.get("model") == model and now - e.get("t", 0) < window_s:
+            total += int(e.get("tokens", 0))
+    return total
+
+
+def ledger_add(model: str, tokens: int) -> None:
+    """Record billed tokens for the rolling budget."""
+    if tokens:
+        LEDGER.parent.mkdir(parents=True, exist_ok=True)
+        with LEDGER.open("a") as fh:
+            fh.write(json.dumps({"t": time.time(), "model": model, "tokens": tokens}) + "\n")
+
+
 def run(pack_name: str, config: str, limit: int | None, tiers: set[str] | None) -> Path:
     """Run (or resume) one config; returns the JSONL path."""
     spec = CONFIGS[config]
@@ -155,8 +183,15 @@ def run(pack_name: str, config: str, limit: int | None, tiers: set[str] | None) 
     matcher = Matcher(mode=spec["matching"], llm=llm, model=settings.match_model)
     rxnorm = RxNormClient(cache_dir=settings.cache_dir) if pack_name == "claims" else None
     today = date.fromisoformat(manifest["reference_date"]) if manifest.get("reference_date") else date.today()
+    budget = int(os.getenv("BENCH_DAILY_TOKEN_BUDGET", "110000"))
+    ledger_model = spec["pipeline"] if spec["pipeline"] != "oracle" else "match"
     with out.open("a") as fh:
         for i, pair in enumerate(todo, 1):
+            used = ledger_used(ledger_model)
+            if budget and used >= budget:
+                print(f"\nDaily benchmark budget reached ({used:,} of {budget:,} tokens in the last 24h for "
+                      f"'{ledger_model}'); the rest of the quota is left for the live demo. Resume later.")
+                sys.exit(3)
             ctx = CheckContext(matcher=matcher, case_id=pair["pair_id"], today=today,
                                services={"rxnorm": rxnorm} if rxnorm else {})
             record = None
@@ -177,6 +212,7 @@ def run(pack_name: str, config: str, limit: int | None, tiers: set[str] | None) 
                 continue
             fh.write(json.dumps(record) + "\n")
             fh.flush()
+            ledger_add(ledger_model, record["usage"].get("billed_tokens", 0))
             print(f"  {i}/{len(todo)} {pair['pair_id']} {pair['tier']:<7} expected={record['expected_outcome']:<7} "
                   f"got={record['decision']:<12} {record['status']} tokens={record['usage'].get('total_tokens', 0)}")
     return out

@@ -1,0 +1,587 @@
+{
+ "pack": "payables",
+ "sample": "vendor",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "invoice": {
+   "doc_type": "invoice",
+   "title": "GST tax invoice",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "seller_name": {
+     "value": "Varghese-Bose",
+     "confidence": 0.98,
+     "evidence": "Varghese-Bose",
+     "null_reason": null
+    },
+    "seller_gstin": {
+     "value": "08ZHVCG2901R2ZQ",
+     "confidence": 0.98,
+     "evidence": "08ZHVCG2901R2ZQ",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Oak, Chakraborty and Yogi",
+     "confidence": 0.98,
+     "evidence": "Oak, Chakraborty and Yogi",
+     "null_reason": null
+    },
+    "buyer_gstin": {
+     "value": "17TOOCI8853R1Z1",
+     "confidence": 0.98,
+     "evidence": "17TOOCI8853R1Z1",
+     "null_reason": null
+    },
+    "invoice_number": {
+     "value": "INV/26-27/3551",
+     "confidence": 0.98,
+     "evidence": "INV/26-27/3551",
+     "null_reason": null
+    },
+    "invoice_date": {
+     "value": "2026-05-03",
+     "confidence": 0.98,
+     "evidence": "03/05/2026",
+     "null_reason": null
+    },
+    "po_reference": {
+     "value": "PO/HYD/26-27/146",
+     "confidence": 0.98,
+     "evidence": "PO/HYD/26-27/146",
+     "null_reason": null
+    },
+    "place_of_supply": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Lever arch box file x10",
+       "confidence": 0.98,
+       "evidence": "Lever arch box file x10",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "4820",
+       "confidence": 0.98,
+       "evidence": "4820",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 5.0,
+       "confidence": 0.98,
+       "evidence": "5",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 153.87,
+       "confidence": 0.98,
+       "evidence": "153.87",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 769.35,
+       "confidence": 0.98,
+       "evidence": "769.35",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Dell KB216 keyboard",
+       "confidence": 0.98,
+       "evidence": "Dell KB216 keyboard",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8471",
+       "confidence": 0.98,
+       "evidence": "8471",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 2.0,
+       "confidence": 0.98,
+       "evidence": "2",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 689.0,
+       "confidence": 0.98,
+       "evidence": "689.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 1378.0,
+       "confidence": 0.98,
+       "evidence": "1378.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Sanitiser 5L jerry can",
+       "confidence": 0.98,
+       "evidence": "Sanitiser 5L jerry can",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "3808",
+       "confidence": 0.98,
+       "evidence": "3808",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 1.0,
+       "confidence": 0.98,
+       "evidence": "1",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 869.82,
+       "confidence": 0.98,
+       "evidence": "869.82",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 869.82,
+       "confidence": 0.98,
+       "evidence": "869.82",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "20 W LED batten",
+       "confidence": 0.98,
+       "evidence": "20 W LED batten",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9405",
+       "confidence": 0.98,
+       "evidence": "9405",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 2.0,
+       "confidence": 0.98,
+       "evidence": "2",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 260.0,
+       "confidence": 0.98,
+       "evidence": "260.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 520.0,
+       "confidence": 0.98,
+       "evidence": "520.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     }
+    ],
+    "taxable_value": {
+     "value": 3537.17,
+     "confidence": 0.98,
+     "evidence": "3537.17",
+     "null_reason": null
+    },
+    "cgst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "sgst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "igst": {
+     "value": 636.69,
+     "confidence": 0.98,
+     "evidence": "636.69",
+     "null_reason": null
+    },
+    "grand_total": {
+     "value": -492.14,
+     "confidence": 0.98,
+     "evidence": "-492.14",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.17,
+   "usage": {
+    "prompt_tokens": 2122,
+    "completion_tokens": 896,
+    "total_tokens": 3018,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "9b3ecf4bc3cc2d254f7a5e7083c17b399c21a49ed6d9753adf8c98ec31b0b17d",
+    "dhash": "8b96959d8f820000"
+   }
+  },
+  "purchase_order": {
+   "doc_type": "purchase_order",
+   "title": "purchase order",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "po_number": {
+     "value": "PO/HYD/26-27/146",
+     "confidence": 0.98,
+     "evidence": "PO/HYD/26-27/146",
+     "null_reason": null
+    },
+    "po_date": {
+     "value": "2026-04-21",
+     "confidence": 0.98,
+     "evidence": "21/04/2026",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Oak, Chakraborty and Yogi",
+     "confidence": 0.98,
+     "evidence": "Oak, Chakraborty and Yogi",
+     "null_reason": null
+    },
+    "vendor_name": {
+     "value": "Varghese-Bose",
+     "confidence": 0.98,
+     "evidence": "Varghese-Bose",
+     "null_reason": null
+    },
+    "vendor_gstin": {
+     "value": "08EAEC54672U1Z9",
+     "confidence": 0.98,
+     "evidence": "08EAEC54672U1Z9",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Box files (pack of 10)",
+       "confidence": 0.98,
+       "evidence": "Box files (pack of 10)",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "4820",
+       "confidence": 0.98,
+       "evidence": "4820",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 5.0,
+       "confidence": 0.98,
+       "evidence": "5",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 161.0,
+       "confidence": 0.98,
+       "evidence": "161.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 805.0,
+       "confidence": 0.98,
+       "evidence": "805.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "USB keyboard",
+       "confidence": 0.98,
+       "evidence": "USB keyboard",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8471",
+       "confidence": 0.98,
+       "evidence": "8471",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 4.0,
+       "confidence": 0.98,
+       "evidence": "4",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 689.0,
+       "confidence": 0.98,
+       "evidence": "689.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 2756.0,
+       "confidence": 0.98,
+       "evidence": "2,756.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Hand sanitizer 5 litre can",
+       "confidence": 0.98,
+       "evidence": "Hand sanitizer 5 litre can",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "3808",
+       "confidence": 0.98,
+       "evidence": "3808",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 1.0,
+       "confidence": 0.98,
+       "evidence": "1",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 913.0,
+       "confidence": 0.98,
+       "evidence": "913.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 913.0,
+       "confidence": 0.98,
+       "evidence": "913.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "LED tube light 20W",
+       "confidence": 0.98,
+       "evidence": "LED tube light 20W",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9405",
+       "confidence": 0.98,
+       "evidence": "9405",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 2.0,
+       "confidence": 0.98,
+       "evidence": "2",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 260.0,
+       "confidence": 0.98,
+       "evidence": "260.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 520.0,
+       "confidence": 0.98,
+       "evidence": "520.00",
+       "null_reason": null
+      }
+     }
+    ],
+    "total": {
+     "value": 4994.0,
+     "confidence": 0.98,
+     "evidence": "4,994.00",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.95,
+   "usage": {
+    "prompt_tokens": 1845,
+    "completion_tokens": 722,
+    "total_tokens": 2567,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "a433083581e423fcdffe23c80a5ac23cd4d557c07fa624a155092d556b484840",
+    "dhash": "8602959586020000"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "total_mismatch",
+    "severity": "hard",
+    "message": "invoice.grand_total -492.14 does not equal the sum of its parts 4,173.86",
+    "fields": [
+     "invoice.grand_total",
+     "invoice.taxable_value",
+     "invoice.igst"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "expected": 4173.86,
+     "found": -492.14
+    }
+   },
+   {
+    "code": "invalid_gstin",
+    "severity": "hard",
+    "message": "purchase_order.vendor_gstin '08EAEC54672U1Z9' is not a valid GSTIN: does not match the GSTIN format",
+    "fields": [
+     "purchase_order.vendor_gstin"
+    ],
+    "unverifiable": false,
+    "detail": {}
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "gstin_mismatch",
+    "description": "Invoice seller GSTIN equals the PO vendor GSTIN",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "gstin_mismatch",
+      "severity": "hard",
+      "message": "invoice seller GSTIN 08ZHVCG2901R2ZQ differs from the PO vendor GSTIN 08EAEC54672U1Z9",
+      "fields": [
+       "invoice.seller_gstin",
+       "purchase_order.vendor_gstin"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   },
+   {
+    "code": "po_reference_mismatch",
+    "description": "Invoice references this PO number",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "line_not_on_po",
+    "description": "Every invoice line is on the PO (description + HSN)",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "qty_over_po",
+    "description": "Billed quantity does not exceed the ordered quantity",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "rate_above_po",
+    "description": "Invoice rate within 2% of the PO rate",
+    "status": "pass",
+    "findings": [
+     {
+      "code": "rate_below_po",
+      "severity": "info",
+      "message": "invoice line 0 rate is below the PO rate",
+      "fields": [
+       "invoice.line_items[0].rate",
+       "purchase_order.line_items[0].rate"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     },
+     {
+      "code": "rate_below_po",
+      "severity": "info",
+      "message": "invoice line 2 rate is below the PO rate",
+      "fields": [
+       "invoice.line_items[2].rate",
+       "purchase_order.line_items[2].rate"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "total_mismatch",
+     "severity": "hard",
+     "message": "invoice.grand_total -492.14 does not equal the sum of its parts 4,173.86",
+     "fields": [
+      "invoice.grand_total",
+      "invoice.taxable_value",
+      "invoice.igst"
+     ]
+    },
+    {
+     "code": "invalid_gstin",
+     "severity": "hard",
+     "message": "purchase_order.vendor_gstin '08EAEC54672U1Z9' is not a valid GSTIN: does not match the GSTIN format",
+     "fields": [
+      "purchase_order.vendor_gstin"
+     ]
+    },
+    {
+     "code": "gstin_mismatch",
+     "severity": "hard",
+     "message": "invoice seller GSTIN 08ZHVCG2901R2ZQ differs from the PO vendor GSTIN 08EAEC54672U1Z9",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

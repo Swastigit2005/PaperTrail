@@ -104,3 +104,45 @@ def test_ip_cap(client, monkeypatch, tmp_path):
     assert client.post("/api/extract", data={"pack": "expenses", "doc_type": "receipt"}, files=files).status_code == 200
     files = {"file": ("r.png", png_bytes(), "image/png")}
     assert client.post("/api/extract", data={"pack": "expenses", "doc_type": "receipt"}, files=files).status_code == 429
+
+
+def _model_router(busy_models, reply):
+    """Fake API: models in ``busy_models`` answer 429, others reply with ``reply``."""
+    import json as _json
+
+    def respond(params):
+        if params["model"] in busy_models:
+            raise RateLimited("quota", retry_after=60)
+        return _json.dumps(reply)
+
+    return respond
+
+
+def test_vision_busy_falls_back_to_text_model_with_ocr_text(client, tmp_path):
+    api._state["llm"] = fake_llm(_model_router({"vision-a"}, RECEIPT_JSON), tmp_path)
+    form = {"pack": "expenses", "doc_type": "receipt", "ocr_text": "CAFE AROMA total 180"}
+    r = client.post("/api/extract", data=form, files={"file": ("r.png", png_bytes(), "image/png")})
+    assert r.status_code == 200, r.text
+    assert r.json()["model"] == "text-model" and "Fallback used" in r.json()["notes"][0]
+
+
+def test_text_model_busy_falls_back_to_match_model(client, tmp_path):
+    api._state["llm"] = fake_llm(_model_router({"vision-a", "text-model"}, RECEIPT_JSON), tmp_path)
+    r = client.post("/api/extract", data={"pack": "expenses", "doc_type": "receipt", "pipeline": "ocr+llm",
+                                          "ocr_text": "CAFE AROMA total 180"},
+                    files={"file": ("r.png", png_bytes(), "image/png")})
+    assert r.status_code == 200 and r.json()["model"] == "match-model"
+
+
+def test_vision_busy_without_ocr_text_asks_browser_for_ocr(client, tmp_path):
+    api._state["llm"] = fake_llm(_model_router({"vision-a"}, RECEIPT_JSON), tmp_path)
+    r = client.post("/api/extract", data={"pack": "expenses", "doc_type": "receipt"},
+                    files={"file": ("r.png", png_bytes(), "image/png")})
+    assert r.status_code == 429 and r.json()["fallback"] == "ocr"
+
+
+def test_every_model_busy_is_friendly(client, tmp_path):
+    api._state["llm"] = fake_llm(_model_router({"vision-a", "text-model", "match-model"}, RECEIPT_JSON), tmp_path)
+    r = client.post("/api/extract", data={"pack": "expenses", "doc_type": "receipt", "ocr_text": "x"},
+                    files={"file": ("r.png", png_bytes(), "image/png")})
+    assert r.status_code == 429 and r.json()["fallback"] is None and "example documents" in r.json()["message"]

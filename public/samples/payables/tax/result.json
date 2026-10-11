@@ -1,0 +1,416 @@
+{
+ "pack": "payables",
+ "sample": "tax",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "invoice": {
+   "doc_type": "invoice",
+   "title": "GST tax invoice",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "seller_name": {
+     "value": "Chaudhari-Sengupta",
+     "confidence": 0.98,
+     "evidence": "Chaudhari-Sengupta",
+     "null_reason": null
+    },
+    "seller_gstin": {
+     "value": "13MKACQ7714S1Z2",
+     "confidence": 0.98,
+     "evidence": "13MKACQ7714S1Z2",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Swaminathan Ltd",
+     "confidence": 0.98,
+     "evidence": "Swaminathan Ltd",
+     "null_reason": null
+    },
+    "buyer_gstin": {
+     "value": "13LVKCX3648W1ZN",
+     "confidence": 0.98,
+     "evidence": "13LVKCX3648W1ZN",
+     "null_reason": null
+    },
+    "invoice_number": {
+     "value": "INV/26-27/2491",
+     "confidence": 0.98,
+     "evidence": "INV/26-27/2491",
+     "null_reason": null
+    },
+    "invoice_date": {
+     "value": "2026-05-24",
+     "confidence": 0.98,
+     "evidence": "24.05.2026",
+     "null_reason": null
+    },
+    "po_reference": {
+     "value": "PO/BLR/26-27/397",
+     "confidence": 0.98,
+     "evidence": "PO/BLR/26-27/397",
+     "null_reason": null
+    },
+    "place_of_supply": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Sugar (5 KG)",
+       "confidence": 0.98,
+       "evidence": "Sugar (5 KG)",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "1701",
+       "confidence": 0.98,
+       "evidence": "1701",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 1.0,
+       "confidence": 0.98,
+       "evidence": "1",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 266.93,
+       "confidence": 0.98,
+       "evidence": "266.93",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 266.93,
+       "confidence": 0.98,
+       "evidence": "266.93",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 5.0,
+       "confidence": 0.98,
+       "evidence": "5",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Camlin WB marker 4 colour set",
+       "confidence": 0.98,
+       "evidence": "Camlin WB marker 4 colour set",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9608",
+       "confidence": 0.98,
+       "evidence": "9608",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 50.0,
+       "confidence": 0.98,
+       "evidence": "50",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 125.0,
+       "confidence": 0.98,
+       "evidence": "125.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 6250.0,
+       "confidence": 0.98,
+       "evidence": "6250.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     }
+    ],
+    "taxable_value": {
+     "value": 6516.93,
+     "confidence": 0.98,
+     "evidence": "6516.93",
+     "null_reason": null
+    },
+    "cgst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "sgst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "igst": {
+     "value": 1138.35,
+     "confidence": 0.98,
+     "evidence": "1138.35",
+     "null_reason": null
+    },
+    "grand_total": {
+     "value": 7655.28,
+     "confidence": 0.98,
+     "evidence": "7655.28",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.4,
+   "usage": {
+    "prompt_tokens": 2122,
+    "completion_tokens": 629,
+    "total_tokens": 2751,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "96dd900e0fc335d95a09294089f3ea12670215c7379839d5f892f3d0e9a2131b",
+    "dhash": "9396958d86420000"
+   }
+  },
+  "purchase_order": {
+   "doc_type": "purchase_order",
+   "title": "purchase order",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "po_number": {
+     "value": "PO/BLR/26-27/397",
+     "confidence": 0.98,
+     "evidence": "PO/BLR/26-27/397",
+     "null_reason": null
+    },
+    "po_date": {
+     "value": "2026-05-11",
+     "confidence": 0.95,
+     "evidence": "11/05/2026",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Swaminathan Ltd",
+     "confidence": 0.98,
+     "evidence": "Swaminathan Ltd",
+     "null_reason": null
+    },
+    "vendor_name": {
+     "value": "Chaudhari-Sengupta",
+     "confidence": 0.98,
+     "evidence": "Chaudhari-Sengupta",
+     "null_reason": null
+    },
+    "vendor_gstin": {
+     "value": "13MKACQ7714S1Z2",
+     "confidence": 0.98,
+     "evidence": "13MKACQ7714S1Z2",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Sugar 5 kg",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "1701",
+       "confidence": 0.95,
+       "evidence": "1701",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 1.0,
+       "confidence": 0.98,
+       "evidence": "1",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 273.0,
+       "confidence": 0.98,
+       "evidence": "273.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 273.0,
+       "confidence": 0.98,
+       "evidence": "273.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Whiteboard markers assorted (set of 4)",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9608",
+       "confidence": 0.95,
+       "evidence": "9608",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 50.0,
+       "confidence": 0.98,
+       "evidence": "50",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 125.0,
+       "confidence": 0.98,
+       "evidence": "125.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 6250.0,
+       "confidence": 0.98,
+       "evidence": "6,250.00",
+       "null_reason": null
+      }
+     }
+    ],
+    "total": {
+     "value": 6523.0,
+     "confidence": 0.98,
+     "evidence": "523.00",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.45,
+   "usage": {
+    "prompt_tokens": 1845,
+    "completion_tokens": 434,
+    "total_tokens": 2279,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "98255420023a77c72da42830299483f5a982beae7981604f7bf21f6a9c8d9f68",
+    "dhash": "9e0e9586d2020000"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "invalid_gstin",
+    "severity": "hard",
+    "message": "invoice.buyer_gstin '13LVKCX3648W1ZN' is not a valid GSTIN: checksum mismatch: last char N, expected R",
+    "fields": [
+     "invoice.buyer_gstin"
+    ],
+    "unverifiable": false,
+    "detail": {}
+   },
+   {
+    "code": "wrong_tax_split",
+    "severity": "hard",
+    "message": "intra-state supply (same state code) must charge equal CGST and SGST and no IGST; got CGST 0.00, SGST 0.00, IGST 1,138.35",
+    "fields": [
+     "invoice.cgst",
+     "invoice.sgst",
+     "invoice.igst",
+     "invoice.seller_gstin",
+     "invoice.buyer_gstin"
+    ],
+    "unverifiable": false,
+    "detail": {}
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "gstin_mismatch",
+    "description": "Invoice seller GSTIN equals the PO vendor GSTIN",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "po_reference_mismatch",
+    "description": "Invoice references this PO number",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "line_not_on_po",
+    "description": "Every invoice line is on the PO (description + HSN)",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "qty_over_po",
+    "description": "Billed quantity does not exceed the ordered quantity",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "rate_above_po",
+    "description": "Invoice rate within 2% of the PO rate",
+    "status": "pass",
+    "findings": [
+     {
+      "code": "rate_below_po",
+      "severity": "info",
+      "message": "invoice line 0 rate is below the PO rate",
+      "fields": [
+       "invoice.line_items[0].rate",
+       "purchase_order.line_items[0].rate"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "invalid_gstin",
+     "severity": "hard",
+     "message": "invoice.buyer_gstin '13LVKCX3648W1ZN' is not a valid GSTIN: checksum mismatch: last char N, expected R",
+     "fields": [
+      "invoice.buyer_gstin"
+     ]
+    },
+    {
+     "code": "wrong_tax_split",
+     "severity": "hard",
+     "message": "intra-state supply (same state code) must charge equal CGST and SGST and no IGST; got CGST 0.00, SGST 0.00, IGST 1,138.35",
+     "fields": [
+      "invoice.cgst",
+      "invoice.sgst",
+      "invoice.igst",
+      "invoice.seller_gstin",
+      "invoice.buyer_gstin"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

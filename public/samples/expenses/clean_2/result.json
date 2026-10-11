@@ -1,0 +1,242 @@
+{
+ "pack": "expenses",
+ "sample": "clean_2",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "receipt": {
+   "doc_type": "receipt",
+   "title": "merchant receipt",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "merchant": {
+     "value": "SPICE ROUTE KITCHEN",
+     "confidence": 0.95,
+     "evidence": "SPICE ROUTE KITCHEN",
+     "null_reason": null
+    },
+    "receipt_number": {
+     "value": "R-2904",
+     "confidence": 0.95,
+     "evidence": "R-2904",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-09-08",
+     "confidence": 0.95,
+     "evidence": "08/09/2026",
+     "null_reason": null
+    },
+    "items": [
+     {
+      "description": {
+       "value": "Filter coffee",
+       "confidence": 0.95,
+       "evidence": "Filter coffee",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 60.0,
+       "confidence": 0.95,
+       "evidence": "60.0",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Paneer tikka",
+       "confidence": 0.95,
+       "evidence": "Paneer tikka",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 320.0,
+       "confidence": 0.95,
+       "evidence": "320.0",
+       "null_reason": null
+      }
+     }
+    ],
+    "tax": {
+     "value": 19.0,
+     "confidence": 0.95,
+     "evidence": "19.0",
+     "null_reason": null
+    },
+    "total": {
+     "value": 399.0,
+     "confidence": 0.95,
+     "evidence": "399.0",
+     "null_reason": null
+    },
+    "payment_mode": {
+     "value": "Card",
+     "confidence": 0.95,
+     "evidence": "Paid by Card",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.12,
+   "usage": {
+    "prompt_tokens": 2360,
+    "completion_tokens": 248,
+    "total_tokens": 2608,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "1c1ffb41c93aa439218072cb4245eff7b6d28f1bc73b410fdebc315782333fdb",
+    "dhash": "fcdedf3a82410101"
+   }
+  },
+  "expense_claim": {
+   "doc_type": "expense_claim",
+   "title": "expense claim form",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "employee_name": {
+     "value": "Shivansh Swaminathan",
+     "confidence": 0.98,
+     "evidence": "Shivansh Swaminathan",
+     "null_reason": null
+    },
+    "employee_id": {
+     "value": "E-1301",
+     "confidence": 0.98,
+     "evidence": "E-1301",
+     "null_reason": null
+    },
+    "claim_date": {
+     "value": "2026-09-14",
+     "confidence": 0.95,
+     "evidence": "14-09-2026",
+     "null_reason": null
+    },
+    "expense_date": {
+     "value": "2026-09-08",
+     "confidence": 0.95,
+     "evidence": "08-09-2026",
+     "null_reason": null
+    },
+    "merchant": {
+     "value": "Spice Route Kitchen",
+     "confidence": 0.98,
+     "evidence": "Spice Route Kitchen",
+     "null_reason": null
+    },
+    "category": {
+     "value": "Meals",
+     "confidence": 0.98,
+     "evidence": "Meals",
+     "null_reason": null
+    },
+    "amount_claimed": {
+     "value": 399.0,
+     "confidence": 0.98,
+     "evidence": "399.00",
+     "null_reason": null
+    },
+    "purpose": {
+     "value": "Vendor meeting",
+     "confidence": 0.98,
+     "evidence": "Vendor meeting",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.08,
+   "usage": {
+    "prompt_tokens": 1810,
+    "completion_tokens": 230,
+    "total_tokens": 2040,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "c8a3a39332257a13b01abc5eeb7c4d890676a6d72e2dcae518391bdc88448a8a",
+    "dhash": "79b3a4b432a03084"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [],
+  "crosschecks": [
+   {
+    "code": "claim_amount_mismatch",
+    "description": "Claimed amount does not exceed the receipt total",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "expense_date_mismatch",
+    "description": "Claim expense date equals the receipt date",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "outside_policy_window",
+    "description": "Receipt is within 30 days of the claim",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "merchant_mismatch",
+    "description": "Claim merchant matches the receipt merchant",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "duplicate_receipt",
+    "description": "Receipt was not already claimed",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "approve",
+   "reasons": [
+    {
+     "code": "all_clear",
+     "severity": "info",
+     "message": "All validations and cross-checks passed; critical fields read with high confidence.",
+     "fields": []
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": [
+  {
+   "case_id": "sample-clean",
+   "dhash": "f0c68b8b02c00000",
+   "fingerprint": "7a55c6a806e1ff07"
+  },
+  {
+   "case_id": "sample-inflated",
+   "dhash": "f1de9fbe1e7d7f7e",
+   "fingerprint": "760b1a431954aee1"
+  },
+  {
+   "case_id": "sample-duplicate",
+   "dhash": "f5dedebebe7d7f7e",
+   "fingerprint": "7a55c6a806e1ff07"
+  },
+  {
+   "case_id": "sample-late",
+   "dhash": "f0c69b0302600000",
+   "fingerprint": "54177b88c8d91d38"
+  }
+ ]
+}

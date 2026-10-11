@@ -1,0 +1,468 @@
+{
+ "pack": "claims",
+ "sample": "clean",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "prescription": {
+   "doc_type": "prescription",
+   "title": "medical prescription",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "doctor_name": {
+     "value": "Dr. Yadavi Vala",
+     "confidence": 0.95,
+     "evidence": "Dr. Yadavi Vala",
+     "null_reason": null
+    },
+    "registration_number": {
+     "value": "MMC 55516",
+     "confidence": 0.95,
+     "evidence": "MMC 55516",
+     "null_reason": null
+    },
+    "clinic_name": {
+     "value": "Chauhan Polyclinic",
+     "confidence": 0.95,
+     "evidence": "Chauhan Polyclinic",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Dhriti Nagarajan",
+     "confidence": 0.95,
+     "evidence": "Dhriti Nagarajan",
+     "null_reason": null
+    },
+    "patient_age": {
+     "value": "61 Y",
+     "confidence": 0.95,
+     "evidence": "61 Y",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-07-04",
+     "confidence": 0.95,
+     "evidence": "04-07-2026",
+     "null_reason": null
+    },
+    "diagnosis": {
+     "value": "Fever",
+     "confidence": 0.95,
+     "evidence": "Fever",
+     "null_reason": null
+    },
+    "medicines": [
+     {
+      "name": {
+       "value": "Cetcip",
+       "confidence": 0.95,
+       "evidence": "Cetcip",
+       "null_reason": null
+      },
+      "strength": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.9,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "OD",
+       "confidence": 0.95,
+       "evidence": "OD",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "7 days",
+       "confidence": 0.95,
+       "evidence": "7 days",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Telmisartan",
+       "confidence": 0.95,
+       "evidence": "Telmisartan",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "40 mg",
+       "confidence": 0.95,
+       "evidence": "40 mg",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.9,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "1-0-1",
+       "confidence": 0.95,
+       "evidence": "1-0-1",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "2 weeks",
+       "confidence": 0.95,
+       "evidence": "2 weeks",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Thyronorm",
+       "confidence": 0.95,
+       "evidence": "Thyronorm",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "50",
+       "confidence": 0.95,
+       "evidence": "50",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.9,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "HS",
+       "confidence": 0.95,
+       "evidence": "HS",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "10 days",
+       "confidence": 0.95,
+       "evidence": "10 days",
+       "null_reason": null
+      }
+     }
+    ]
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.66,
+   "usage": {
+    "prompt_tokens": 2569,
+    "completion_tokens": 484,
+    "total_tokens": 3053,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "049076d7aaeadce531cdbb3177e4129613723d567e5fdb599332f69fdd36c251",
+    "dhash": "70860980c0902404"
+   }
+  },
+  "bill": {
+   "doc_type": "bill",
+   "title": "pharmacy bill",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "pharmacy_name": {
+     "value": "KAPOOR CHEMISTS",
+     "confidence": 0.98,
+     "evidence": "KAPOOR CHEMISTS",
+     "null_reason": null
+    },
+    "bill_number": {
+     "value": "INV-72362",
+     "confidence": 0.98,
+     "evidence": "INV-72362",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Mrs. Dhriti Nagarajan",
+     "confidence": 0.98,
+     "evidence": "Mrs. Dhriti Nagarajan",
+     "null_reason": null
+    },
+    "doctor_name": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "date": {
+     "value": "2026-07-06",
+     "confidence": 0.95,
+     "evidence": "06/07/2026",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "medicine": {
+       "value": "CETIRIZINE 10MG TAB",
+       "confidence": 0.98,
+       "evidence": "CETIRIZINE 10MG TAB",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B37570",
+       "confidence": 0.95,
+       "evidence": "B37570",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 7.0,
+       "confidence": 0.98,
+       "evidence": "7",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 1.84,
+       "confidence": 0.98,
+       "evidence": "1.84",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 12.88,
+       "confidence": 0.98,
+       "evidence": "12.88",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Telvas 40 Tab",
+       "confidence": 0.98,
+       "evidence": "Telvas 40 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B22323",
+       "confidence": 0.95,
+       "evidence": "B22323",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 30.0,
+       "confidence": 0.98,
+       "evidence": "30",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8.73,
+       "confidence": 0.98,
+       "evidence": "8.73",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 261.9,
+       "confidence": 0.98,
+       "evidence": "261.9",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Eltroxin 50 Tab",
+       "confidence": 0.98,
+       "evidence": "Eltroxin 50 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B83017",
+       "confidence": 0.95,
+       "evidence": "B83017",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.98,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 1.53,
+       "confidence": 0.98,
+       "evidence": "1.53",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 15.3,
+       "confidence": 0.98,
+       "evidence": "15.3",
+       "null_reason": null
+      }
+     }
+    ],
+    "discount": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "total": {
+     "value": 290.08,
+     "confidence": 0.98,
+     "evidence": "290.08",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.58,
+   "usage": {
+    "prompt_tokens": 2423,
+    "completion_tokens": 523,
+    "total_tokens": 2946,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "02c178a92062b7e6007b50156573bdd84c3059808d37e31909c9539baa68bef9",
+    "dhash": "68c88d1582e20400"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "drug_not_in_reference",
+    "severity": "info",
+    "message": "prescription.medicines[0].name 'Cetcip' not in RxNorm or the brand list",
+    "fields": [
+     "prescription.medicines[0].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "suggestion": null
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[1].name 'Telmisartan' found in RxNorm (RXCUI 73494)",
+    "fields": [
+     "prescription.medicines[1].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "73494",
+     "ingredients": [
+      "telmisartan"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[2].name 'Thyronorm' is a known brand of levothyroxine",
+    "fields": [
+     "prescription.medicines[2].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "levothyroxine"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[0].medicine 'CETIRIZINE 10MG TAB' found in RxNorm (RXCUI 20610)",
+    "fields": [
+     "bill.line_items[0].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "20610",
+     "ingredients": [
+      "cetirizine"
+     ]
+    }
+   },
+   {
+    "code": "drug_not_in_reference",
+    "severity": "info",
+    "message": "bill.line_items[1].medicine 'Telvas 40 Tab' not in RxNorm or the brand list",
+    "fields": [
+     "bill.line_items[1].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "suggestion": null
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[2].medicine 'Eltroxin 50 Tab' is a known brand of levothyroxine",
+    "fields": [
+     "bill.line_items[2].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "levothyroxine"
+     ]
+    }
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "unprescribed_medicine",
+    "description": "Every billed medicine was prescribed",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "patient_name_mismatch",
+    "description": "Patient name matches on both documents",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "bill_before_prescription",
+    "description": "Bill dated on/after the prescription, within 30 days",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "implausible_quantity",
+    "description": "Billed quantity fits dose x frequency x duration",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "approve",
+   "reasons": [
+    {
+     "code": "all_clear",
+     "severity": "info",
+     "message": "All validations and cross-checks passed; critical fields read with high confidence.",
+     "fields": []
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

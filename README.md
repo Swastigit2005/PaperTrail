@@ -12,6 +12,17 @@
 
 > **Demo with synthetic data, not for real claims or payments.** Every person, company, GSTIN and amount in this repository is fake.
 
+## Try it in 30 seconds
+
+1. Open the live demo and pick a use case: **Claims**, **Payables** or **Expenses**.
+2. Click a sample pair to see a full case, or drag two of the **example documents** (bottom left) into the upload
+   slots and press **Process documents**. There are 5 synthetic pairs per use case, also in [`examples/`](examples/)
+   and as a zip download in the demo.
+3. Click any field chip in the reasons to highlight that field in both documents.
+
+The example documents are recognised by their file hash and served from extractions precomputed with the live engine,
+so they work instantly even when the free-tier models are at their limit. Your own files go to the live models.
+
 ## Why this exists
 
 When a business document leaves the organisation that created it, it travels as a PDF, a scan or a phone photo. The receiver, whether an insurer, an accounts-payable team or a finance desk, has to re-type it and check it by hand: does the bill match the prescription? Does the invoice match the purchase order? Is the GSTIN even valid? Errors and padding hide in exactly those cross-document gaps.
@@ -83,13 +94,13 @@ The expenses pack was built by following [docs/ADDING_A_PACK.md](docs/ADDING_A_P
 | Configuration | Pairs | Extraction F1 (exact / norm.) | Discrepancy precision | Discrepancy recall | False alarms on clean pairs | Decision accuracy | Tokens / pair | Model latency p50 / p95 |
 |---|---|---|---|---|---|---|---|---|
 | VLM direct + rules | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| VLM direct + rules+LLM | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| VLM direct + rules+LLM | 45 of 60 | 90.0% / 91.5% | 82.6% | 100.0% | 36.8% | 82.2% | 6,162 | 4.0s / 11.3s |
 | VLM B + rules+LLM (no second vision model available on Groq) | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| OCR+LLM + rules+LLM | 15 of 60 | 70.2% / 72.0% | 45.5% | 50.0% | 33.3% | 20.0% | 3,147 | 4.2s / 5.8s |
+| OCR+LLM + rules+LLM | 60 | 70.3% / 72.1% | 55.8% | 65.9% | 33.3% | 36.7% | 3,033 | 4.1s / 9.9s |
 | Oracle (ground truth) + rules | 60 | n/a (ground truth) | 67.2% | 97.7% | 46.7% | 76.7% | n/a | n/a |
-| Oracle (ground truth) + rules+LLM | 60 | n/a (ground truth) | 95.6% | 97.7% | 6.7% | 96.7% | TBD | n/a |
+| Oracle (ground truth) + rules+LLM | 60 | n/a (ground truth) | 95.6% | 97.7% | 6.7% | 96.7% | n/a | n/a |
 
-Field-validation catch rate (OCR+LLM + rules+LLM): `arithmetic_error` 50.0%
+Field-validation catch rate (VLM direct + rules+LLM): `arithmetic_error` 100.0%
 
 ![claims recall per discrepancy type](bench/results/recall_claims.png)
 
@@ -97,20 +108,21 @@ Error attribution (oracle vs real):
 
 | Configuration | Missed: extraction | Missed: matching/logic | False alarm: extraction | False alarm: matching/logic |
 |---|---|---|---|---|
-| OCR+LLM + rules+LLM (vs Oracle (ground truth) + rules+LLM) | 5 | 0 | 6 | 0 |
+| VLM direct + rules+LLM (vs Oracle (ground truth) + rules+LLM) | 0 | 0 | 6 | 2 |
+| OCR+LLM + rules+LLM (vs Oracle (ground truth) + rules+LLM) | 14 | 1 | 22 | 1 |
 
 #### Payables
 
 | Configuration | Pairs | Extraction F1 (exact / norm.) | Discrepancy precision | Discrepancy recall | False alarms on clean pairs | Decision accuracy | Tokens / pair | Model latency p50 / p95 |
 |---|---|---|---|---|---|---|---|---|
 | VLM direct + rules | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| VLM direct + rules+LLM | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| VLM direct + rules+LLM | 40 of 60 | 94.7% / 94.8% | 51.1% | 92.0% | 40.0% | 72.5% | 5,497 | 4.7s / 23.0s |
 | VLM B + rules+LLM (no second vision model available on Groq) | TBD | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| OCR+LLM + rules+LLM | 15 of 60 | 80.7% / 81.2% | 26.9% | 77.8% | 71.4% | 53.3% | 3,592 | 4.8s / 6.1s |
+| OCR+LLM + rules+LLM | 60 | 79.3% / 79.8% | 23.4% | 59.5% | 80.0% | 46.7% | 3,405 | 5.1s / 24.5s |
 | Oracle (ground truth) + rules | 60 | n/a (ground truth) | 92.3% | 97.3% | 3.3% | 98.3% | n/a | n/a |
-| Oracle (ground truth) + rules+LLM | 60 | n/a (ground truth) | 100.0% | 100.0% | 0.0% | 100.0% | TBD | n/a |
+| Oracle (ground truth) + rules+LLM | 60 | n/a (ground truth) | 100.0% | 100.0% | 0.0% | 100.0% | n/a | n/a |
 
-Field-validation catch rate (OCR+LLM + rules+LLM): `invalid_gstin` 100.0%, `total_mismatch` 100.0%
+Field-validation catch rate (VLM direct + rules+LLM): `invalid_gstin` 100.0%, `total_mismatch` 100.0%
 
 ![payables recall per discrepancy type](bench/results/recall_payables.png)
 
@@ -118,7 +130,8 @@ Error attribution (oracle vs real):
 
 | Configuration | Missed: extraction | Missed: matching/logic | False alarm: extraction | False alarm: matching/logic |
 |---|---|---|---|---|
-| OCR+LLM + rules+LLM (vs Oracle (ground truth) + rules+LLM) | 2 | 0 | 19 | 0 |
+| VLM direct + rules+LLM (vs Oracle (ground truth) + rules+LLM) | 2 | 0 | 22 | 0 |
+| OCR+LLM + rules+LLM (vs Oracle (ground truth) + rules+LLM) | 15 | 0 | 72 | 0 |
 <!-- BENCH:END -->
 
 Full report: [bench/results/BENCHMARK.md](bench/results/BENCHMARK.md).
@@ -184,7 +197,7 @@ Pick a model with `"image"` in `input_modalities` for vision, and text models wi
 ## Benchmarking
 
 ```bash
-python -m bench.generate_synthetic --seed 7                 # test set (images regenerate byte-for-byte)
+python -m bench.generate_synthetic --seed 7                 # test set (truth + layouts regenerate exactly)
 bench/run_all.sh oracle                                     # ground-truth extraction, both matching modes
 bench/run_all.sh vlm                                        # vision model: rules+LLM, then rules (reuses cached extractions)
 bench/run_all.sh ocr                                        # Tesseract + text model
@@ -213,10 +226,24 @@ The live demo runs on **Vercel (Hobby, free)**:
 3. Under **Settings → Environment Variables**, add `GROQ_API_KEY`, `GROQ_VISION_MODEL`, `GROQ_TEXT_MODEL`, `GROQ_MATCH_MODEL`, `GROQ_TEXT_REASONING_EFFORT=low` and `PAPERTRAIL_REPO_URL` (your GitHub URL).
 4. Deploy. Every push to `main` redeploys automatically, so GitHub and the demo never drift apart.
 
+Staying up on a free tier:
+- **Bundled examples never need quota.** Precomputed extractions are matched by file hash in the browser.
+- **The model fallback chain:**
+  - vision model first;
+  - if it's at its limit, the browser runs Tesseract and the server retries with `GROQ_TEXT_MODEL`;
+  - then with `GROQ_MATCH_MODEL`.
+
+  Each Groq model has its own daily quota, and the UI says which model answered.
+- **LLM matching falls back to deterministic rules** when its model is busy.
+- **The benchmark leaves room for the demo.** It bills against a rolling 24-hour budget (`BENCH_DAILY_TOKEN_BUDGET`,
+  default 110K of the vision model's 200K/day).
+- **Safest setup:** give the deployed demo its own Groq API key from a separate free Groq account (quotas are
+  per organisation), so benchmarking never touches the demo's quota.
+
 Demo guards:
 - 5 MB per upload, images and the first page of a PDF only;
 - at most 2 concurrent extractions per instance;
-- a per-IP hourly cap, plus a per-session cap of 8 live runs;
+- a per-IP hourly cap, plus a per-session cap of 8 live documents (example documents don't count);
 - results cached by image hash, both in the browser and in the function's `/tmp`;
 - a Groq 429 becomes "demo busy, try again in a minute", and LLM matching falls back to rules when busy.
 

@@ -42,6 +42,35 @@
    ],
    "duplicate_of": null,
    "expected": "flag"
+  },
+  {
+   "id": "extra_line",
+   "title": "Invoice bills an item that was never ordered",
+   "tier": "scanned",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "line_not_on_po"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  },
+  {
+   "id": "vendor",
+   "title": "Different vendor GSTIN and a wrong grand total",
+   "tier": "clean",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "gstin_mismatch",
+    "total_mismatch"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
   }
  ]
 }

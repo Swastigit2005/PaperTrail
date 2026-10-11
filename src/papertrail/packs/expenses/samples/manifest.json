@@ -40,6 +40,32 @@
    ],
    "duplicate_of": "clean",
    "expected": "flag"
+  },
+  {
+   "id": "late",
+   "title": "Receipt older than the 30-day policy window",
+   "tier": "clean",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [
+    "outside_policy_window"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  },
+  {
+   "id": "clean_2",
+   "title": "Clean team-lunch claim (phone scan)",
+   "tier": "scanned",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve"
   }
  ]
 }

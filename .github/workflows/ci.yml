@@ -22,4 +22,4 @@ jobs:
       - name: Static site data is in sync with bench/results and samples
         run: |
           python scripts/build_web.py
-          git diff --exit-code -- public/ || (echo "Run 'python scripts/build_web.py' and commit public/" && exit 1)
+          git diff --exit-code -- public/ examples/ || (echo "Run 'python scripts/build_web.py' and commit" && exit 1)

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Keep resuming the long-running jobs until everything is done, sleeping while a daily Groq quota
 # is exhausted. Vision quota goes to the demo samples first, then the VLM benchmark; the OCR
-# benchmark uses a different model (and quota) so it runs in parallel.
+# benchmark uses a different model (and quota) so it runs in parallel. Each benchmark is capped at
+# BENCH_DAILY_TOKEN_BUDGET billed tokens per rolling 24h (default 110000 of Groq's 200000), so the live
+# demo always keeps quota for visitors.
 #   nohup bench/resume_loop.sh > bench/logs/loop.log 2>&1 &
 set -u
 cd "$(dirname "$0")/.."

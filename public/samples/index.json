@@ -1,5 +1,274 @@
 {
- "claims": [],
- "expenses": [],
- "payables": []
+ "claims": [
+  {
+   "id": "clean",
+   "title": "Clean claim (brand vs generic names)",
+   "tier": "clean",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve",
+   "hashes": {
+    "prescription": "6fbad9019ec6add77f094ce3e23103783771aa71d31094a9f0957c718a5034d1",
+    "bill": "a3bc27941d16f1dbc11d35cc3cc7e6d890b511e80d852bc9c0ca3ed05c9f71df"
+   }
+  },
+  {
+   "id": "unprescribed",
+   "title": "Bill includes a medicine that was not prescribed",
+   "tier": "scanned",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "unprescribed_medicine"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "prescription": "202bda3f5d9cd7566607ca7fc0bdc82b453c29c077bfc38769b3bc34f526a233",
+    "bill": "f3d494e10e10e62c9bd2d48399322c3b8d496c66e1b2b4706ef530545873b5d2"
+   }
+  },
+  {
+   "id": "quantity",
+   "title": "Billed quantity far exceeds the prescribed course",
+   "tier": "clean",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "implausible_quantity",
+    "bill_before_prescription"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "prescription": "a4cdb9b05181c4756402b54b00a0e8c17b06871dad5487496c5cdf3e0fdb5d43",
+    "bill": "812c92133a0ea397ad2b8b4f299f0acf5b4af99b7fe8ff45aebce72ee6b39ee6"
+   }
+  },
+  {
+   "id": "patient",
+   "title": "Bill is for a different patient",
+   "tier": "scanned",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "patient_name_mismatch"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "prescription": "e5c684cbffd251524cad040ff1dec7198900d2dfd547312fc2c55383b711996f",
+    "bill": "60f2349a81499932e7be5d6baedb244c0d964bfec78b1d5a5ee51f1e7b40fdb5"
+   }
+  },
+  {
+   "id": "arithmetic",
+   "title": "Bill totals do not add up",
+   "tier": "clean",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "arithmetic_error"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "prescription": "521f6b06acdce50d55d98a20432bfc1e13ba61d01c4d9940945940fa86b342c7",
+    "bill": "5db2c4fd82af838a305d84e81541ff96262a22f01a6417069746c1377abed09f"
+   }
+  }
+ ],
+ "expenses": [
+  {
+   "id": "clean",
+   "title": "Clean meal claim",
+   "tier": "clean",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve",
+   "hashes": {
+    "receipt": "eb2181417a8762c1dd4dfa70bca4e048d8012de706f89462effa8b885104b0e1",
+    "expense_claim": "82a21b508549fc1508027ea7dbc9758848fbc020634b94a8e9e793d09274f022"
+   }
+  },
+  {
+   "id": "inflated",
+   "title": "Claimed amount exceeds the receipt",
+   "tier": "scanned",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [
+    "claim_amount_mismatch"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "receipt": "b543631cd57b4c2fae88c72bb673ea08e6ad3553dcfccd3a02e51fd3b9d4bc19",
+    "expense_claim": "43e8bce8bb16d6cb9e8a5d04b5c3848fa37bfa1e081fdcfc2b8e8956f7f0787a"
+   }
+  },
+  {
+   "id": "duplicate",
+   "title": "Same receipt claimed again (duplicate)",
+   "tier": "scanned",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [
+    "duplicate_receipt"
+   ],
+   "duplicate_of": "clean",
+   "expected": "flag",
+   "hashes": {
+    "receipt": "beb45861d6ba26a899742b3475487974ca857751260b7352532f3bbf23208b74",
+    "expense_claim": "61dc4b13f6352075871419248222b43dee14cb460cfa59a9ecdd3a1469456987"
+   }
+  },
+  {
+   "id": "late",
+   "title": "Receipt older than the 30-day policy window",
+   "tier": "clean",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [
+    "outside_policy_window"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "receipt": "88aa23522606613208800dbb164fa1998344aac903db213a8e071f063881fde5",
+    "expense_claim": "9c3c84709dee65b5055bb4317b691dac941429d0bd27459c9a6ac250c78ed02b"
+   }
+  },
+  {
+   "id": "clean_2",
+   "title": "Clean team-lunch claim (phone scan)",
+   "tier": "scanned",
+   "documents": {
+    "receipt": "receipt.jpg",
+    "expense_claim": "expense_claim.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve",
+   "hashes": {
+    "receipt": "503a8b68d2791e7ebae5e950708bc1ccacba1af3c4b65c82792199668cc59bdd",
+    "expense_claim": "945dd95ef0bef7dd8c7fb55ced8650deb93a6c1694a827d693bcedf3ffc8d101"
+   }
+  }
+ ],
+ "payables": [
+  {
+   "id": "clean",
+   "title": "Clean invoice (paraphrased lines)",
+   "tier": "clean",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [],
+   "duplicate_of": null,
+   "expected": "approve",
+   "hashes": {
+    "invoice": "1f60e5a1ed49bf53f87e474dd944ff6a143f1b06161c10fe99a0b055d9978ca6",
+    "purchase_order": "9d8059eb369d7b42ff79a2154e1bf956d6a9c41c5c2ce278d314487930812bbe"
+   }
+  },
+  {
+   "id": "overbilled",
+   "title": "Rate above PO and quantity over PO",
+   "tier": "scanned",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "rate_above_po",
+    "qty_over_po"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "invoice": "3066e77eb15d1284baafe0e49123e0e59c5676d4157068b7511a37f49d2526ec",
+    "purchase_order": "dafded9c122685d1e0286c6cbd1a33e282d00cb72bfdddb2988e4c8b9a09f151"
+   }
+  },
+  {
+   "id": "tax",
+   "title": "Wrong tax split and invalid GSTIN",
+   "tier": "clean",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "wrong_tax_split",
+    "invalid_gstin"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "invoice": "d548773439144a92b13aaa8295547313e9ef5d82ea646f3039bb52a0914c697e",
+    "purchase_order": "016fd49c406c9ca849a1c74ce3b2404cd5101aa775d4552bfa58988cd61ffb95"
+   }
+  },
+  {
+   "id": "extra_line",
+   "title": "Invoice bills an item that was never ordered",
+   "tier": "scanned",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "line_not_on_po"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "invoice": "33e1e48db5ccfc98780f53d13ab2fbd693939156f9602eebbbf1b0f05dbcd1c6",
+    "purchase_order": "b44e8518eda962484536cc9b0ae3ee7c744775592782b50c544032b0c4941d34"
+   }
+  },
+  {
+   "id": "vendor",
+   "title": "Different vendor GSTIN and a wrong grand total",
+   "tier": "clean",
+   "documents": {
+    "invoice": "invoice.jpg",
+    "purchase_order": "purchase_order.jpg"
+   },
+   "seeded": [
+    "gstin_mismatch",
+    "total_mismatch"
+   ],
+   "duplicate_of": null,
+   "expected": "flag",
+   "hashes": {
+    "invoice": "0fc897e1d7b937a25e9e83830cbb3d9d222bcb794cda013b09a3094f165e5859",
+    "purchase_order": "719dc45d40435332d2293e20506a71e4e74e25a5719b7fa31d30c9daace8942b"
+   }
+  }
+ ]
 }

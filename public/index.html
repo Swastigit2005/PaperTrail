@@ -45,15 +45,16 @@
           <p class="hint">Precomputed with the real engine. Instant, no quota used.</p>
           <div id="samples" class="samples"></div>
 
-          <h2 class="mt">Or upload your own</h2>
-          <p class="hint">Two documents, images or PDF (first page), max 5 MB each. Use fake data only.</p>
+          <h2 class="mt">Try the upload flow</h2>
+          <p class="hint">Drop two documents (images or a PDF's first page, max 5 MB each): an example from below, or your
+            own file with fake data only.</p>
           <form id="upload-form" class="upload">
             <div class="file-row" data-slot="0">
-              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Choose document 1</span></label>
+              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Drop or choose document 1</span></label>
               <select aria-label="Document 1 type"></select>
             </div>
             <div class="file-row" data-slot="1">
-              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Choose document 2</span></label>
+              <label class="file"><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span>Drop or choose document 2</span></label>
               <select aria-label="Document 2 type"></select>
             </div>
             <fieldset>
@@ -69,6 +70,8 @@
             <button type="submit" class="primary" id="run-btn">Process documents</button>
             <p class="status" id="status" aria-live="polite"></p>
           </form>
+          <h2 class="mt">Example documents</h2>
+          <div id="examples" class="examples"></div>
         </aside>
 
         <section class="results" id="results" aria-live="polite">

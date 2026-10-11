@@ -14,8 +14,8 @@ MENUS = (("Masala dosa", 140.0), ("Filter coffee", 60.0), ("Paneer tikka", 320.0
 MERCHANTS = ("Cafe Aroma", "Udupi Grand", "Spice Route Kitchen", "Hotel Saravana", "The Chai Stop")
 
 
-def build_case(rng: random.Random, fake, claim_extra: float = 0.0) -> dict[str, Any]:
-    """Receipt + claim truth. ``claim_extra`` > 0 makes the claimed amount exceed the receipt."""
+def build_case(rng: random.Random, fake, claim_extra: float = 0.0, late_days: int = 0) -> dict[str, Any]:
+    """Receipt + claim truth. ``claim_extra`` > 0 inflates the claim; ``late_days`` files it that much later."""
     person = identity(fake, rng)
     merchant = rng.choice(MERCHANTS)
     day = date(2026, 9, 1) + timedelta(days=rng.randint(0, 20))
@@ -26,7 +26,8 @@ def build_case(rng: random.Random, fake, claim_extra: float = 0.0) -> dict[str, 
     receipt = {"merchant": merchant, "receipt_number": f"R-{rng.randint(1000, 9999)}", "date": day.isoformat(),
                "items": items, "tax": tax, "total": total, "payment_mode": rng.choice(["UPI", "Card", "Cash"])}
     claim = {"employee_name": person.full, "employee_id": f"E-{rng.randint(1000, 9999)}",
-             "claim_date": (day + timedelta(days=rng.randint(2, 10))).isoformat(), "expense_date": day.isoformat(),
+             "claim_date": (day + timedelta(days=rng.randint(2, 10) + late_days)).isoformat(),
+             "expense_date": day.isoformat(),
              "merchant": merchant, "category": "Meals", "amount_claimed": round(total + claim_extra, 2),
              "purpose": rng.choice(["Client lunch", "Team offsite meal", "Vendor meeting"])}
     return {"receipt": receipt, "expense_claim": claim}

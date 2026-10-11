@@ -1,0 +1,297 @@
+{
+ "pack": "expenses",
+ "sample": "late",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "receipt": {
+   "doc_type": "receipt",
+   "title": "merchant receipt",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "merchant": {
+     "value": "UDUPI GRAND",
+     "confidence": 0.95,
+     "evidence": "UDUPI GRAND",
+     "null_reason": null
+    },
+    "receipt_number": {
+     "value": "R-8229",
+     "confidence": 0.95,
+     "evidence": "R-8229",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-09-17",
+     "confidence": 0.95,
+     "evidence": "17/09/2026",
+     "null_reason": null
+    },
+    "items": [
+     {
+      "description": {
+       "value": "Masala dosa",
+       "confidence": 0.95,
+       "evidence": "Masala dosa",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 140.0,
+       "confidence": 0.95,
+       "evidence": "140.0",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Veg biryani",
+       "confidence": 0.95,
+       "evidence": "Veg biryani",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 280.0,
+       "confidence": 0.95,
+       "evidence": "280.0",
+       "null_reason": null
+      }
+     }
+    ],
+    "tax": {
+     "value": 21.0,
+     "confidence": 0.95,
+     "evidence": "21.0",
+     "null_reason": null
+    },
+    "total": {
+     "value": 441.0,
+     "confidence": 0.95,
+     "evidence": "441.0",
+     "null_reason": null
+    },
+    "payment_mode": {
+     "value": "Cash",
+     "confidence": 0.95,
+     "evidence": "Cash",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 0.9,
+   "usage": {
+    "prompt_tokens": 2360,
+    "completion_tokens": 238,
+    "total_tokens": 2598,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "bffa2a555544b0db267afd4d93ea54e54b91b8b4a036fa2b72be90fd6a91d303",
+    "dhash": "f0c69b0302600000"
+   }
+  },
+  "expense_claim": {
+   "doc_type": "expense_claim",
+   "title": "expense claim form",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "employee_name": {
+     "value": "Charan Kapoor",
+     "confidence": 0.98,
+     "evidence": "Charan Kapoor",
+     "null_reason": null
+    },
+    "employee_id": {
+     "value": "E-6065",
+     "confidence": 0.98,
+     "evidence": "E-6065",
+     "null_reason": null
+    },
+    "claim_date": {
+     "value": "2026-11-05",
+     "confidence": 0.95,
+     "evidence": "05-11-2026",
+     "null_reason": null
+    },
+    "expense_date": {
+     "value": "2026-09-17",
+     "confidence": 0.95,
+     "evidence": "17-09-2026",
+     "null_reason": null
+    },
+    "merchant": {
+     "value": "Udupi Grand",
+     "confidence": 0.97,
+     "evidence": "Udupi Grand",
+     "null_reason": null
+    },
+    "category": {
+     "value": "Meals",
+     "confidence": 0.97,
+     "evidence": "Meals",
+     "null_reason": null
+    },
+    "amount_claimed": {
+     "value": 441.0,
+     "confidence": 0.97,
+     "evidence": "441.00",
+     "null_reason": null
+    },
+    "purpose": {
+     "value": "Client lunch",
+     "confidence": 0.97,
+     "evidence": "Client lunch",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 0.85,
+   "usage": {
+    "prompt_tokens": 1810,
+    "completion_tokens": 226,
+    "total_tokens": 2036,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "b86309c919975a0029ff50bbedaaec492d2f0686e8f1b328e78fe3760d05cfe9",
+    "dhash": "69b0a4b022a43484"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "implausible_date",
+    "severity": "soft",
+    "message": "expense_claim.claim_date: 2026-11-05 is in the future",
+    "fields": [
+     "expense_claim.claim_date"
+    ],
+    "unverifiable": false,
+    "detail": {}
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "claim_amount_mismatch",
+    "description": "Claimed amount does not exceed the receipt total",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "expense_date_mismatch",
+    "description": "Claim expense date equals the receipt date",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "outside_policy_window",
+    "description": "Receipt is within 30 days of the claim",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "outside_policy_window",
+      "severity": "hard",
+      "message": "receipt is 49 days old; policy allows 30",
+      "fields": [
+       "receipt.date",
+       "expense_claim.claim_date"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   },
+   {
+    "code": "merchant_mismatch",
+    "description": "Claim merchant matches the receipt merchant",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "duplicate_receipt",
+    "description": "Receipt was not already claimed",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "duplicate_receipt",
+      "severity": "hard",
+      "message": "receipt looks like a duplicate of case sample-clean (near-identical image)",
+      "fields": [
+       "receipt.merchant",
+       "receipt.date",
+       "receipt.total"
+      ],
+      "unverifiable": false,
+      "detail": {
+       "other_case": "sample-clean",
+       "kind": "image"
+      }
+     }
+    ]
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "outside_policy_window",
+     "severity": "hard",
+     "message": "receipt is 49 days old; policy allows 30",
+     "fields": [
+      "receipt.date",
+      "expense_claim.claim_date"
+     ]
+    },
+    {
+     "code": "duplicate_receipt",
+     "severity": "hard",
+     "message": "receipt looks like a duplicate of case sample-clean (near-identical image)",
+     "fields": [
+      "receipt.merchant",
+      "receipt.date",
+      "receipt.total"
+     ]
+    },
+    {
+     "code": "implausible_date",
+     "severity": "soft",
+     "message": "expense_claim.claim_date: 2026-11-05 is in the future",
+     "fields": [
+      "expense_claim.claim_date"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": [
+  {
+   "case_id": "sample-clean",
+   "dhash": "f0c68b8b02c00000",
+   "fingerprint": "7a55c6a806e1ff07"
+  },
+  {
+   "case_id": "sample-inflated",
+   "dhash": "f1de9fbe1e7d7f7e",
+   "fingerprint": "760b1a431954aee1"
+  },
+  {
+   "case_id": "sample-duplicate",
+   "dhash": "f5dedebebe7d7f7e",
+   "fingerprint": "7a55c6a806e1ff07"
+  }
+ ]
+}

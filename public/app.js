@@ -48,12 +48,8 @@ async function boot() {
   selectPack(state.pack);
   renderQueue();
   $("#upload-form").addEventListener("submit", onUpload);
-  document.querySelectorAll(".file input").forEach((inp) => inp.addEventListener("change", () => {
-    const label = inp.closest(".file");
-    label.classList.toggle("has", inp.files.length > 0);
-    label.querySelector("span").textContent = inp.files[0]?.name || label.querySelector("span").dataset.empty;
-  }));
   document.querySelectorAll(".file span").forEach((s) => { s.dataset.empty = s.textContent; });
+  setupDropZones();
   $("#zoom .close").addEventListener("click", () => $("#zoom").close());
   $("#zoom").addEventListener("click", (e) => { if (e.target.id === "zoom") $("#zoom").close(); });
 }
@@ -99,6 +95,9 @@ function selectPack(name) {
     sel.innerHTML = '<option value="auto">Auto-detect</option>' +
       types.map((t, j) => `<option value="${esc(t.name)}" ${i === j ? "" : ""}>${esc(t.title)}</option>`).join("");
   });
+  renderExamples();
+  setSlot(0, null);
+  setSlot(1, null);
   if (samples.length) loadSample(samples[0].id);
 }
 
@@ -163,6 +162,12 @@ function chips(fields) {
   return `<span class="chips">${fields.map((f) => `<button class="chip" data-ref="${esc(f)}">${esc(f)}</button>`).join("")}</span>`;
 }
 
+function pipelineLabel(c) {
+  const kinds = new Set(Object.values(c.documents).map((d) => d.pipeline || c.pipeline));
+  if (kinds.size > 1) return "vision LLM, with OCR + LLM fallback";
+  return kinds.has("ocr+llm") ? "OCR + LLM" : "vision LLM";
+}
+
 function showCase(c) {
   state.current = c;
   const pack = packInfo(c.pack);
@@ -205,7 +210,7 @@ function showCase(c) {
         <span>${esc(r.message)} ${chips(r.fields)}</span></li>`).join("")}</ul>
       ${(ev.notes || []).map((n) => `<p class="note">${esc(n)}</p>`).join("")}
       <p class="meta">${c.source === "sample" ? `Sample: ${esc(c.title)}. Precomputed with the live engine. ` : "Live run. "}
-        Extraction: ${c.pipeline === "vlm" ? "vision LLM" : "OCR + LLM"} (${esc(models)}), matching: ${esc(ev.matching || c.matching)},
+        Extraction: ${esc(pipelineLabel(c))} (${esc(models)}), matching: ${esc(ev.matching || c.matching)},
         ${tokens.toLocaleString()} tokens, ${latency.toFixed(1)}s model time.
         ${c.seeded?.length ? `Seeded issues: ${c.seeded.map(esc).join(", ")}.` : ""}</p>
     </section>
@@ -301,21 +306,146 @@ async function api(path, options) {
   const r = await fetch(path, options);
   let body = null;
   try { body = await r.json(); } catch { /* non-JSON error */ }
-  if (r.status === 429) {
-    const wait = body?.retry_after ? ` (about ${body.retry_after}s)` : "";
-    throw new Error((body?.message || body?.detail || "The demo is busy. Please try again in a minute.") + wait);
+  if (!r.ok) {
+    const wait = r.status === 429 && body?.retry_after ? ` (about ${body.retry_after}s)` : "";
+    const err = new Error((body?.message || body?.detail || `request failed (${r.status})`) + wait);
+    err.status = r.status;
+    err.fallback = body?.fallback || null;
+    throw err;
   }
-  if (!r.ok) throw new Error(body?.detail || body?.message || `request failed (${r.status})`);
   return body;
+}
+
+// --- upload slots, drag & drop, example gallery ----------------------------------------------------
+const slots = [null, null];
+
+function setSlot(i, file) {
+  slots[i] = file;
+  const row = document.querySelectorAll(".file-row")[i];
+  const label = row.querySelector(".file");
+  label.classList.toggle("has", Boolean(file));
+  label.querySelector("span").textContent = file ? file.name : label.querySelector("span").dataset.empty;
+  try {  // keep the native input in sync where the browser allows it
+    const dt = new DataTransfer();
+    if (file) dt.items.add(file);
+    row.querySelector("input").files = dt.files;
+  } catch { /* older browsers: slots[] is the source of truth */ }
+}
+
+async function fileFromUrl(url, name) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`could not load ${name}`);
+  const blob = await r.blob();
+  return new File([blob], name, { type: blob.type || "image/jpeg" });
+}
+
+function setupDropZones() {
+  document.querySelectorAll(".file-row").forEach((row, i) => {
+    const label = row.querySelector(".file");
+    row.querySelector("input").addEventListener("change", (e) => setSlot(i, e.target.files[0] || null));
+    label.addEventListener("dragover", (e) => { e.preventDefault(); label.classList.add("over"); });
+    label.addEventListener("dragleave", () => label.classList.remove("over"));
+    label.addEventListener("drop", async (e) => {
+      e.preventDefault();
+      label.classList.remove("over");
+      try {
+        if (e.dataTransfer.files.length) return setSlot(i, e.dataTransfer.files[0]);
+        const ref = e.dataTransfer.getData("application/x-papertrail");
+        if (ref) {
+          const { url, name } = JSON.parse(ref);
+          return setSlot(i, await fileFromUrl(url, name));
+        }
+      } catch (err) { setStatus(err.message, true); }
+    });
+  });
+}
+
+function renderExamples() {
+  const list = state.samples[state.pack] || [];
+  const el = $("#examples");
+  if (!list.length) { el.innerHTML = ""; return; }
+  el.innerHTML = `<p class="hint">Drag a document onto a slot above, or use a whole pair. These files are synthetic and
+      their results are precomputed, so they work even when the free-tier models are busy.
+      <a href="/examples/${esc(state.pack)}.zip" download>Download all ${list.length * 2} files (.zip)</a></p>
+    <div class="ex-list">${list.map((s, n) => `
+      <div class="ex">
+        <div class="ex-title">${n + 1}. ${esc(s.title)}</div>
+        <div class="ex-row">${Object.entries(s.documents).map(([dt, f]) => {
+          const url = `/samples/${state.pack}/${s.id}/${f}`;
+          const name = `${state.pack}-${String(n + 1).padStart(2, "0")}-${s.id}-${f}`;
+          return `<a class="thumb" href="${esc(url)}" download="${esc(name)}" draggable="true"
+              data-url="${esc(url)}" data-name="${esc(name)}" title="Drag onto a slot (${esc(dt.replaceAll("_", " "))})">
+              <img src="${esc(url)}" alt="${esc(dt)}" loading="lazy"><span>${esc(dt.replaceAll("_", " "))}</span></a>`;
+        }).join("")}
+          <button type="button" class="btn small" data-use="${esc(s.id)}">Use pair</button></div>
+      </div>`).join("")}</div>`;
+  el.querySelectorAll(".thumb").forEach((a) => a.addEventListener("dragstart", (e) => {
+    e.dataTransfer.setData("application/x-papertrail", JSON.stringify({ url: a.dataset.url, name: a.dataset.name }));
+    e.dataTransfer.setData("text/uri-list", new URL(a.dataset.url, location.href).href);
+  }));
+  el.querySelectorAll("[data-use]").forEach((b) => b.addEventListener("click", async () => {
+    const s = list.find((x) => x.id === b.dataset.use);
+    const n = list.indexOf(s) + 1;
+    const files = await Promise.all(Object.values(s.documents).map((f) =>
+      fileFromUrl(`/samples/${state.pack}/${s.id}/${f}`, `${state.pack}-${String(n).padStart(2, "0")}-${s.id}-${f}`)));
+    files.forEach((f, i) => setSlot(i, f));
+    document.querySelectorAll(".file-row select").forEach((sel) => { sel.value = "auto"; });
+    setStatus(`Loaded example pair ${n}. Press “Process documents”.`);
+  }));
+}
+
+// sha256 of the original bytes -> precomputed extraction of a known example document
+async function findExample(file) {
+  const hash = await sha256(file);
+  for (const [pack, list] of Object.entries(state.samples)) {
+    for (const s of list) {
+      for (const [dt, h] of Object.entries(s.hashes || {})) {
+        if (h === hash) return { pack, sample: s, doc_type: dt };
+      }
+    }
+  }
+  return null;
+}
+
+const resultCache = {};
+async function sampleResult(pack, id) {
+  const key = `${pack}/${id}`;
+  if (!resultCache[key]) resultCache[key] = await getJSON(`/samples/${key}/result.json`);
+  return resultCache[key];
+}
+
+async function extractLive(file, blob, chosen, pipeline, label) {
+  const send = async (ocrText) => {
+    const form = new FormData();
+    form.append("file", blob, `${file.name.replace(/\.[^.]+$/, "")}.jpg`);
+    form.append("pack", state.pack);
+    form.append("doc_type", chosen);
+    form.append("pipeline", pipeline);
+    if (ocrText) form.append("ocr_text", ocrText);
+    return api("/api/extract", { method: "POST", body: form });
+  };
+  if (pipeline === "ocr+llm") {
+    const text = await browserOCR(blob, label);
+    setStatus(`Extracting ${label} with the text model…`);
+    return send(text);
+  }
+  setStatus(`Extracting ${label} with the vision model…`);
+  try {
+    return await send(null);
+  } catch (err) {
+    if (err.fallback !== "ocr") throw err;
+    setStatus(`Vision model is at its free-tier limit: reading ${label} in your browser instead…`);
+    const text = await browserOCR(blob, label);
+    setStatus(`Extracting ${label} with a fallback text model…`);
+    return send(text);
+  }
 }
 
 async function onUpload(e) {
   e.preventDefault();
   const rows = [...document.querySelectorAll(".file-row")];
-  const files = rows.map((r) => r.querySelector("input").files[0]);
-  if (files.some((f) => !f)) return setStatus("Choose both documents first.", true);
-  const runs = store.get("sessionStorage", "pt.runs", 0);
-  if (runs >= SESSION_RUN_CAP) return setStatus(`Session limit of ${SESSION_RUN_CAP} live runs reached (free tier). Samples still work.`, true);
+  const files = slots.slice();
+  if (files.some((f) => !f)) return setStatus("Add both documents first (drag an example or choose a file).", true);
   const pipeline = new FormData(e.target).get("pipeline");
   const matching = new FormData(e.target).get("matching");
   const btn = $("#run-btn");
@@ -323,47 +453,73 @@ async function onUpload(e) {
   try {
     const documents = {};
     const images = {};
+    const examples = [];
+    let live = 0;
     for (const [i, file] of files.entries()) {
-      setStatus(`Preparing document ${i + 1}…`);
-      const blob = await fileToImageBlob(file);
-      const hash = await sha256(blob);
-      const chosen = rows[i].querySelector("select").value;
-      const cacheKey = `pt.x.${state.pack}.${pipeline}.${chosen}.${hash}`;
-      let res = store.get("localStorage", cacheKey, null);
-      if (!res) {
-        const form = new FormData();
-        form.append("file", blob, `${file.name.replace(/\.[^.]+$/, "")}.jpg`);
-        form.append("pack", state.pack);
-        form.append("doc_type", chosen);
-        form.append("pipeline", pipeline);
-        if (pipeline === "ocr+llm") form.append("ocr_text", await browserOCR(blob, `document ${i + 1}`));
-        setStatus(`Extracting document ${i + 1} with the ${pipeline === "vlm" ? "vision" : "text"} model…`);
-        res = await api("/api/extract", { method: "POST", body: form });
-        store.set("localStorage", cacheKey, res);
+      const label = `document ${i + 1}`;
+      if (file.size > MAX_BYTES) throw new Error(`${file.name} is larger than 5 MB`);
+      const ex = await findExample(file);
+      let res;
+      if (ex && ex.pack !== state.pack) {
+        throw new Error(`${file.name} is a ${ex.pack} example; switch to that use case or pick a ${state.pack} document.`);
+      }
+      if (ex) {
+        setStatus(`Recognised ${label} as example “${ex.sample.title}”: using its precomputed extraction.`);
+        res = { ...(await sampleResult(ex.pack, ex.sample.id)).documents[ex.doc_type], precomputed: true };
+        examples.push(ex);
+        images[ex.doc_type] = URL.createObjectURL(file);
+      } else {
+        const runs = store.get("sessionStorage", "pt.runs", 0);
+        if (runs + live >= SESSION_RUN_CAP) {
+          throw new Error(`Session limit of ${SESSION_RUN_CAP} live documents reached (free tier). The example documents still work.`);
+        }
+        setStatus(`Preparing ${label}…`);
+        const blob = await fileToImageBlob(file);
+        const chosen = rows[i].querySelector("select").value;
+        const cacheKey = `pt.x.${state.pack}.${pipeline}.${chosen}.${await sha256(blob)}`;
+        res = store.get("localStorage", cacheKey, null);
+        if (!res) {
+          res = await extractLive(file, blob, chosen, pipeline, label);
+          store.set("localStorage", cacheKey, res);
+          live += 1;
+        }
+        images[res.doc_type] = URL.createObjectURL(blob);
       }
       if (documents[res.doc_type]) throw new Error(`Both documents look like a ${res.title}. Set the types manually.`);
       documents[res.doc_type] = res;
-      images[res.doc_type] = URL.createObjectURL(blob);
     }
-    setStatus("Validating and cross-checking…");
     const caseId = `case-${Date.now().toString(36)}`;
-    const evaluation = await api("/api/evaluate", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        pack: state.pack, case_id: caseId, matching,
-        documents: Object.fromEntries(Object.entries(documents).map(([dt, x]) => [dt, x.data])),
-        images: Object.fromEntries(Object.entries(documents).map(([dt, x]) => [dt, { dhash: x.image.dhash }])),
-        history: store.get("sessionStorage", `pt.history.${state.pack}`, []),
-      }),
-    });
-    store.set("sessionStorage", `pt.history.${state.pack}`,
-      [...store.get("sessionStorage", `pt.history.${state.pack}`, []), ...evaluation.history_add]);
-    store.set("sessionStorage", "pt.runs", runs + 1);
-    const c = { pack: state.pack, pipeline, matching, documents, evaluation, images, source: "upload", title: "Your upload" };
+    const samePair = examples.length === 2 && examples[0].sample.id === examples[1].sample.id;
+    let evaluation;
+    if (samePair) {  // the whole case was precomputed with the live engine
+      evaluation = (await sampleResult(state.pack, examples[0].sample.id)).evaluation;
+      evaluation = { ...evaluation, history_add: [] };
+    } else {
+      setStatus("Validating and cross-checking…");
+      evaluation = await api("/api/evaluate", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pack: state.pack, case_id: caseId, matching,
+          documents: Object.fromEntries(Object.entries(documents).map(([dt, x]) => [dt, x.data])),
+          images: Object.fromEntries(Object.entries(documents).map(([dt, x]) => [dt, { dhash: x.image.dhash }])),
+          history: store.get("sessionStorage", `pt.history.${state.pack}`, []),
+        }),
+      });
+      store.set("sessionStorage", `pt.history.${state.pack}`,
+        [...store.get("sessionStorage", `pt.history.${state.pack}`, []), ...evaluation.history_add]);
+    }
+    const notes = Object.values(documents).flatMap((d) => d.notes || []);
+    if (examples.length) notes.unshift(`${examples.length === 2 ? "Both documents are" : "One document is"} a bundled example: its extraction was precomputed with the live engine, so no model quota was used.`);
+    evaluation = { ...evaluation, notes: [...notes, ...(evaluation.notes || [])] };
+    store.set("sessionStorage", "pt.runs", store.get("sessionStorage", "pt.runs", 0) + live);
+    const usedPipeline = Object.values(documents).some((d) => d.pipeline === "ocr+llm") ? "ocr+llm" : "vlm";
+    const c = { pack: state.pack, pipeline: usedPipeline, matching: evaluation.matching || matching, documents, evaluation,
+      images, source: "upload", title: "Your upload" };
     document.querySelectorAll(".sample").forEach((b) => b.classList.remove("active"));
     showCase(c);
     addToQueue(c, caseId);
-    setStatus(`Done. ${SESSION_RUN_CAP - runs - 1} live runs left in this session.`);
+    const left = SESSION_RUN_CAP - store.get("sessionStorage", "pt.runs", 0);
+    setStatus(live ? `Done. ${left} live documents left in this session.` : "Done (example documents: instant, no quota used).");
   } catch (err) {
     setStatus(err.message, true);
   } finally {

@@ -59,6 +59,7 @@ class Usage:
     completion_tokens: int = 0
     requests: int = 0
     cached_requests: int = 0
+    billed_tokens: int = 0  # tokens actually charged to the quota (cache hits cost nothing)
 
     @property
     def total_tokens(self) -> int:
@@ -71,6 +72,7 @@ class Usage:
         self.completion_tokens += other.completion_tokens
         self.requests += other.requests
         self.cached_requests += other.cached_requests
+        self.billed_tokens += other.billed_tokens
         return self
 
     def as_dict(self) -> dict[str, int]:
@@ -81,6 +83,7 @@ class Usage:
             "total_tokens": self.total_tokens,
             "requests": self.requests,
             "cached_requests": self.cached_requests,
+            "billed_tokens": self.billed_tokens,
         }
 
 
@@ -335,6 +338,7 @@ class LLMClient:
                 prompt_tokens=resp.usage.prompt_tokens,
                 completion_tokens=resp.usage.completion_tokens,
                 requests=1,
+                billed_tokens=resp.usage.prompt_tokens + resp.usage.completion_tokens,
             )
             limiter.record_actual(usage.total_tokens)
             self.usage.add(usage)

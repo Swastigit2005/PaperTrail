@@ -1,0 +1,476 @@
+{
+ "pack": "payables",
+ "sample": "extra_line",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "invoice": {
+   "doc_type": "invoice",
+   "title": "GST tax invoice",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "seller_name": {
+     "value": "Kade-Ranganathan",
+     "confidence": 0.98,
+     "evidence": "Kade-Ranganathan",
+     "null_reason": null
+    },
+    "seller_gstin": {
+     "value": "35JVBCI7409I1Z4",
+     "confidence": 0.98,
+     "evidence": "35JVBCI7409I1Z4",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Pall-Parikh",
+     "confidence": 0.98,
+     "evidence": "Pall-Parikh",
+     "null_reason": null
+    },
+    "buyer_gstin": {
+     "value": "09ABBUC4372E1ZA",
+     "confidence": 0.98,
+     "evidence": "09ABBUC4372E1ZA",
+     "null_reason": null
+    },
+    "invoice_number": {
+     "value": "TI/26-27/3945",
+     "confidence": 0.98,
+     "evidence": "TI/26-27/3945",
+     "null_reason": null
+    },
+    "invoice_date": {
+     "value": "2026-05-11",
+     "confidence": 0.98,
+     "evidence": "11-05-2026",
+     "null_reason": null
+    },
+    "po_reference": {
+     "value": "4500019894",
+     "confidence": 0.98,
+     "evidence": "4500019894",
+     "null_reason": null
+    },
+    "place_of_supply": {
+     "value": "Uttar Pradesh (09)",
+     "confidence": 0.98,
+     "evidence": "Uttar Pradesh (09)",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Mesh office chair with lumbar support",
+       "confidence": 0.98,
+       "evidence": "Mesh office chair with lumbar support",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9401",
+       "confidence": 0.98,
+       "evidence": "9401",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.98,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8021.0,
+       "confidence": 0.98,
+       "evidence": "8021.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 80210.0,
+       "confidence": 0.98,
+       "evidence": "80210.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Alcohol hand rub 5 ltr",
+       "confidence": 0.98,
+       "evidence": "Alcohol hand rub 5 ltr",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "3808",
+       "confidence": 0.98,
+       "evidence": "3808",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 5.0,
+       "confidence": 0.98,
+       "evidence": "5",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 1269.0,
+       "confidence": 0.98,
+       "evidence": "1269.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 6345.0,
+       "confidence": 0.98,
+       "evidence": "6345.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "HP CC388A Toner Black",
+       "confidence": 0.98,
+       "evidence": "HP CC388A Toner Black",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8443",
+       "confidence": 0.98,
+       "evidence": "8443",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.98,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 2410.0,
+       "confidence": 0.98,
+       "evidence": "2410.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 24100.0,
+       "confidence": 0.98,
+       "evidence": "24100.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     }
+    ],
+    "taxable_value": {
+     "value": 110655.0,
+     "confidence": 0.98,
+     "evidence": "110655.0",
+     "null_reason": null
+    },
+    "cgst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "sgst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "igst": {
+     "value": 19917.9,
+     "confidence": 0.98,
+     "evidence": "19917.9",
+     "null_reason": null
+    },
+    "grand_total": {
+     "value": 130572.9,
+     "confidence": 0.98,
+     "evidence": "130572.9",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.09,
+   "usage": {
+    "prompt_tokens": 2122,
+    "completion_tokens": 764,
+    "total_tokens": 2886,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "8548a60ac4c05c8e3d1b95d58069936c6818ce6390c4945ca62b29af8cafbc56",
+    "dhash": "3919959d07020100"
+   }
+  },
+  "purchase_order": {
+   "doc_type": "purchase_order",
+   "title": "purchase order",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "po_number": {
+     "value": "4500019894",
+     "confidence": 0.98,
+     "evidence": "4500019894",
+     "null_reason": null
+    },
+    "po_date": {
+     "value": "2026-05-04",
+     "confidence": 0.95,
+     "evidence": "04/05/2026",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Pall-Parikh",
+     "confidence": 0.95,
+     "evidence": "Pall-Parikh",
+     "null_reason": null
+    },
+    "vendor_name": {
+     "value": "Kade-Ranganathan",
+     "confidence": 0.95,
+     "evidence": "Kade-Ranganathan",
+     "null_reason": null
+    },
+    "vendor_gstin": {
+     "value": "35JVBCT409I1Z4",
+     "confidence": 0.95,
+     "evidence": "35JVBCT409I1Z4",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Ergonomic office chair",
+       "confidence": 0.95,
+       "evidence": "Ergonomic office chair",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9401",
+       "confidence": 0.95,
+       "evidence": "9401",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.95,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8021.0,
+       "confidence": 0.95,
+       "evidence": "8,021.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 80210.0,
+       "confidence": 0.95,
+       "evidence": "80,210.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "HP 88A black toner cartridge",
+       "confidence": 0.95,
+       "evidence": "HP 88A black toner cartridge",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8443",
+       "confidence": 0.95,
+       "evidence": "8443",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.95,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 2410.0,
+       "confidence": 0.95,
+       "evidence": "2,410.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 24100.0,
+       "confidence": 0.95,
+       "evidence": "24,100.00",
+       "null_reason": null
+      }
+     }
+    ],
+    "total": {
+     "value": 104310.0,
+     "confidence": 0.95,
+     "evidence": "1,04,310.00",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.41,
+   "usage": {
+    "prompt_tokens": 1845,
+    "completion_tokens": 474,
+    "total_tokens": 2319,
+    "requests": 1,
+    "cached_requests": 0
+   },
+   "cached": false,
+   "image": {
+    "sha256": "2ab8a4e3e85cf91ced9d7ad2d8a25a406a9a9a3c024e2c6ebb29ef9dd47e19b1",
+    "dhash": "3e3ebd9d76020102"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "invalid_gstin",
+    "severity": "hard",
+    "message": "invoice.buyer_gstin '09ABBUC4372E1ZA' is not a valid GSTIN: checksum mismatch: last char A, expected R",
+    "fields": [
+     "invoice.buyer_gstin"
+    ],
+    "unverifiable": false,
+    "detail": {}
+   },
+   {
+    "code": "invalid_gstin",
+    "severity": "hard",
+    "message": "purchase_order.vendor_gstin '35JVBCT409I1Z4' is not a valid GSTIN: length 14, expected 15",
+    "fields": [
+     "purchase_order.vendor_gstin"
+    ],
+    "unverifiable": false,
+    "detail": {}
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "gstin_mismatch",
+    "description": "Invoice seller GSTIN equals the PO vendor GSTIN",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "gstin_mismatch",
+      "severity": "hard",
+      "message": "invoice seller GSTIN 35JVBCI7409I1Z4 differs from the PO vendor GSTIN 35JVBCT409I1Z4",
+      "fields": [
+       "invoice.seller_gstin",
+       "purchase_order.vendor_gstin"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   },
+   {
+    "code": "po_reference_mismatch",
+    "description": "Invoice references this PO number",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "line_not_on_po",
+    "description": "Every invoice line is on the PO (description + HSN)",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "line_not_on_po",
+      "severity": "hard",
+      "message": "invoice line 'Alcohol hand rub 5 ltr' is not on the PO",
+      "fields": [
+       "invoice.line_items[1].description"
+      ],
+      "unverifiable": false,
+      "detail": {
+       "match_method": "none"
+      }
+     }
+    ]
+   },
+   {
+    "code": "qty_over_po",
+    "description": "Billed quantity does not exceed the ordered quantity",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "rate_above_po",
+    "description": "Invoice rate within 2% of the PO rate",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "invalid_gstin",
+     "severity": "hard",
+     "message": "invoice.buyer_gstin '09ABBUC4372E1ZA' is not a valid GSTIN: checksum mismatch: last char A, expected R",
+     "fields": [
+      "invoice.buyer_gstin"
+     ]
+    },
+    {
+     "code": "invalid_gstin",
+     "severity": "hard",
+     "message": "purchase_order.vendor_gstin '35JVBCT409I1Z4' is not a valid GSTIN: length 14, expected 15",
+     "fields": [
+      "purchase_order.vendor_gstin"
+     ]
+    },
+    {
+     "code": "gstin_mismatch",
+     "severity": "hard",
+     "message": "invoice seller GSTIN 35JVBCI7409I1Z4 differs from the PO vendor GSTIN 35JVBCT409I1Z4",
+     "fields": [
+      "invoice.seller_gstin",
+      "purchase_order.vendor_gstin"
+     ]
+    },
+    {
+     "code": "line_not_on_po",
+     "severity": "hard",
+     "message": "invoice line 'Alcohol hand rub 5 ltr' is not on the PO",
+     "fields": [
+      "invoice.line_items[1].description"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

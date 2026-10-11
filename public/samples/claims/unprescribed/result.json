@@ -1,0 +1,443 @@
+{
+ "pack": "claims",
+ "sample": "unprescribed",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "prescription": {
+   "doc_type": "prescription",
+   "title": "medical prescription",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "doctor_name": {
+     "value": "Dr. Ridhi Khatri",
+     "confidence": 0.98,
+     "evidence": "Dr. Ridhi Khatri",
+     "null_reason": null
+    },
+    "registration_number": {
+     "value": "DMC 76205",
+     "confidence": 0.98,
+     "evidence": "DMC 76205",
+     "null_reason": null
+    },
+    "clinic_name": {
+     "value": "Agate Nursing Home",
+     "confidence": 0.98,
+     "evidence": "Agate Nursing Home",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Shivansh Swaminathan",
+     "confidence": 0.98,
+     "evidence": "Shivansh Swaminathan",
+     "null_reason": null
+    },
+    "patient_age": {
+     "value": "30 Y",
+     "confidence": 0.98,
+     "evidence": "30 Y",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-08-17",
+     "confidence": 0.98,
+     "evidence": "17/08/2026",
+     "null_reason": null
+    },
+    "diagnosis": {
+     "value": "Fever",
+     "confidence": 0.98,
+     "evidence": "Fever",
+     "null_reason": null
+    },
+    "medicines": [
+     {
+      "name": {
+       "value": "Levocetirizine",
+       "confidence": 0.98,
+       "evidence": "Levocetirizine",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "5 mg",
+       "confidence": 0.98,
+       "evidence": "5 mg",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": "1 tab",
+       "confidence": 0.98,
+       "evidence": "1 tab",
+       "null_reason": null
+      },
+      "frequency": {
+       "value": "BD",
+       "confidence": 0.98,
+       "evidence": "BD",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "2 weeks",
+       "confidence": 0.98,
+       "evidence": "2 weeks",
+       "null_reason": null
+      }
+     },
+     {
+      "name": {
+       "value": "Montelukast",
+       "confidence": 0.98,
+       "evidence": "Montelukast",
+       "null_reason": null
+      },
+      "strength": {
+       "value": "10 mg",
+       "confidence": 0.98,
+       "evidence": "10 mg",
+       "null_reason": null
+      },
+      "dosage": {
+       "value": null,
+       "confidence": 0.9,
+       "evidence": null,
+       "null_reason": "not present"
+      },
+      "frequency": {
+       "value": "TDS",
+       "confidence": 0.98,
+       "evidence": "TDS",
+       "null_reason": null
+      },
+      "duration": {
+       "value": "10 days",
+       "confidence": 0.98,
+       "evidence": "10 days",
+       "null_reason": null
+      }
+     }
+    ]
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 4.75,
+   "usage": {
+    "prompt_tokens": 2569,
+    "completion_tokens": 389,
+    "total_tokens": 2958,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "613f5cd11d49ed65fb0e9cba5a931d4713ec809afc6525f453fff331020edadd",
+    "dhash": "78bc3e9e01010100"
+   }
+  },
+  "bill": {
+   "doc_type": "bill",
+   "title": "pharmacy bill",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "pharmacy_name": {
+     "value": "Buch Chemists",
+     "confidence": 0.98,
+     "evidence": "Buch Chemists",
+     "null_reason": null
+    },
+    "bill_number": {
+     "value": "B-71870",
+     "confidence": 0.98,
+     "evidence": "B-71870",
+     "null_reason": null
+    },
+    "patient_name": {
+     "value": "Mr. Shivansh Swaminathan",
+     "confidence": 0.98,
+     "evidence": "Mr. Shivansh Swaminathan",
+     "null_reason": null
+    },
+    "doctor_name": {
+     "value": "Dr. Ridhi Khatri",
+     "confidence": 0.98,
+     "evidence": "Dr. Ridhi Khatri",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-08-18",
+     "confidence": 0.98,
+     "evidence": "18/08/2026",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "medicine": {
+       "value": "MONTELUKAST 10MG TAB",
+       "confidence": 0.98,
+       "evidence": "MONTELUKAST 10MG TAB",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B72298",
+       "confidence": 0.98,
+       "evidence": "B72298",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 30.0,
+       "confidence": 0.98,
+       "evidence": "30",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 16.78,
+       "confidence": 0.98,
+       "evidence": "16.78",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 503.4,
+       "confidence": 0.98,
+       "evidence": "503.4",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Omez 20 Cap",
+       "confidence": 0.98,
+       "evidence": "Omez 20 Cap",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B12231",
+       "confidence": 0.98,
+       "evidence": "B12231",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 10.0,
+       "confidence": 0.98,
+       "evidence": "10",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 4.58,
+       "confidence": 0.98,
+       "evidence": "4.58",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 45.8,
+       "confidence": 0.98,
+       "evidence": "45.8",
+       "null_reason": null
+      }
+     },
+     {
+      "medicine": {
+       "value": "Levocet 5 Tab",
+       "confidence": 0.98,
+       "evidence": "Levocet 5 Tab",
+       "null_reason": null
+      },
+      "batch": {
+       "value": "B23761",
+       "confidence": 0.98,
+       "evidence": "B23761",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 28.0,
+       "confidence": 0.98,
+       "evidence": "28",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 2.8,
+       "confidence": 0.98,
+       "evidence": "2.8",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 78.4,
+       "confidence": 0.98,
+       "evidence": "78.4",
+       "null_reason": null
+      }
+     }
+    ],
+    "discount": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "total": {
+     "value": 627.6,
+     "confidence": 0.98,
+     "evidence": "627.6",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.69,
+   "usage": {
+    "prompt_tokens": 2423,
+    "completion_tokens": 521,
+    "total_tokens": 2944,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "ab6373d47247f980046c6eb4b2a938eb5ab8158163bba137341456a55bb85ae8",
+    "dhash": "828191967e7f7efe"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[0].name 'Levocetirizine' found in RxNorm (RXCUI 356887)",
+    "fields": [
+     "prescription.medicines[0].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "356887",
+     "ingredients": [
+      "levocetirizine"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "prescription.medicines[1].name 'Montelukast' found in RxNorm (RXCUI 88249)",
+    "fields": [
+     "prescription.medicines[1].name"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "88249",
+     "ingredients": [
+      "montelukast"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[0].medicine 'MONTELUKAST 10MG TAB' found in RxNorm (RXCUI 88249)",
+    "fields": [
+     "bill.line_items[0].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "rxnorm",
+     "rxcui": "88249",
+     "ingredients": [
+      "montelukast"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[1].medicine 'Omez 20 Cap' is a known brand of omeprazole",
+    "fields": [
+     "bill.line_items[1].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "omeprazole"
+     ]
+    }
+   },
+   {
+    "code": "drug_validated",
+    "severity": "info",
+    "message": "bill.line_items[2].medicine 'Levocet 5 Tab' is a known brand of levocetirizine",
+    "fields": [
+     "bill.line_items[2].medicine"
+    ],
+    "unverifiable": false,
+    "detail": {
+     "source": "brand_map",
+     "ingredients": [
+      "levocetirizine"
+     ]
+    }
+   }
+  ],
+  "crosschecks": [
+   {
+    "code": "unprescribed_medicine",
+    "description": "Every billed medicine was prescribed",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "unprescribed_medicine",
+      "severity": "hard",
+      "message": "'Omez 20 Cap' is billed but not on the prescription",
+      "fields": [
+       "bill.line_items[1].medicine"
+      ],
+      "unverifiable": false,
+      "detail": {
+       "match_method": "none"
+      }
+     }
+    ]
+   },
+   {
+    "code": "patient_name_mismatch",
+    "description": "Patient name matches on both documents",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "bill_before_prescription",
+    "description": "Bill dated on/after the prescription, within 30 days",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "implausible_quantity",
+    "description": "Billed quantity fits dose x frequency x duration",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "unprescribed_medicine",
+     "severity": "hard",
+     "message": "'Omez 20 Cap' is billed but not on the prescription",
+     "fields": [
+      "bill.line_items[1].medicine"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

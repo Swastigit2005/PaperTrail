@@ -114,8 +114,8 @@
     "prompt_tokens": 2360,
     "completion_tokens": 329,
     "total_tokens": 2689,
-    "requests": 1,
-    "cached_requests": 0
+    "requests": 0,
+    "cached_requests": 1
    },
    "cached": false,
    "image": {
@@ -187,8 +187,8 @@
     "prompt_tokens": 1810,
     "completion_tokens": 228,
     "total_tokens": 2038,
-    "requests": 1,
-    "cached_requests": 0
+    "requests": 0,
+    "cached_requests": 1
    },
    "cached": false,
    "image": {

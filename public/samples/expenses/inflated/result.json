@@ -1,0 +1,242 @@
+{
+ "pack": "expenses",
+ "sample": "inflated",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "receipt": {
+   "doc_type": "receipt",
+   "title": "merchant receipt",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "merchant": {
+     "value": "UDUPI GRAND",
+     "confidence": 0.95,
+     "evidence": "UDUPI GRAND",
+     "null_reason": null
+    },
+    "receipt_number": {
+     "value": "R-1078",
+     "confidence": 0.95,
+     "evidence": "R-1078",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-09-02",
+     "confidence": 0.95,
+     "evidence": "02/09/2026",
+     "null_reason": null
+    },
+    "items": [
+     {
+      "description": {
+       "value": "Filter coffee",
+       "confidence": 0.95,
+       "evidence": "Filter coffee",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 60.0,
+       "confidence": 0.95,
+       "evidence": "60.0",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Gulab jamun",
+       "confidence": 0.95,
+       "evidence": "Gulab jamun",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 110.0,
+       "confidence": 0.95,
+       "evidence": "110.0",
+       "null_reason": null
+      }
+     }
+    ],
+    "tax": {
+     "value": 8.5,
+     "confidence": 0.95,
+     "evidence": "8.5",
+     "null_reason": null
+    },
+    "total": {
+     "value": 178.5,
+     "confidence": 0.95,
+     "evidence": "178.5",
+     "null_reason": null
+    },
+    "payment_mode": {
+     "value": "Card",
+     "confidence": 0.95,
+     "evidence": "Paid by Card",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.68,
+   "usage": {
+    "prompt_tokens": 2360,
+    "completion_tokens": 244,
+    "total_tokens": 2604,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "eb9ce366db41022a3f0a278b82ef3de1d5fcc916b89ba220a75d9c5a694357be",
+    "dhash": "f1de9fbe1e7d7f7e"
+   }
+  },
+  "expense_claim": {
+   "doc_type": "expense_claim",
+   "title": "expense claim form",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "employee_name": {
+     "value": "Yashasvi Vala",
+     "confidence": 0.95,
+     "evidence": "Yashasvi Vala",
+     "null_reason": null
+    },
+    "employee_id": {
+     "value": "E-7715",
+     "confidence": 0.95,
+     "evidence": "E-7715",
+     "null_reason": null
+    },
+    "claim_date": {
+     "value": "2026-09-08",
+     "confidence": 0.95,
+     "evidence": "08-09-2026",
+     "null_reason": null
+    },
+    "expense_date": {
+     "value": "2026-09-02",
+     "confidence": 0.95,
+     "evidence": "02-09-2026",
+     "null_reason": null
+    },
+    "merchant": {
+     "value": "Udupi Grand",
+     "confidence": 0.95,
+     "evidence": "Udupi Grand",
+     "null_reason": null
+    },
+    "category": {
+     "value": "Meals",
+     "confidence": 0.95,
+     "evidence": "Meals",
+     "null_reason": null
+    },
+    "amount_claimed": {
+     "value": 528.5,
+     "confidence": 0.95,
+     "evidence": "528.5",
+     "null_reason": null
+    },
+    "purpose": {
+     "value": "Team offsite meal",
+     "confidence": 0.95,
+     "evidence": "Team offsite meal",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.18,
+   "usage": {
+    "prompt_tokens": 1810,
+    "completion_tokens": 220,
+    "total_tokens": 2030,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "c0ba4824ba03cefb59c17b88cdb1b8323eb8f973902d87a756bb42317bd97474",
+    "dhash": "61b1a4b4b4a6343c"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [],
+  "crosschecks": [
+   {
+    "code": "claim_amount_mismatch",
+    "description": "Claimed amount does not exceed the receipt total",
+    "status": "fail",
+    "findings": [
+     {
+      "code": "claim_amount_mismatch",
+      "severity": "hard",
+      "message": "claimed 528.50 exceeds receipt total 178.50",
+      "fields": [
+       "expense_claim.amount_claimed",
+       "receipt.total"
+      ],
+      "unverifiable": false,
+      "detail": {}
+     }
+    ]
+   },
+   {
+    "code": "expense_date_mismatch",
+    "description": "Claim expense date equals the receipt date",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "outside_policy_window",
+    "description": "Receipt is within 30 days of the claim",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "merchant_mismatch",
+    "description": "Claim merchant matches the receipt merchant",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "duplicate_receipt",
+    "description": "Receipt was not already claimed",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "flag",
+   "reasons": [
+    {
+     "code": "claim_amount_mismatch",
+     "severity": "hard",
+     "message": "claimed 528.50 exceeds receipt total 178.50",
+     "fields": [
+      "expense_claim.amount_claimed",
+      "receipt.total"
+     ]
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": [
+  {
+   "case_id": "sample-clean",
+   "dhash": "f0c68b8b02c00000",
+   "fingerprint": "7a55c6a806e1ff07"
+  }
+ ]
+}

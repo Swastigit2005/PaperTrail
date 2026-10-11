@@ -1,0 +1,499 @@
+{
+ "pack": "payables",
+ "sample": "clean",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "invoice": {
+   "doc_type": "invoice",
+   "title": "GST tax invoice",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "seller_name": {
+     "value": "Nagarajan PLC",
+     "confidence": 0.98,
+     "evidence": "Nagarajan PLC",
+     "null_reason": null
+    },
+    "seller_gstin": {
+     "value": "14AXYCI0618D1ZC",
+     "confidence": 0.98,
+     "evidence": "14AXYCI0618D1ZC",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Chauhan, Kapoor and Salvi",
+     "confidence": 0.98,
+     "evidence": "Chauhan, Kapoor and Salvi",
+     "null_reason": null
+    },
+    "buyer_gstin": {
+     "value": "14FWLCE8037P1ZO",
+     "confidence": 0.98,
+     "evidence": "14FWLCE8037P1ZO",
+     "null_reason": null
+    },
+    "invoice_number": {
+     "value": "GST/26-27/4353",
+     "confidence": 0.98,
+     "evidence": "GST/26-27/4353",
+     "null_reason": null
+    },
+    "invoice_date": {
+     "value": "2026-06-10",
+     "confidence": 0.95,
+     "evidence": "10-06-2026",
+     "null_reason": null
+    },
+    "po_reference": {
+     "value": "PO/HYD/26-27/747",
+     "confidence": 0.95,
+     "evidence": "Order Ref: PO/HYD/26-27/747",
+     "null_reason": null
+    },
+    "place_of_supply": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Mesh office chair with lumbar support",
+       "confidence": 0.98,
+       "evidence": "Mesh office chair with lumbar support",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9401",
+       "confidence": 0.98,
+       "evidence": "9401",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 5.0,
+       "confidence": 0.98,
+       "evidence": "5",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8258.0,
+       "confidence": 0.98,
+       "evidence": "8258.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 41290.0,
+       "confidence": 0.98,
+       "evidence": "41290.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Dell KB216 keyboard",
+       "confidence": 0.98,
+       "evidence": "Dell KB216 keyboard",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8471",
+       "confidence": 0.98,
+       "evidence": "8471",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 50.0,
+       "confidence": 0.98,
+       "evidence": "50",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 803.0,
+       "confidence": 0.98,
+       "evidence": "803.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 40150.0,
+       "confidence": 0.98,
+       "evidence": "40150.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "CAT-6 LAN cable roll 305m",
+       "confidence": 0.98,
+       "evidence": "CAT-6 LAN cable roll 305m",
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8544",
+       "confidence": 0.98,
+       "evidence": "8544",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 1.0,
+       "confidence": 0.98,
+       "evidence": "1",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 7854.0,
+       "confidence": 0.98,
+       "evidence": "7854.0",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 7854.0,
+       "confidence": 0.98,
+       "evidence": "7854.0",
+       "null_reason": null
+      },
+      "gst_rate": {
+       "value": 18.0,
+       "confidence": 0.98,
+       "evidence": "18",
+       "null_reason": null
+      }
+     }
+    ],
+    "taxable_value": {
+     "value": 89294.0,
+     "confidence": 0.98,
+     "evidence": "89294.0",
+     "null_reason": null
+    },
+    "cgst": {
+     "value": 8036.46,
+     "confidence": 0.98,
+     "evidence": "8036.46",
+     "null_reason": null
+    },
+    "sgst": {
+     "value": 8036.46,
+     "confidence": 0.98,
+     "evidence": "8036.46",
+     "null_reason": null
+    },
+    "igst": {
+     "value": null,
+     "confidence": 0.9,
+     "evidence": null,
+     "null_reason": "not present"
+    },
+    "grand_total": {
+     "value": 105366.92,
+     "confidence": 0.98,
+     "evidence": "105366.92",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.35,
+   "usage": {
+    "prompt_tokens": 2122,
+    "completion_tokens": 792,
+    "total_tokens": 2914,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "20bc435ea21571ae1abe247d59d50e43a7f659809703faca88353a183c8e27a7",
+    "dhash": "8b96958d8d020000"
+   }
+  },
+  "purchase_order": {
+   "doc_type": "purchase_order",
+   "title": "purchase order",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "po_number": {
+     "value": "PO/HYD/26-27/747",
+     "confidence": 0.98,
+     "evidence": "PO/HYD/26-27/747",
+     "null_reason": null
+    },
+    "po_date": {
+     "value": "2026-05-29",
+     "confidence": 0.95,
+     "evidence": "29-05-2026",
+     "null_reason": null
+    },
+    "buyer_name": {
+     "value": "Chauhan, Kapoor and Salvi",
+     "confidence": 0.98,
+     "evidence": "Chauhan, Kapoor and Salvi",
+     "null_reason": null
+    },
+    "vendor_name": {
+     "value": "Nagarajan PLC",
+     "confidence": 0.98,
+     "evidence": "Nagarajan PLC",
+     "null_reason": null
+    },
+    "vendor_gstin": {
+     "value": "14AXYCI0618D1ZC",
+     "confidence": 0.98,
+     "evidence": "14AXYCI0618D1ZC",
+     "null_reason": null
+    },
+    "line_items": [
+     {
+      "description": {
+       "value": "Box files (pack of 10)",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "4820",
+       "confidence": 0.95,
+       "evidence": "4820",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 20.0,
+       "confidence": 0.98,
+       "evidence": "20",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 242.0,
+       "confidence": 0.98,
+       "evidence": "242.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 4840.0,
+       "confidence": 0.98,
+       "evidence": "4,840.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Ergonomic office chair",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "9401",
+       "confidence": 0.95,
+       "evidence": "9401",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 5.0,
+       "confidence": 0.98,
+       "evidence": "5",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 8258.0,
+       "confidence": 0.98,
+       "evidence": "8,258.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 41290.0,
+       "confidence": 0.98,
+       "evidence": "41,290.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Copier paper A4 75 GSM (500 sheets)",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "4802",
+       "confidence": 0.95,
+       "evidence": "4802",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 2.0,
+       "confidence": 0.98,
+       "evidence": "2",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 317.0,
+       "confidence": 0.98,
+       "evidence": "317.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 634.0,
+       "confidence": 0.98,
+       "evidence": "634.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "USB keyboard",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8471",
+       "confidence": 0.95,
+       "evidence": "8471",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 50.0,
+       "confidence": 0.98,
+       "evidence": "50",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 803.0,
+       "confidence": 0.98,
+       "evidence": "803.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 40150.0,
+       "confidence": 0.98,
+       "evidence": "40,150.00",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Cat6 ethernet cable (305 m box)",
+       "confidence": 0.5,
+       "evidence": null,
+       "null_reason": null
+      },
+      "hsn": {
+       "value": "8544",
+       "confidence": 0.95,
+       "evidence": "8544",
+       "null_reason": null
+      },
+      "qty": {
+       "value": 1.0,
+       "confidence": 0.98,
+       "evidence": "1",
+       "null_reason": null
+      },
+      "rate": {
+       "value": 7854.0,
+       "confidence": 0.98,
+       "evidence": "7,854.00",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 7854.0,
+       "confidence": 0.98,
+       "evidence": "7,854.00",
+       "null_reason": null
+      }
+     }
+    ],
+    "total": {
+     "value": 768.0,
+     "confidence": 0.95,
+     "evidence": "768.00",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 2.71,
+   "usage": {
+    "prompt_tokens": 1845,
+    "completion_tokens": 816,
+    "total_tokens": 2661,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "148e8d46439b5958778afde9c326daf806ba9dd99f44f50063a50ebf13769dbc",
+    "dhash": "8e169585c6120000"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [],
+  "crosschecks": [
+   {
+    "code": "gstin_mismatch",
+    "description": "Invoice seller GSTIN equals the PO vendor GSTIN",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "po_reference_mismatch",
+    "description": "Invoice references this PO number",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "line_not_on_po",
+    "description": "Every invoice line is on the PO (description + HSN)",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "qty_over_po",
+    "description": "Billed quantity does not exceed the ordered quantity",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "rate_above_po",
+    "description": "Invoice rate within 2% of the PO rate",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "approve",
+   "reasons": [
+    {
+     "code": "all_clear",
+     "severity": "info",
+     "message": "All validations and cross-checks passed; critical fields read with high confidence.",
+     "fields": []
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

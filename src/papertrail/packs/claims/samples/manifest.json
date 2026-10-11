@@ -41,6 +41,34 @@
    ],
    "duplicate_of": null,
    "expected": "flag"
+  },
+  {
+   "id": "patient",
+   "title": "Bill is for a different patient",
+   "tier": "scanned",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "patient_name_mismatch"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
+  },
+  {
+   "id": "arithmetic",
+   "title": "Bill totals do not add up",
+   "tier": "clean",
+   "documents": {
+    "prescription": "prescription.jpg",
+    "bill": "bill.jpg"
+   },
+   "seeded": [
+    "arithmetic_error"
+   ],
+   "duplicate_of": null,
+   "expected": "flag"
   }
  ]
 }

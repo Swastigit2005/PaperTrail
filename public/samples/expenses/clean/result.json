@@ -1,0 +1,249 @@
+{
+ "pack": "expenses",
+ "sample": "clean",
+ "pipeline": "vlm",
+ "matching": "rules+llm",
+ "documents": {
+  "receipt": {
+   "doc_type": "receipt",
+   "title": "merchant receipt",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "merchant": {
+     "value": "CAFE AROMA",
+     "confidence": 0.98,
+     "evidence": "CAFE AROMA",
+     "null_reason": null
+    },
+    "receipt_number": {
+     "value": "R-6064",
+     "confidence": 0.98,
+     "evidence": "R-6064",
+     "null_reason": null
+    },
+    "date": {
+     "value": "2026-09-07",
+     "confidence": 0.95,
+     "evidence": "07/09/2026",
+     "null_reason": null
+    },
+    "items": [
+     {
+      "description": {
+       "value": "Butter naan",
+       "confidence": 0.98,
+       "evidence": "Butter naan",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 70.0,
+       "confidence": 0.98,
+       "evidence": "70.0",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Filter coffee",
+       "confidence": 0.98,
+       "evidence": "Filter coffee",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 60.0,
+       "confidence": 0.98,
+       "evidence": "60.0",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Veg biryani",
+       "confidence": 0.98,
+       "evidence": "Veg biryani",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 280.0,
+       "confidence": 0.98,
+       "evidence": "280.0",
+       "null_reason": null
+      }
+     },
+     {
+      "description": {
+       "value": "Fresh lime soda",
+       "confidence": 0.98,
+       "evidence": "Fresh lime soda",
+       "null_reason": null
+      },
+      "amount": {
+       "value": 90.0,
+       "confidence": 0.98,
+       "evidence": "90.0",
+       "null_reason": null
+      }
+     }
+    ],
+    "tax": {
+     "value": 25.0,
+     "confidence": 0.98,
+     "evidence": "25.0",
+     "null_reason": null
+    },
+    "total": {
+     "value": 525.0,
+     "confidence": 0.98,
+     "evidence": "525.0",
+     "null_reason": null
+    },
+    "payment_mode": {
+     "value": "Card",
+     "confidence": 0.95,
+     "evidence": "Paid by Card",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.23,
+   "usage": {
+    "prompt_tokens": 2360,
+    "completion_tokens": 329,
+    "total_tokens": 2689,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "2b0857a1f5fb17907742ba9274a506aa6df39bb2d2e3b6a63c55b3ca7302c5f0",
+    "dhash": "f0c68b8b02c00000"
+   }
+  },
+  "expense_claim": {
+   "doc_type": "expense_claim",
+   "title": "expense claim form",
+   "detection": {
+    "method": "override",
+    "confidence": 1.0
+   },
+   "data": {
+    "employee_name": {
+     "value": "Dhriti Nagarajan",
+     "confidence": 0.98,
+     "evidence": "Dhriti Nagarajan",
+     "null_reason": null
+    },
+    "employee_id": {
+     "value": "E-6247",
+     "confidence": 0.98,
+     "evidence": "E-6247",
+     "null_reason": null
+    },
+    "claim_date": {
+     "value": "2026-09-17",
+     "confidence": 0.95,
+     "evidence": "17-09-2026",
+     "null_reason": null
+    },
+    "expense_date": {
+     "value": "2026-09-07",
+     "confidence": 0.95,
+     "evidence": "07-09-2026",
+     "null_reason": null
+    },
+    "merchant": {
+     "value": "Cafe Aroma",
+     "confidence": 0.98,
+     "evidence": "Cafe Aroma",
+     "null_reason": null
+    },
+    "category": {
+     "value": "Meals",
+     "confidence": 0.98,
+     "evidence": "Meals",
+     "null_reason": null
+    },
+    "amount_claimed": {
+     "value": 525.0,
+     "confidence": 0.98,
+     "evidence": "525.00",
+     "null_reason": null
+    },
+    "purpose": {
+     "value": "Client lunch",
+     "confidence": 0.98,
+     "evidence": "Client lunch",
+     "null_reason": null
+    }
+   },
+   "pipeline": "vlm",
+   "model": "qwen/qwen3.8-27b",
+   "latency_s": 1.17,
+   "usage": {
+    "prompt_tokens": 1810,
+    "completion_tokens": 228,
+    "total_tokens": 2038,
+    "requests": 0,
+    "cached_requests": 1
+   },
+   "cached": false,
+   "image": {
+    "sha256": "e4c7ef691d159335ed6ecbe04cab53256f986f74d1f83491c6deb4531b4e3e58",
+    "dhash": "69b2b4b020a43484"
+   }
+  }
+ },
+ "evaluation": {
+  "validations": [],
+  "crosschecks": [
+   {
+    "code": "claim_amount_mismatch",
+    "description": "Claimed amount does not exceed the receipt total",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "expense_date_mismatch",
+    "description": "Claim expense date equals the receipt date",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "outside_policy_window",
+    "description": "Receipt is within 30 days of the claim",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "merchant_mismatch",
+    "description": "Claim merchant matches the receipt merchant",
+    "status": "pass",
+    "findings": []
+   },
+   {
+    "code": "duplicate_receipt",
+    "description": "Receipt was not already claimed",
+    "status": "pass",
+    "findings": []
+   }
+  ],
+  "decision": {
+   "outcome": "approve",
+   "reasons": [
+    {
+     "code": "all_clear",
+     "severity": "info",
+     "message": "All validations and cross-checks passed; critical fields read with high confidence.",
+     "fields": []
+    }
+   ]
+  },
+  "matching": "rules+llm",
+  "notes": []
+ },
+ "history_before": []
+}

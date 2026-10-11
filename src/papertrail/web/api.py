@@ -42,7 +42,8 @@ MAX_UPLOAD_BYTES = 5 * 1024 * 1024
 ALLOWED_TYPES = ("image/jpeg", "image/png", "image/webp", "application/pdf")
 CONCURRENCY = 2
 IP_CAP_PER_HOUR = int(os.getenv("PAPERTRAIL_IP_CAP", "40"))
-BUSY_MESSAGE = "The demo is busy (free-tier rate limit). Please try again in a minute."
+BUSY_MESSAGE = ("All free-tier models are at their limit right now. The example documents still work instantly; "
+                "for your own files, please try again in a minute.")
 
 app = FastAPI(title="PaperTrail", version="0.1.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
 
@@ -90,8 +91,11 @@ def _check_ip(request: Request) -> None:
 
 @app.exception_handler(RateLimited)
 async def _busy(_: Request, exc: RateLimited) -> JSONResponse:
-    return JSONResponse(status_code=429, content={"error": "demo_busy", "message": BUSY_MESSAGE,
-                                                  "retry_after": round(min(exc.retry_after, 120))})
+    can_ocr = bool(getattr(exc, "can_ocr", False))
+    return JSONResponse(status_code=429, content={
+        "error": "demo_busy", "message": BUSY_MESSAGE, "retry_after": round(min(exc.retry_after, 120)),
+        "fallback": "ocr" if can_ocr else None,
+    })
 
 
 @app.get("/api/health")
@@ -168,33 +172,83 @@ def extract(
     if not _slots.acquire(timeout=25):
         raise RateLimited("all demo slots busy", retry_after=30)
     try:
-        if pipeline == "vlm":
-            extractor: Any = VLMDirectExtractor(llm, s.require("vision_model"))
-        else:
-            extractor = OcrThenLLMExtractor(llm, s.require("text_model"))
-        if doc_type == "auto":
-            text = ocr_text or (extractor.detection_text(image) if pipeline == "ocr+llm" else None)
-            det = detect_doc_type(image, the_pack.doc_types, ocr_text=text, llm=llm, model=s.vision_model)
-            detection = {"method": det.method, "confidence": det.confidence}
-            dt = the_pack.doc_type(det.doc_type)
-        else:
-            dt = the_pack.doc_type(doc_type)
-            detection = {"method": "override", "confidence": 1.0}
-        result = extractor.extract(image, dt, ocr_text=ocr_text)
+        if pipeline == "ocr+llm" and not ocr_text:  # server-side Tesseract (Docker / local)
+            from papertrail.core.extraction.ocr_then_llm import tesseract_ocr
+
+            ocr_text = tesseract_ocr(image).text
+        return _extract_with_fallback(the_pack, image, doc_type, pipeline, ocr_text, s, llm)
     except (ValueError, KeyError) as exc:
         raise HTTPException(400, str(exc)) from exc
-    except LLMError as exc:
-        if isinstance(exc, RateLimited):
-            raise
-        raise HTTPException(502, f"model call failed: {exc}") from exc
     finally:
         _slots.release()
-    return {
-        "doc_type": dt.name, "title": dt.title, "detection": detection,
-        "data": result.data.model_dump(mode="json"), "pipeline": result.pipeline, "model": result.model,
-        "latency_s": round(result.latency_s, 2), "usage": result.usage, "cached": result.cached,
-        "image": {"sha256": image.sha256, "dhash": f"{image.dhash:016x}"}, "ocr_text": result.ocr_text,
-    }
+
+
+def _model_chain(pipeline: str, ocr_text: str | None, s: Settings) -> list[tuple[str, str]]:
+    """(kind, model) candidates in order. Each Groq model has its own free-tier quota, so when one is
+    exhausted the next one usually still answers."""
+    chain: list[tuple[str, str]] = []
+    if pipeline == "vlm" and s.vision_model:
+        chain.append(("vlm", s.vision_model))
+    if pipeline == "ocr+llm" or ocr_text:
+        for model in (s.text_model, s.match_model):
+            if model and ("ocr", model) not in chain:
+                chain.append(("ocr", model))
+    return chain
+
+
+def _extract_with_fallback(
+    the_pack: Any, image: Any, doc_type: str, pipeline: str, ocr_text: str | None, s: Settings, llm: LLMClient
+) -> dict[str, Any]:
+    """Detect (if needed) and extract, walking the model chain on rate limits."""
+    notes: list[str] = []
+    if doc_type == "auto":
+        try:
+            det = detect_doc_type(image, the_pack.doc_types, ocr_text=ocr_text, llm=llm,
+                                  model=s.vision_model if pipeline == "vlm" else None)
+        except RateLimited as exc:
+            raise _busy_error(exc, can_ocr=pipeline == "vlm" and not ocr_text) from exc
+        except ValueError as exc:
+            raise ValueError(f"{exc}. Choose the document type manually.") from exc
+        detection = {"method": det.method, "confidence": det.confidence}
+        dt = the_pack.doc_type(det.doc_type)
+    else:
+        dt = the_pack.doc_type(doc_type)
+        detection = {"method": "override", "confidence": 1.0}
+
+    last: RateLimited | None = None
+    for kind, model in _model_chain(pipeline, ocr_text, s):
+        extractor: Any = VLMDirectExtractor(llm, model) if kind == "vlm" else OcrThenLLMExtractor(llm, model)
+        try:
+            result = extractor.extract(image, dt, ocr_text=ocr_text)
+        except RateLimited as exc:
+            last = exc
+            notes.append(f"{model} is at its free-tier limit; trying the next model.")
+            continue
+        except LLMError as exc:
+            raise HTTPException(502, f"model call failed: {exc}") from exc
+        if notes:
+            notes = [f"Fallback used: extracted with {model} ({'OCR + LLM' if kind == 'ocr' else 'vision'}) "
+                     "because the preferred model is at its free-tier limit."]
+        return {
+            "doc_type": dt.name, "title": dt.title, "detection": detection,
+            "data": result.data.model_dump(mode="json"), "pipeline": result.pipeline, "model": result.model,
+            "latency_s": round(result.latency_s, 2), "usage": result.usage, "cached": result.cached,
+            "image": {"sha256": image.sha256, "dhash": f"{image.dhash:016x}"}, "ocr_text": result.ocr_text,
+            "notes": notes,
+        }
+    raise _busy_error(last or RateLimited("no model configured", 60), can_ocr=pipeline == "vlm" and not ocr_text)
+
+
+class _Busy(RateLimited):
+    """All candidate models are rate limited; ``can_ocr`` tells the browser a retry with OCR text may work."""
+
+    def __init__(self, retry_after: float, can_ocr: bool) -> None:
+        super().__init__("all models busy", retry_after)
+        self.can_ocr = can_ocr
+
+
+def _busy_error(exc: RateLimited, can_ocr: bool) -> _Busy:
+    return _Busy(exc.retry_after, can_ocr)
 
 
 class HistoryEntry(BaseModel):
